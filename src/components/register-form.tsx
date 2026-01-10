@@ -24,10 +24,6 @@ export default function RegisterForm() {
         }
     }
 
-
-    console.log("state", state)
-    console.log("isPending", isPending)
-
     return (
         <form action={formAction} className="space-y-6">
             {/* User Info Fields */}

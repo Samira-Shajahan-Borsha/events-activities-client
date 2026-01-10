@@ -8,7 +8,7 @@ import { useActionState } from "react";
 import { Loader2, Mail, Lock } from "lucide-react";
 import { login } from "@/services/auth/login";
 
-export default function LoginForm() {
+export default function LoginForm({ redirect }: { redirect?: string }) {
     const [state, formAction, isPending] = useActionState(login, null);
 
     const getFieldError = (fieldName: string) => {
@@ -20,10 +20,9 @@ export default function LoginForm() {
         }
     }
 
-    console.log(state, "state")
-
     return (
         <form action={formAction} className="space-y-6">
+            {redirect && <input type="hidden" name="redirect" value={redirect} />}
             {/* User Info Fields */}
             <FieldGroup>
                 <div className="grid grid-cols-1 gap-4">

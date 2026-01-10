@@ -8,7 +8,14 @@ export const metadata: Metadata = {
     description: "Login to your account to explore and join local events.",
 };
 
-export default function LoginPage() {
+const LoginPage = async ({
+    searchParams,
+}: {
+    searchParams?: Promise<{ redirect?: string }>;
+}) => {
+    const params = (await searchParams) || {};
+
+    console.log("From Login Page", params);
     return (
         <div className="flex min-h-screen flex-col items-center justify-center px-4">
             <div className="w-full max-w-[350px] flex flex-col space-y-6">
@@ -30,7 +37,7 @@ export default function LoginPage() {
                 </div>
 
                 {/* Login Form */}
-                <LoginForm />
+                <LoginForm redirect={params.redirect} />
 
                 {/* Link to Register */}
                 <p className="text-center text-sm text-muted-foreground">
@@ -45,3 +52,5 @@ export default function LoginPage() {
         </div>
     );
 }
+
+export default LoginPage
