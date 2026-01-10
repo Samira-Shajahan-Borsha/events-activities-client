@@ -1,13 +1,26 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useActionState } from "react";
 import { Loader2, Mail, Lock } from "lucide-react";
+import { login } from "@/services/auth/login";
 
 export default function LoginForm() {
-    const [state, formAction, isPending] = useActionState(() => { }, null);
+    const [state, formAction, isPending] = useActionState(login, null);
+
+    const getFieldError = (fieldName: string) => {
+        if (state && state?.errors) {
+            const error = state?.errors?.find((err: any) => err.field === fieldName)
+            return error.message;
+        } else {
+            return null;
+        }
+    }
+
+    console.log(state, "state")
 
     return (
         <form action={formAction} className="space-y-6">
@@ -26,8 +39,14 @@ export default function LoginForm() {
                                 placeholder="m@example.com"
                                 className="pl-9"
                             />
+                            {
+                                getFieldError("email") && <FieldDescription className="text-red-600">
+                                    {getFieldError("email")}
+                                </FieldDescription>
+                            }
                         </div>
                     </Field>
+
 
                     {/* Password */}
                     <Field>
@@ -41,6 +60,11 @@ export default function LoginForm() {
                                 placeholder="********"
                                 className="pl-9"
                             />
+                            {
+                                getFieldError("password") && <FieldDescription className="text-red-600">
+                                    {getFieldError("password")}
+                                </FieldDescription>
+                            }
                         </div>
                     </Field>
                 </div>

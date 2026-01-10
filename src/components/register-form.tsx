@@ -1,17 +1,29 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useActionState } from "react";
 import { Loader2, User, Mail, Lock } from "lucide-react";
+import { register } from "@/services/auth/register";
 
 export default function RegisterForm() {
-    const [state, formAction, isPending] = useActionState((currentState: any, formData: any) => {
-        console.log("currentState", currentState)
-        console.log("formData", formData.get("fullName"))
-        return { success: true }
-    }, null);
+    const [state, formAction, isPending] = useActionState(register, null);
+
+    const getFieldError = (fieldName: string) => {
+        if (state && state?.errors) {
+            const error = state?.errors?.find((err: any) => err.field === fieldName)
+            if (error) {
+                return error?.message;
+            } else {
+                return null;
+            }
+        } else {
+            return null;
+        }
+    }
+
 
     console.log("state", state)
     console.log("isPending", isPending)
@@ -33,7 +45,13 @@ export default function RegisterForm() {
                                 placeholder="John Doe"
                                 className="pl-9"
                             />
+                            {
+                                getFieldError("fullName") && <FieldDescription className="text-red-600">
+                                    {getFieldError("fullName")}
+                                </FieldDescription>
+                            }
                         </div>
+
                     </Field>
 
                     {/* Email */}
@@ -48,6 +66,11 @@ export default function RegisterForm() {
                                 placeholder="m@example.com"
                                 className="pl-9"
                             />
+                            {
+                                getFieldError("email") && <FieldDescription className="text-red-600">
+                                    {getFieldError("email")}
+                                </FieldDescription>
+                            }
                         </div>
                     </Field>
 
@@ -63,6 +86,11 @@ export default function RegisterForm() {
                                 placeholder="********"
                                 className="pl-9"
                             />
+                            {
+                                getFieldError("password") && <FieldDescription className="text-red-600">
+                                    {getFieldError("password")}
+                                </FieldDescription>
+                            }
                         </div>
                     </Field>
 
@@ -78,6 +106,11 @@ export default function RegisterForm() {
                                 placeholder="********"
                                 className="pl-9"
                             />
+                            {
+                                getFieldError("confirmPassword") && <FieldDescription className="text-red-600">
+                                    {getFieldError("confirmPassword")}
+                                </FieldDescription>
+                            }
                         </div>
                     </Field>
                 </div>
