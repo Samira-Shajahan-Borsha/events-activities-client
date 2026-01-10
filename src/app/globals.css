@@ -32,47 +32,55 @@
     --radius-xl: calc(var(--radius) + 4px);
 }
 
+/* ============================= */
+/* 🌤️ LIGHT MODE – MODERN TEAL */
+/* ============================= */
 :root {
-    /* Core Brand Colors - Professional Indigo/Slate */
-    --background: oklch(0.99 0.005 240); /* Very faint blue-tint white */
-    --foreground: oklch(0.18 0.02 240); /* Deep slate text */
+    /* Base */
+    --background: oklch(0.99 0.003 190);
+    --foreground: oklch(0.17 0.015 190);
 
-    /* Cards and Popovers */
+    /* Cards & surfaces */
     --card: oklch(1 0 0);
-    --card-foreground: oklch(0.18 0.02 240);
+    --card-foreground: oklch(0.17 0.015 190);
+
     --popover: oklch(1 0 0);
-    --popover-foreground: oklch(0.18 0.02 240);
+    --popover-foreground: oklch(0.17 0.015 190);
 
-    /* Brand Primary - A sophisticated Indigo */
-    --primary: oklch(0.35 0.12 250); /* Professional Deep Indigo */
-    --primary-foreground: oklch(0.98 0.01 240);
+    /* Primary – Teal / Emerald */
+    --primary: oklch(0.55 0.14 180);
+    --primary-foreground: oklch(0.98 0.01 180);
 
-    /* Secondary & Accents - Soft Greys */
-    --secondary: oklch(0.94 0.01 240);
-    --secondary-foreground: oklch(0.25 0.03 240);
+    /* Secondary */
+    --secondary: oklch(0.94 0.01 190);
+    --secondary-foreground: oklch(0.24 0.02 190);
 
-    --muted: oklch(0.96 0.01 240);
-    --muted-foreground: oklch(0.52 0.03 240);
+    /* Muted */
+    --muted: oklch(0.96 0.008 190);
+    --muted-foreground: oklch(0.52 0.025 190);
 
-    --accent: oklch(0.92 0.02 250); /* Subtle highlight */
-    --accent-foreground: oklch(0.35 0.12 250);
+    /* Accent */
+    --accent: oklch(0.92 0.03 180);
+    --accent-foreground: oklch(0.55 0.14 180);
 
-    /* State Colors */
-    --destructive: oklch(0.6 0.18 25); /* Modern Red */
-    --destructive-foreground: oklch(0.98 0.01 240);
+    /* Destructive */
+    --destructive: oklch(0.62 0.22 28);
+    --destructive-foreground: oklch(0.98 0.01 180);
 
-    /* Borders and Inputs */
-    --border: oklch(0.88 0.02 240);
-    --input: oklch(0.88 0.02 240);
-    --ring: oklch(0.35 0.12 250); /* Matches primary */
+    /* UI */
+    --border: oklch(0.88 0.01 190);
+    --input: oklch(0.88 0.01 190);
+    --ring: oklch(0.55 0.14 180);
 
-    --radius: 0.6rem;
+    /* Radius */
+    --radius: 0.75rem;
 }
 
 @layer base {
     * {
-        @apply border-border outline-ring/50;
+        @apply border-border outline-ring/40;
     }
+
     body {
         @apply bg-background text-foreground antialiased;
         font-feature-settings: "rlig" 1, "calt" 1;
