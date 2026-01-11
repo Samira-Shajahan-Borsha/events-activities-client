@@ -13,8 +13,6 @@ import { toast } from "sonner";
 export default function LoginForm({ redirect }: { redirect?: string }) {
     const [state, formAction, isPending] = useActionState(login, null);
 
-    console.log(state, "state from login")
-
     const getFieldError = (fieldName: string) => {
         if (state && state.errors) {
             const error = state.errors.find((err: any) => err.field === fieldName);
@@ -29,7 +27,6 @@ export default function LoginForm({ redirect }: { redirect?: string }) {
             toast.error("Login Failed. You might have entered incorrect email or password.")
         }
     }, [state])
-
 
     return (
         <form action={formAction} className="space-y-6">

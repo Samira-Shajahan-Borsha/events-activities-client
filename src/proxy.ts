@@ -65,7 +65,6 @@ export async function proxy(request: NextRequest) {
         }
     }
 
-    console.log("pathname", request.nextUrl.pathname);
     return NextResponse.next();
 }
 
