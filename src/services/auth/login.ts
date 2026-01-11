@@ -5,6 +5,8 @@ import z from "zod";
 import { parse } from "cookie";
 import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken";
+import { redirect } from "next/navigation";
+import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/auth-utils";
 
 const loginValidationZodSchema = z.object({
     email: z.email().nonempty(),
@@ -17,6 +19,7 @@ const loginValidationZodSchema = z.object({
 export const login = async (_currentState: any, formData: any): Promise<any> => {
     try {
         const redirectTo = formData.get("redirect") || null;
+        // console.log(redirectTo, "redirect from server");
         let accessTokenObject: null | any = null;
         let refreshTokenObject: null | any = null;
 
@@ -46,6 +49,8 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
             },
             body: JSON.stringify(loginData),
         });
+
+        const result = await res.json();
 
         const setCookieHeaders = res.headers.getSetCookie();
 
@@ -90,7 +95,33 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
             sameSite: refreshTokenObject["SameSite"] || "none",
         });
 
-        return { success: true };
+        const verifiedToken: JwtPayload | string = jwt.verify(
+            accessTokenObject.accessToken as string,
+            process.env.JWT_ACCESS_TOKEN_SECRET as string
+        );
+
+        if (typeof verifiedToken === "string") {
+            throw new Error("Invalid Token");
+        }
+
+        const userRole: UserRole = verifiedToken.role;
+
+        if (!result.success) {
+            throw new Error("Login failed");
+        }
+
+        //  Redirecting Unauthenticated Users To Target Route After Login
+        if (redirectTo) {
+            const requestedPath = redirectTo.toString();
+
+            if (isValidRedirectForRole(requestedPath, userRole)) {
+                redirect(requestedPath);
+            } else {
+                redirect(getDefaultDashboardRoute(userRole));
+            }
+        } else {
+            redirect(getDefaultDashboardRoute(userRole));
+        }
     } catch (error: any) {
         // Re-throw NEXT_REDIRECT errors so Next.js can handle them
         if (error?.digest?.startsWith("NEXT_REDIRECT")) {

@@ -2,78 +2,7 @@ import { NextResponse } from "next/server";
 import { NextRequest } from "next/server";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { cookies } from "next/headers";
-
-type UserRole = "ADMIN" | "USER" | "HOST";
-
-// exact: ["/my-profile", "/settings"] // Routes exactly matching /my-profile and /settings
-// patterns : [/^\/dashboard/, /^\/patient/] // Routes starting with /dashboard/*
-
-type RouteConfig = {
-    exact: string[];
-    patterns: RegExp[];
-};
-
-const authRoutes = ["/login", "/register", "forgot-password", "/reset-password"];
-
-const commonProtectedRoutes: RouteConfig = {
-    exact: ["/my-profile", "/settings"],
-    patterns: [], //  ["/password/change-password", "/password/forgot-password", "/password/reset-password"]
-};
-
-const adminProtectedRoutes: RouteConfig = {
-    patterns: [/^\/admin/], // Routes starting with /admin/*
-    exact: [], // Routes exactly matching /my-events
-};
-
-const hostProtectedRoutes: RouteConfig = {
-    patterns: [/^\/host/], // Routes starting with /host/*
-    exact: [], // Routes exactly matching /my-events
-};
-
-const userProtectedRoutes: RouteConfig = {
-    patterns: [/^\/dashboard/, /^\/payment/], // Routes starting with /dashboard/* and starting with /payment/*
-    exact: [], // Routes exactly matching /payment/success
-};
-
-const isAuthRoute = (pathname: string) => {
-    return authRoutes.some((route: string) => route === pathname);
-};
-
-const isRouteMatches = (pathname: string, routes: RouteConfig): boolean => {
-    if (routes.exact.includes(pathname)) {
-        return true;
-    }
-    return routes.patterns.some((pattern: RegExp) => pattern.test(pathname));
-};
-
-const getRouteOwner = (pathname: string): "ADMIN" | "HOST" | "USER" | "COMMON" | null => {
-    if (isRouteMatches(pathname, adminProtectedRoutes)) {
-        return "ADMIN";
-    }
-    if (isRouteMatches(pathname, hostProtectedRoutes)) {
-        return "HOST";
-    }
-    if (isRouteMatches(pathname, userProtectedRoutes)) {
-        return "USER";
-    }
-    if (isRouteMatches(pathname, commonProtectedRoutes)) {
-        return "COMMON";
-    }
-    return null;
-};
-
-const getDefaultDashboardRoute = (role: UserRole): string => {
-    switch (role) {
-        case "ADMIN":
-            return "/admin/dashboard";
-        case "HOST":
-            return "/host/dashboard";
-        case "USER":
-            return "/dashboard";
-        default:
-            return "/";
-    }
-};
+import { getDefaultDashboardRoute, getRouteOwner, isAuthRoute, UserRole } from "./lib/auth-utils";
 
 export async function proxy(request: NextRequest) {
     // console.log(request);

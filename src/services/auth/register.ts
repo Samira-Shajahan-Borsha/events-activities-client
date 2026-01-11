@@ -2,6 +2,7 @@
 "use server";
 
 import z from "zod";
+import { login } from "./login";
 
 const registerValidationSchema = z
     .object({
@@ -56,7 +57,6 @@ export const register = async (_currentState: any, formData: any): Promise<any> 
             fullName: formData.get("fullName"),
             email: formData.get("email"),
             password: formData.get("password"),
-            // role: formData.get("role") || "USER",
         };
 
         const res = await fetch("http://localhost:5000/api/v1/user/register", {
@@ -65,10 +65,21 @@ export const register = async (_currentState: any, formData: any): Promise<any> 
                 "Content-Type": "application/json",
             },
             body: JSON.stringify(registerData),
-        }).then((res) => res.json());
+        });
 
-        return res;
+        const result = await res.json();
+
+        //  Logging In User Automatically After Register
+        if (result.success) {
+            await login(_currentState, formData);
+        }
+
+        return result;
     } catch (error: any) {
+        // Re-throw NEXT_REDIRECT errors so Next.js can handle them
+        if (error?.digest?.startsWith("NEXT_REDIRECT")) {
+            throw error;
+        }
         console.error(error);
         return { error: "Registration failed" };
     }

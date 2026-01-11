@@ -9,6 +9,8 @@ import { Loader2, User, Mail, Lock } from "lucide-react";
 import { register } from "@/services/auth/register";
 
 export default function RegisterForm() {
+
+
     const [state, formAction, isPending] = useActionState(register, null);
 
     const getFieldError = (fieldName: string) => {

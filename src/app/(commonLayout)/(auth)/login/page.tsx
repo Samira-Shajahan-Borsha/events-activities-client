@@ -15,7 +15,6 @@ const LoginPage = async ({
 }) => {
     const params = (await searchParams) || {};
 
-    console.log("From Login Page", params);
     return (
         <div className="flex min-h-screen flex-col items-center justify-center px-4">
             <div className="w-full max-w-[350px] flex flex-col space-y-6">
