@@ -4,10 +4,11 @@
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useActionState } from "react";
-import { Loader2, User, Mail, Lock } from "lucide-react";
+import { useActionState, useEffect } from "react";
+import { Loader2, User, Mail } from "lucide-react";
 import { register } from "@/services/auth/register";
 import PasswordInput from "./password-input";
+import { toast } from "sonner";
 
 export default function RegisterForm() {
 
@@ -26,9 +27,14 @@ export default function RegisterForm() {
         }
     }
 
+    useEffect(() => {
+        if (state && !state?.success && state?.message) {
+            toast.error(state?.message)
+        }
+    }, [state])
+
     return (
         <form action={formAction} className="space-y-6">
-            {/* User Info Fields */}
             <FieldGroup>
                 <div className="grid grid-cols-1 gap-4">
                     {/* Full Name */}

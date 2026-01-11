@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter, Poppins, Fira_Code } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
+import LogoutSuccessToast from "@/components/shared/LogoutSuccessToast";
+import LoginSuccessToast from "@/components/shared/LoginSuccessToast";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -38,6 +40,8 @@ export default function RootLayout({
       >
         {children}
         <Toaster position="top-right" richColors />
+        <LoginSuccessToast />
+        <LogoutSuccessToast />
       </body>
     </html>
   );
