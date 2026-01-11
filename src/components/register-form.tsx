@@ -7,9 +7,9 @@ import { Input } from "@/components/ui/input";
 import { useActionState } from "react";
 import { Loader2, User, Mail, Lock } from "lucide-react";
 import { register } from "@/services/auth/register";
+import PasswordInput from "./password-input";
 
 export default function RegisterForm() {
-
 
     const [state, formAction, isPending] = useActionState(register, null);
 
@@ -73,44 +73,20 @@ export default function RegisterForm() {
                     </Field>
 
                     {/* Password */}
-                    <Field>
-                        <FieldLabel htmlFor="password">Password</FieldLabel>
-                        <div className="relative">
-                            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder="********"
-                                className="pl-9"
-                            />
-                            {
-                                getFieldError("password") && <FieldDescription className="text-red-600">
-                                    {getFieldError("password")}
-                                </FieldDescription>
-                            }
-                        </div>
-                    </Field>
+                    <PasswordInput
+                        id="password"
+                        name="password"
+                        label="Password"
+                        error={getFieldError("password")}
+                    />
 
                     {/* Confirm Password */}
-                    <Field>
-                        <FieldLabel htmlFor="confirmPassword">Confirm Password</FieldLabel>
-                        <div className="relative">
-                            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                id="confirmPassword"
-                                name="confirmPassword"
-                                type="password"
-                                placeholder="********"
-                                className="pl-9"
-                            />
-                            {
-                                getFieldError("confirmPassword") && <FieldDescription className="text-red-600">
-                                    {getFieldError("confirmPassword")}
-                                </FieldDescription>
-                            }
-                        </div>
-                    </Field>
+                    <PasswordInput
+                        id="confirmPassword"
+                        name="confirmPassword"
+                        label="Confirm Password"
+                        error={getFieldError("confirmPassword")}
+                    />
                 </div>
             </FieldGroup>
 

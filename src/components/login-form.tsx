@@ -4,21 +4,32 @@
 import { Button } from "@/components/ui/button";
 import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useActionState } from "react";
-import { Loader2, Mail, Lock } from "lucide-react";
+import { useActionState, useEffect } from "react";
+import { Loader2, Mail } from "lucide-react";
 import { login } from "@/services/auth/login";
+import PasswordInput from "./password-input";
+import { toast } from "sonner";
 
 export default function LoginForm({ redirect }: { redirect?: string }) {
     const [state, formAction, isPending] = useActionState(login, null);
 
+    console.log(state, "state from login")
+
     const getFieldError = (fieldName: string) => {
-        if (state && state?.errors) {
-            const error = state?.errors?.find((err: any) => err.field === fieldName)
+        if (state && state.errors) {
+            const error = state.errors.find((err: any) => err.field === fieldName);
             return error.message;
         } else {
             return null;
         }
-    }
+    };
+
+    useEffect(() => {
+        if (state && !state?.success && state?.message) {
+            toast.error("Login Failed. You might have entered incorrect email or password.")
+        }
+    }, [state])
+
 
     return (
         <form action={formAction} className="space-y-6">
@@ -48,24 +59,12 @@ export default function LoginForm({ redirect }: { redirect?: string }) {
 
 
                     {/* Password */}
-                    <Field>
-                        <FieldLabel htmlFor="password">Password</FieldLabel>
-                        <div className="relative">
-                            <Lock className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                            <Input
-                                id="password"
-                                name="password"
-                                type="password"
-                                placeholder="********"
-                                className="pl-9"
-                            />
-                            {
-                                getFieldError("password") && <FieldDescription className="text-red-600">
-                                    {getFieldError("password")}
-                                </FieldDescription>
-                            }
-                        </div>
-                    </Field>
+                    <PasswordInput
+                        id="password"
+                        name="password"
+                        label="Password"
+                        error={getFieldError("password")}
+                    />
                 </div>
             </FieldGroup>
 

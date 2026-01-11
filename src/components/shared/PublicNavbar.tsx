@@ -10,6 +10,8 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
+import { getCookie } from "@/services/auth/tokenHandlers";
+import LogoutButton from "../logout-button";
 
 const navItems = [
     { href: "/events", label: "Explore Events" },
@@ -17,7 +19,9 @@ const navItems = [
     { href: "/about", label: "About Us" },
 ];
 
-export default function PublicNavbar() {
+export default async function PublicNavbar() {
+    const accessToken = await getCookie("accessToken");
+
     return (
         <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
@@ -54,12 +58,17 @@ export default function PublicNavbar() {
 
                 {/* Desktop Auth */}
                 <div className="hidden md:flex items-center gap-3">
-                    <Button variant="ghost" size="sm" asChild>
-                        <Link href="/login">Login</Link>
-                    </Button>
-                    <Button size="sm" asChild>
-                        <Link href="/register">Register</Link>
-                    </Button>
+                    {
+                        accessToken ? <LogoutButton /> :
+                            <>
+                                <Button variant="ghost" size="sm" asChild>
+                                    <Link href="/login">Login</Link>
+                                </Button>
+                                <Button size="sm" asChild>
+                                    <Link href="/register">Register</Link>
+                                </Button>
+                            </>
+                    }
                 </div>
 
                 {/* Mobile Menu */}

@@ -3,10 +3,10 @@
 
 import z from "zod";
 import { parse } from "cookie";
-import { cookies } from "next/headers";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
 import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/auth-utils";
+import { setCookie } from "./tokenHandlers";
 
 const loginValidationZodSchema = z.object({
     email: z.email().nonempty(),
@@ -33,7 +33,7 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
         if (!validatedFields.success) {
             return {
                 success: false,
-                errors: validatedFields.error.issues?.map((issue) => {
+                errors: validatedFields.error.issues.map((issue) => {
                     return {
                         field: issue.path[0],
                         message: issue.message,
@@ -77,9 +77,7 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
             throw new Error("Tokens not found in cookies");
         }
 
-        const cookieStore = await cookies();
-
-        cookieStore.set("accessToken", accessTokenObject.accessToken, {
+        await setCookie("accessToken", accessTokenObject.accessToken, {
             secure: true,
             httpOnly: true,
             maxAge: parseInt(accessTokenObject["Max-Age"]) || 1000 * 60 * 60,
@@ -87,7 +85,7 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
             sameSite: accessTokenObject["SameSite"] || "none",
         });
 
-        cookieStore.set("refreshToken", refreshTokenObject.refreshToken, {
+        await setCookie("refreshToken", refreshTokenObject.refreshToken, {
             secure: true,
             httpOnly: true,
             maxAge: parseInt(refreshTokenObject["Max-Age"]) || 1000 * 60 * 60 * 24 * 90,
@@ -107,7 +105,7 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
         const userRole: UserRole = verifiedToken.role;
 
         if (!result.success) {
-            throw new Error("Login failed");
+            throw new Error(result.message || "Login failed");
         }
 
         //  Redirecting Unauthenticated Users To Target Route After Login
@@ -128,6 +126,13 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
             throw error;
         }
         console.log(error);
-        return { error: "Login failed" };
+        return {
+            success: false,
+            message: `${
+                process.env.NODE_ENV === "development"
+                    ? error.message
+                    : "Login Failed. You might have entered incorrect email or password."
+            }`,
+        };
     }
 };
