@@ -7,6 +7,8 @@ export default async function ExploreEventsPage() {
   const { data, meta } = await res.json();
   const events: IEvent[] = data;
 
+  console.log(events);
+
   return (
     <div>
       {/* ---------------- Header ---------------- */}

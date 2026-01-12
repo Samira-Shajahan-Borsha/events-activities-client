@@ -2,25 +2,17 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useActionState, useEffect } from "react";
 import { Loader2, Mail } from "lucide-react";
 import { login } from "@/services/auth/login";
 import PasswordInput from "./password-input";
 import { toast } from "sonner";
+import InputFieldError from "./shared/InputFieldError";
 
 export default function LoginForm({ redirect }: { redirect?: string }) {
     const [state, formAction, isPending] = useActionState(login, null);
-
-    const getFieldError = (fieldName: string) => {
-        if (state && state.errors) {
-            const error = state.errors.find((err: any) => err.field === fieldName);
-            return error.message;
-        } else {
-            return null;
-        }
-    };
 
     useEffect(() => {
         if (state && !state?.success && state?.message) {
@@ -46,11 +38,7 @@ export default function LoginForm({ redirect }: { redirect?: string }) {
                                 placeholder="m@example.com"
                                 className="pl-9"
                             />
-                            {
-                                getFieldError("email") && <FieldDescription className="text-red-600">
-                                    {getFieldError("email")}
-                                </FieldDescription>
-                            }
+                            <InputFieldError field="email" state={state} />
                         </div>
                     </Field>
 
@@ -60,7 +48,7 @@ export default function LoginForm({ redirect }: { redirect?: string }) {
                         id="password"
                         name="password"
                         label="Password"
-                        error={getFieldError("password")}
+                        state={state}
                     />
                 </div>
             </FieldGroup>

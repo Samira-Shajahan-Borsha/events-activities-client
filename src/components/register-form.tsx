@@ -9,12 +9,13 @@ import { Loader2, User, Mail } from "lucide-react";
 import { register } from "@/services/auth/register";
 import PasswordInput from "./password-input";
 import { toast } from "sonner";
+import InputFieldError from "./shared/InputFieldError";
 
 export default function RegisterForm() {
 
     const [state, formAction, isPending] = useActionState(register, null);
 
-    const getFieldError = (fieldName: string) => {
+/*     const getFieldError = (fieldName: string) => {
         if (state && state?.errors) {
             const error = state?.errors?.find((err: any) => err.field === fieldName)
             if (error) {
@@ -25,7 +26,7 @@ export default function RegisterForm() {
         } else {
             return null;
         }
-    }
+    } */
 
     useEffect(() => {
         if (state && !state?.success && state?.message) {
@@ -49,11 +50,7 @@ export default function RegisterForm() {
                                 placeholder="John Doe"
                                 className="pl-9"
                             />
-                            {
-                                getFieldError("fullName") && <FieldDescription className="text-red-600">
-                                    {getFieldError("fullName")}
-                                </FieldDescription>
-                            }
+                            <InputFieldError field="fullName" state={state} />
                         </div>
 
                     </Field>
@@ -70,11 +67,7 @@ export default function RegisterForm() {
                                 placeholder="m@example.com"
                                 className="pl-9"
                             />
-                            {
-                                getFieldError("email") && <FieldDescription className="text-red-600">
-                                    {getFieldError("email")}
-                                </FieldDescription>
-                            }
+                            <InputFieldError field="email" state={state} />
                         </div>
                     </Field>
 
@@ -83,7 +76,7 @@ export default function RegisterForm() {
                         id="password"
                         name="password"
                         label="Password"
-                        error={getFieldError("password")}
+                        state={state}
                     />
 
                     {/* Confirm Password */}
@@ -91,7 +84,7 @@ export default function RegisterForm() {
                         id="confirmPassword"
                         name="confirmPassword"
                         label="Confirm Password"
-                        error={getFieldError("confirmPassword")}
+                        state={state}
                     />
                 </div>
             </FieldGroup>

@@ -2,15 +2,17 @@
 
 import { useState } from "react";
 import { Input } from "@/components/ui/input";
-import { Field, FieldDescription, FieldLabel } from "@/components/ui/field";
+import { Field, FieldLabel } from "@/components/ui/field";
 import { Lock, Eye, EyeOff } from "lucide-react";
+import InputFieldError from "./shared/InputFieldError";
+import { IInputErrorState } from "@/lib/getInputFieldError";
 
 interface PasswordInputProps {
     id: string;
     name: string;
     label?: string;
     placeholder?: string;
-    error?: string | null;
+    state?: IInputErrorState;
 }
 
 export default function PasswordInput({
@@ -18,7 +20,7 @@ export default function PasswordInput({
     name,
     label,
     placeholder = "********",
-    error,
+    state,
 }: PasswordInputProps) {
     const [showPassword, setShowPassword] = useState(false);
 
@@ -44,7 +46,7 @@ export default function PasswordInput({
                     {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
                 </button>
             </div>
-            {error && <FieldDescription className="mt-1 text-red-600">{error}</FieldDescription>}
+            {state && <InputFieldError field={name} state={state} />}
         </Field>
     );
 }

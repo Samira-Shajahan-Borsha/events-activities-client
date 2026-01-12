@@ -3,6 +3,8 @@
 
 import z from "zod";
 import { login } from "./login";
+import { zodValidator } from "@/lib/zodValidator";
+import { serverFetch } from "@/lib/server-fetch";
 
 const registerValidationSchema = z
     .object({
@@ -32,35 +34,26 @@ const registerValidationSchema = z
 
 export const register = async (_currentState: any, formData: any): Promise<any> => {
     try {
-        const zodRegisterPayload = {
+        const payload = {
             fullName: formData.get("fullName"),
             email: formData.get("email"),
             password: formData.get("password"),
             confirmPassword: formData.get("confirmPassword"),
         };
 
-        const validatedFields = registerValidationSchema.safeParse(zodRegisterPayload);
-
-        if (!validatedFields.success) {
-            return {
-                success: false,
-                errors: validatedFields.error.issues?.map((issue) => {
-                    return {
-                        field: issue.path[0],
-                        message: issue.message,
-                    };
-                }),
-            };
+        if (zodValidator(payload, registerValidationSchema).success === false) {
+            return zodValidator(payload, registerValidationSchema);
         }
 
+        const validatedPayload: any = zodValidator(payload, registerValidationSchema).data;
+
         const registerData = {
-            fullName: formData.get("fullName"),
-            email: formData.get("email"),
-            password: formData.get("password"),
+            fullName: validatedPayload.fullName,
+            email: validatedPayload.email,
+            password: validatedPayload.password,
         };
 
-        const res = await fetch("http://localhost:5000/api/v1/user/register", {
-            method: "POST",
+        const res = await serverFetch.post("/user/register", {
             headers: {
                 "Content-Type": "application/json",
             },

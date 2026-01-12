@@ -7,6 +7,8 @@ import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
 import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/lib/auth-utils";
 import { setCookie } from "./tokenHandlers";
+import { serverFetch } from "@/lib/server-fetch";
+import { zodValidator } from "@/lib/zodValidator";
 
 const loginValidationZodSchema = z.object({
     email: z.email().nonempty(),
@@ -23,34 +25,31 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
         let accessTokenObject: null | any = null;
         let refreshTokenObject: null | any = null;
 
-        const loginData = {
+        const payload = {
             email: formData.get("email"),
             password: formData.get("password"),
         };
 
-        const validatedFields = loginValidationZodSchema.safeParse(loginData);
-
-        if (!validatedFields.success) {
-            return {
-                success: false,
-                errors: validatedFields.error.issues.map((issue) => {
-                    return {
-                        field: issue.path[0],
-                        message: issue.message,
-                    };
-                }),
-            };
+        if (zodValidator(payload, loginValidationZodSchema).success === false) {
+            return zodValidator(payload, loginValidationZodSchema);
         }
 
-        const res = await fetch("http://localhost:5000/api/v1/auth/login", {
-            method: "POST",
+        const validatedPayload = zodValidator(payload, loginValidationZodSchema).data;
+
+        console.log(validatedPayload, "From login");
+
+        const res = await serverFetch.post("/auth/login", {
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(loginData),
+            body: JSON.stringify(validatedPayload),
         });
 
         const result = await res.json();
+
+        if (!result.success) {
+            return result;
+        }
 
         const setCookieHeaders = res.headers.getSetCookie();
 
