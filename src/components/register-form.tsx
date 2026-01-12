@@ -2,7 +2,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
-import { Field, FieldDescription, FieldGroup, FieldLabel } from "@/components/ui/field";
+import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { useActionState, useEffect } from "react";
 import { Loader2, User, Mail } from "lucide-react";
@@ -15,7 +15,7 @@ export default function RegisterForm() {
 
     const [state, formAction, isPending] = useActionState(register, null);
 
-/*     const getFieldError = (fieldName: string) => {
+    /* const getFieldError = (fieldName: string) => {
         if (state && state?.errors) {
             const error = state?.errors?.find((err: any) => err.field === fieldName)
             if (error) {

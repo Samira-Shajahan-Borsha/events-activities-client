@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use server";
 
-import z from "zod";
 import { parse } from "cookie";
 import jwt, { JwtPayload } from "jsonwebtoken";
 import { redirect } from "next/navigation";
@@ -9,14 +8,7 @@ import { getDefaultDashboardRoute, isValidRedirectForRole, UserRole } from "@/li
 import { setCookie } from "./tokenHandlers";
 import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
-
-const loginValidationZodSchema = z.object({
-    email: z.email().nonempty(),
-    password: z
-        .string()
-        .min(8, "Password is required and must be at least 8 characters long")
-        .nonempty({ message: "Password is required" }),
-});
+import { loginValidationZodSchema } from "@/zod/auth.validation";
 
 export const login = async (_currentState: any, formData: any): Promise<any> => {
     try {
@@ -35,8 +27,6 @@ export const login = async (_currentState: any, formData: any): Promise<any> => 
         }
 
         const validatedPayload = zodValidator(payload, loginValidationZodSchema).data;
-
-        console.log(validatedPayload, "From login");
 
         const res = await serverFetch.post("/auth/login", {
             headers: {

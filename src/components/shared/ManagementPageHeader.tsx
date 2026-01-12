@@ -22,20 +22,31 @@ const ManagementPageHeader = ({
 }: ManagementPageHeaderProps) => {
     const Icon = action?.icon || Plus;
     return (
-        <div className="flex items-center justify-between">
-            <div>
-                <h1 className="text-3xl font-bold">{title}</h1>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+            {/* Title block */}
+            <div className="space-y-1">
+                <h1 className="text-2xl font-semibold tracking-tight">
+                    {title}
+                </h1>
+
                 {description && (
-                    <p className="text-muted-foreground mt-1">{description}</p>
+                    <p className="text-sm text-muted-foreground leading-relaxed max-w-[65ch]">
+                        {description}
+                    </p>
                 )}
             </div>
-            {action && (
-                <Button onClick={action.onClick}>
-                    <Icon className="mr-2 h-4 w-4" />
-                    {action.label}
-                </Button>
-            )}
-            {children}
+
+            {/* Actions */}
+            <div className="flex items-center gap-2">
+                {action && (
+                    <Button size="sm" className="gap-2 cursor-pointer" onClick={action.onClick}>
+                        <Icon className="h-4 w-4" />
+                        {action.label}
+                    </Button>
+                )}
+
+                {children}
+            </div>
         </div>
     );
 };

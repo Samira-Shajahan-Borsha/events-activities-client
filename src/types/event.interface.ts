@@ -8,8 +8,16 @@ export type IEvent = {
     location: string;
     isPaid: "PAID" | "FREE";
     joiningFee: number;
-    status: "OPEN" | "CLOSED";
+    status: EVENT_STATUS;
     slug: string;
     host: string;
-    maxParticipants: number
+    maxParticipants: number;
+    minParticipants: number;
 };
+
+export enum EVENT_STATUS {
+    OPEN = "OPEN",
+    FULL = "FULL",
+    CANCELLED = "CANCELLED",
+    COMPLETED = "COMPLETED",
+}

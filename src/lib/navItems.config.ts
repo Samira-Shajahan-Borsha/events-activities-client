@@ -15,12 +15,6 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                     roles: ["ADMIN", "HOST", "USER"],
                 },
                 {
-                    title: "My Profile",
-                    href: "/my-profile",
-                    icon: "UserCircle",
-                    roles: ["ADMIN", "HOST", "USER"],
-                },
-                {
                     title: "Edit Profile",
                     href: "/edit-profile",
                     icon: "UserPen",
@@ -64,7 +58,7 @@ export const adminNavItems: NavSection[] = [
         title: "Event Management",
         items: [
             {
-                title: "Events",
+                title: "Event Management",
                 href: "/admin/dashboard/event-management",
                 icon: "CalendarCog",
                 roles: ["ADMIN"],
@@ -79,13 +73,13 @@ export const hostNavItems: NavSection[] = [
         items: [
             {
                 title: "Create Event",
-                href: "/create-event",
+                href: "/host/dashboard/create-event",
                 icon: "CalendarPlus",
                 roles: ["HOST"],
             },
             {
-                title: "My Events",
-                href: "/my-events",
+                title: "Event Management",
+                href: "/host/dashboard/event-management",
                 icon: "CalendarDays",
                 roles: ["HOST"],
             },
@@ -99,13 +93,13 @@ export const userNavItems: NavSection[] = [
         items: [
             {
                 title: "My Events",
-                href: "/my-events",
+                href: "/dashboard/my-events",
                 icon: "CalendarDays",
                 roles: ["USER"],
             },
             {
                 title: "My Tickets",
-                href: "/my-tickets",
+                href: "/dashboard/my-tickets",
                 icon: "Ticket",
                 roles: ["USER"],
             },

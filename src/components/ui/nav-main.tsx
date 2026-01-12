@@ -20,16 +20,14 @@ interface NavMainProps {
 export function NavMain({ sections }: NavMainProps) {
   const pathname = usePathname();
 
-  const isActive = (href: string) =>
-    href === "/dashboard" ? pathname === href : pathname.startsWith(href);
+  const isActive = (href: string) => pathname === href;
 
   return (
     <div className="flex flex-col">
       {sections.map((section, i) => (
         <SidebarGroup key={i}>
-          {/* Section title */}
           {section.title && (
-            <div className="px-4 py-2 text-sm font-medium text-muted-foreground">
+            <div className="px-4 py-2 text-sm font-semibold">
               {section.title.toUpperCase()}
             </div>
           )}
@@ -46,7 +44,7 @@ export function NavMain({ sections }: NavMainProps) {
                       asChild
                       tooltip={item.title}
                       className={cn(
-                        "relative transition-all duration-200",
+                        "relative transition-colors font-semibold",
                         "hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                         active &&
                         "bg-sidebar-accent text-primary font-medium before:absolute before:left-0 before:top-1/2 before:-translate-y-1/2 before:h-6 before:w-1 before:rounded-r before:bg-primary"
@@ -71,9 +69,8 @@ export function NavMain({ sections }: NavMainProps) {
             </SidebarMenu>
           </SidebarGroupContent>
 
-          {/* Simple separator between sections */}
           {i !== sections.length - 1 && (
-            <hr className="mx-4 my-2 border-t border-muted-foreground/30" />
+            <hr className="mx-4 my-2 border-muted-foreground/20" />
           )}
         </SidebarGroup>
       ))}
