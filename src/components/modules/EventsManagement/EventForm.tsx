@@ -7,6 +7,14 @@ import { format, startOfToday } from "date-fns";
 import { toast } from "sonner";
 import { CalendarIcon, Loader2, Tag, Users, FileText, Image as ImageIcon } from "lucide-react";
 
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
 import { Input } from "@/components/ui/input";
@@ -30,15 +38,16 @@ interface EventFormProps {
   imageUrl?: string;
 }
 
-export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }: EventFormProps) {
+export type CreateEventFormValues = z.infer<typeof createEventZodSchema>;
+export type UpdateEventFormValues = z.infer<typeof updateEventZodSchema>;
 
-  console.log(defaultValues, eventId, "default values in event form");
+export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }: EventFormProps) {
   const [isPending, startTransition] = useTransition();
   const today = startOfToday();
   const router = useRouter();
   const isEditMode = !!eventId;
 
-  const form = useForm<EventFormValues>({
+  const form = useForm<CreateEventFormValues | UpdateEventFormValues>({
     resolver: zodResolver(isEditMode ? updateEventZodSchema : createEventZodSchema),
     defaultValues: {
       name: "",
@@ -73,12 +82,10 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
 
         let result;
         if (isEditMode && eventId) {
-          result = await updateEvent(eventId, formData); // PATCH
+          result = await updateEvent(eventId, formData);
         } else {
-          result = await createEvent(formData); // POST
+          result = await createEvent(formData);
         }
-
-        console.log("API result", result);
 
         if (result?.success) {
           toast.success(result.message);
@@ -87,6 +94,7 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
         } else {
           toast.error(result?.message || "Check the form for errors");
         }
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
       } catch (error: any) {
         toast.error(
           process.env.NODE_ENV === "development"
@@ -104,29 +112,11 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
             <div className="rounded-xl border md:bg-card md:shadow-sm overflow-hidden">
-
-              {/* Media Section */}
-              {/* <div className="border-b bg-muted/30 p-4 sm:p-6">
-                <div className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
-                  <ImageIcon className="h-4 w-4" /> Cover Image
-                </div>
-                <FormField
-                  control={form.control}
-                  name="file"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormControl>
-                        <SingleImageUploader onChange={field.onChange} />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
-              </div> */}
               <div className="border-b bg-muted/30 p-4 sm:p-6">
                 <div className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
                   <ImageIcon className="h-4 w-4" /> Cover Image
                 </div>
+
                 <FormField
                   control={form.control}
                   name="file"
@@ -143,24 +133,6 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
                   )}
                 />
               </div>
-
-              {/* <FormField
-                control={form.control}
-                name="file"
-                render={({ field }) => (
-                  <FormItem>
-                    <FormControl>
-                      <SingleImageUploader
-                        onChange={field.onChange}
-                        initialImageUrl={isEditMode ? imageUrl : undefined}
-                      />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                )}
-              /> */}
-
-
 
               {/* Event Identity */}
               <div className="space-y-8 p-4 sm:p-8">
@@ -250,21 +222,29 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
                       </FormItem>
                     )} />
 
-                    {/* Status field only in edit mode */}
                     {isEditMode && (
-                      <FormField control={form.control} name="status" render={({ field }) => (
-                        <FormItem>
-                          <FormLabel>Status</FormLabel>
-                          <FormControl>
-                            <select {...field} className="input w-full">
-                              <option value="OPEN">Open</option>
-                              <option value="FULL">Full</option>
-                              <option value="CANCELLED">Cancelled</option>
-                              <option value="COMPLETED">Completed</option>
-                            </select>
-                          </FormControl>
-                        </FormItem>
-                      )} />
+                      <FormField
+                        control={form.control}
+                        name="status"
+                        render={({ field }) => (
+                          <FormItem>
+                            <FormLabel>Status</FormLabel>
+                            <FormControl>
+                              <Select {...field} onValueChange={field.onChange}>
+                                <SelectTrigger className="w-full">
+                                  <SelectValue placeholder="Select status" />
+                                </SelectTrigger>
+                                <SelectContent>
+                                  <SelectItem value="OPEN">Open</SelectItem>
+                                  <SelectItem value="FULL">Full</SelectItem>
+                                  <SelectItem value="CANCELLED">Cancelled</SelectItem>
+                                  <SelectItem value="COMPLETED">Completed</SelectItem>
+                                </SelectContent>
+                              </Select>
+                            </FormControl>
+                          </FormItem>
+                        )}
+                      />
                     )}
                   </div>
                 </section>

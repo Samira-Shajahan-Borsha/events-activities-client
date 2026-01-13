@@ -1,3 +1,4 @@
+import { EVENT_STATUS } from "@/types/event.interface";
 import z from "zod";
 
 export const createEventZodSchema = z
@@ -56,6 +57,7 @@ export const updateEventZodSchema = z
         maxParticipants: z.number().min(1, "Maximum 1 participant required").optional(),
         file: z.instanceof(File).optional(),
         isFeatured: z.boolean().optional(),
+        status: z.enum(Object.values(EVENT_STATUS)).optional(),
     })
     .refine(
         (data) => {
