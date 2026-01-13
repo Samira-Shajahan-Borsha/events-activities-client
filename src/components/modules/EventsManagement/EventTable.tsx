@@ -56,7 +56,7 @@ const EventTable = ({ events }: IEventTableProps) => {
                 data={events}
                 columns={eventColumns}
                 onDelete={handleDelete}
-                onEdit={(event) => console.log("Edit:", event._id)}
+                onEdit={(event) => router.push(`/host/dashboard/edit-event/${event.slug}`)}
                 onView={(event) => router.push(`/events/${event.slug}`)}
                 getRowKey={(event) => event._id}
                 emptyMessage="No events found"

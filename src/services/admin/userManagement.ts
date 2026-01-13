@@ -3,9 +3,11 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 
-export const getAllHosts = async () => {
+export const getAllHosts = async (queryString: string) => {
     try {
-        const response = await serverFetch.get(`/user/all-hosts`);
+        const response = await serverFetch.get(
+            `/user/all-hosts${queryString ? `?${queryString}` : ""}`
+        );
 
         const result = await response.json();
 
@@ -20,9 +22,45 @@ export const getAllHosts = async () => {
     }
 };
 
-export const getAllUsers = async () => {
+export const getAllUsers = async (queryString: string) => {
     try {
-        const response = await serverFetch.get(`/user/all-users`);
+        const response = await serverFetch.get(
+            `/user/all-users${queryString ? `?${queryString}` : ""}`
+        );
+
+        const result = await response.json();
+
+        return result;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: `${
+                process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
+            }`,
+        };
+    }
+};
+
+export const getUser = async (id: string) => {
+    try {
+        const response = await serverFetch.get(`/profile/${id}`);
+
+        const result = await response.json();
+
+        return result;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: `${
+                process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
+            }`,
+        };
+    }
+};
+
+export const updateUserRole = async (id: string) => {
+    try {
+        const response = await serverFetch.patch(`/user/role/${id}`);
 
         const result = await response.json();
 

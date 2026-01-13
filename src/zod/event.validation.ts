@@ -32,29 +32,40 @@ export const createEventZodSchema = z
         message: "Max participants cannot be less than min participants",
     });
 
-export const updateEventZodSchema = z.object({
-    name: z.string().nonempty("Event name cannot be empty").optional(),
-    type: z.string().nonempty("Event type cannot be empty").optional(),
-    description: z.string().nonempty("Description cannot be empty").optional(),
-    image: z.string().nonempty("Event image cannot be empty").optional(),
-    date: z.string().optional(),
-    location: z.string().nonempty("Location cannot be empty").optional(),
-    minParticipants: z
-        .string()
-        .optional()
-        .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
-        .pipe(z.number().min(1, "Minimum participants must be at least 1").optional()),
-    maxParticipants: z
-        .string()
-        .optional()
-        .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
-        .pipe(z.number().min(1, "Maximum participants must be at least 1").optional()),
-    joiningFee: z
-        .string()
-        .optional()
-        .transform((val) => (val === "" || val === undefined ? undefined : Number(val)))
-        .pipe(z.number().min(0, "Joining fee cannot be negative").optional()),
-
-    isFeatured: z.boolean().optional(),
-    host: z.string().nonempty("Host ID cannot be empty").optional(),
-});
+export const updateEventZodSchema = z
+    .object({
+        name: z.string().min(1, "Event name cannot be empty").optional(),
+        type: z.string().min(1, "Event type cannot be empty").optional(),
+        location: z.string().min(1, "Location cannot be empty").optional(),
+        description: z.string().min(1, "Description cannot be empty").optional(),
+        date: z
+            .string()
+            .optional()
+            .refine(
+                (val) => {
+                    if (!val) return true;
+                    const selectedDate = new Date(val);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    return selectedDate >= today;
+                },
+                { message: "Event date cannot be in the past" }
+            ),
+        joiningFee: z.number().min(0, "Joining fee cannot be negative").optional(),
+        minParticipants: z.number().min(1, "Minimum 1 participant required").optional(),
+        maxParticipants: z.number().min(1, "Maximum 1 participant required").optional(),
+        file: z.instanceof(File).optional(),
+        isFeatured: z.boolean().optional(),
+    })
+    .refine(
+        (data) => {
+            if (data.minParticipants !== undefined && data.maxParticipants !== undefined) {
+                return data.maxParticipants >= data.minParticipants;
+            }
+            return true;
+        },
+        {
+            path: ["maxParticipants"],
+            message: "Max participants cannot be less than min participants",
+        }
+    );

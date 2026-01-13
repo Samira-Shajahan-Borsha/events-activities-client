@@ -13,7 +13,13 @@ export const eventColumns: Column<IEvent>[] = [
         accessor: (row) => (
             <div className="relative h-12 w-12 overflow-hidden rounded-lg border border-border bg-muted">
                 {row.image ? (
-                    <Image src={row.image} alt={row.name} fill className="object-cover" />
+                    <Image
+                        src={row.image}
+                        alt={row.name}
+                        fill
+                        sizes="48px"
+                        className="object-cover"
+                    />
                 ) : (
                     <div className="flex h-full w-full items-center justify-center">
                         <ImageIcon className="h-5 w-5 text-muted-foreground" />

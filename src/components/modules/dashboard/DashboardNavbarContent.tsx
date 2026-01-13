@@ -4,6 +4,7 @@ import { SidebarTrigger } from "@/components/ui/sidebar";
 import { IUserInfo } from "@/types/user.interface";
 import UserDropdown from "@/components/modules/Dashboard/UserDropdown";
 import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 interface DashboardNavbarContentProps {
     userInfo: IUserInfo
@@ -18,7 +19,9 @@ const DashboardNavbarContent = ({ userInfo }: DashboardNavbarContentProps) => {
                     orientation="vertical"
                     className="mx-2 data-[orientation=vertical]:h-4"
                 />
-                <h1 className="text-base font-medium">Documents</h1>
+                <Link href="/">
+                    <h1 className="text-base font-medium">Home</h1>
+                </Link>
                 <div className="ml-auto flex items-center gap-2">
                     <UserDropdown userInfo={userInfo} />
                 </div>
