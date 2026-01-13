@@ -1,5 +1,5 @@
-import EventManagementHeader from '@/components/modules/event/EventManagementHeader'
-import EventTable from '@/components/modules/event/EventTable'
+import EventManagementHeader from '@/components/modules/EventsManagement/EventManagementHeader'
+import EventTable from '@/components/modules/EventsManagement/EventTable'
 import RefreshButton from '@/components/shared/RefreshButton'
 import { TableSkeleton } from '@/components/shared/TableSkeleton'
 import { getMyEvents } from '@/services/event/eventManagement'

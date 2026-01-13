@@ -6,6 +6,7 @@ import { CalendarPlus, Plus } from "lucide-react"
 import { useState, useTransition } from "react"
 import { useRouter } from "next/navigation"
 import RefreshButton from "@/components/shared/RefreshButton"
+import { getUserInfo } from "@/services/auth/getUserInfo"
 
 const EventManagementHeader = () => {
     const [isDialogOpen, setIsDialogOpen] = useState(false);
@@ -17,6 +18,7 @@ const EventManagementHeader = () => {
             router.refresh()
         })
     }
+
     return (
         <>
             {/* <EventFormDialog
@@ -31,8 +33,11 @@ const EventManagementHeader = () => {
                 action={{
                     label: "Add Event",
                     icon: CalendarPlus,
-                    onClick: () => router.push('/host/dashboard/create-event')
-                }} />
+                    onClick: async () => {
+                        router.push('/host/dashboard/create-event')
+                    }
+                }}
+            />
         </>
     )
 }

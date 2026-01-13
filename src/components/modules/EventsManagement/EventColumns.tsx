@@ -27,8 +27,8 @@ export const eventColumns: Column<IEvent>[] = [
         header: "Event Name",
         accessor: (row) => (
             <div className="flex flex-col">
-                <Link 
-                    href={`/events/${row.slug}`} 
+                <Link
+                    href={`/events/${row.slug}`}
                     className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1"
                 >
                     {row.name}
@@ -48,13 +48,15 @@ export const eventColumns: Column<IEvent>[] = [
     },
     {
         header: "Date & Time",
-        accessor: (row) => format(new Date(row.date), "MMM do, yyyy 'at' h:mm a"),
-        className: "whitespace-nowrap text-sm text-muted-foreground",
+        accessor: (row) => <span className="text-sm text-muted-foreground truncate">{format(new Date(row.date), "MMM do, yyyy 'at' h:mm a")}</span>,
+        className: "max-w-[220px]",
     },
     {
         header: "Location",
-        accessor: "location",
-        className: "max-w-[180px] truncate text-muted-foreground text-sm",
+        accessor: (row) => (
+            <span className="text-sm text-muted-foreground truncate">{row.location}</span>
+        ),
+        className: "max-w-[220px]",
     },
     {
         header: "Price",
@@ -87,7 +89,7 @@ export const eventColumns: Column<IEvent>[] = [
             return (
                 <Badge
                     className={cn(
-                        "font-bold shadow-none pointer-events-none px-2.5 py-0.5", 
+                        "font-bold shadow-none pointer-events-none px-2.5 py-0.5",
                         statusConfig[row.status as EVENT_STATUS]
                     )}
                 >

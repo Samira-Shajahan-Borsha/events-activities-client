@@ -32,19 +32,16 @@ import { createEvent } from "@/services/event/eventManagement";
 import { cn } from "@/lib/utils";
 import SingleImageUploader from "@/components/shared/SingleImageUploader";
 
-import {
-  createEventZodSchema,
-} from "@/zod/event.validation";
+import { createEventZodSchema } from "@/zod/event.validation";
 import z from "zod";
 import { useRouter } from "next/navigation";
 
 export type EventFormValues = z.infer<typeof createEventZodSchema>;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export default function EventForm({ defaultValues }: any) {
+export default function EventForm({ defaultValues, onCancel }: any) {
   const [isPending, startTransition] = useTransition();
   const today = startOfToday();
-
   const router = useRouter();
 
   const form = useForm<EventFormValues>({
@@ -63,14 +60,12 @@ export default function EventForm({ defaultValues }: any) {
     },
   });
 
-
   const onSubmit = (values: EventFormValues) => {
     startTransition(async () => {
       const formData = new FormData();
 
       for (const [key, value] of Object.entries(values)) {
         if (value == null) continue;
-
         formData.append(
           key,
           value instanceof File ? value : String(value)
@@ -89,18 +84,17 @@ export default function EventForm({ defaultValues }: any) {
     });
   };
 
-
   return (
-    <div className="min-h-screen bg-background px-4 py-6 sm:px-6">
+    <div className="min-h-screen bg-background px-0 py-6 sm:px-6">
       <div className="mx-auto max-w-3xl">
         <Form {...form}>
           <form onSubmit={form.handleSubmit(onSubmit)}>
-            <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
+            <div className="rounded-xl border md:bg-card md:shadow-sm overflow-hidden">
 
-              {/* Media */}
+              {/* Media Section */}
               <div className="border-b bg-muted/30 p-4 sm:p-6">
-                <div className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase text-primary">
-                  <ImageIcon className="h-4 w-4" /> Media
+                <div className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
+                  <ImageIcon className="h-4 w-4" /> Cover Image
                 </div>
 
                 <FormField
@@ -115,16 +109,15 @@ export default function EventForm({ defaultValues }: any) {
                     </FormItem>
                   )}
                 />
-
               </div>
 
-              {/* Content */}
+              {/* Content Section */}
               <div className="space-y-8 p-4 sm:p-8">
 
-                {/* General */}
+                {/* Event Identity */}
                 <section className="space-y-4">
-                  <div className="flex items-center gap-2 text-sm font-semibold uppercase text-primary">
-                    <FileText className="h-4 w-4" /> General
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
+                    <FileText className="h-4 w-4" /> Event Identity
                   </div>
 
                   <FormField
@@ -134,7 +127,7 @@ export default function EventForm({ defaultValues }: any) {
                       <FormItem>
                         <FormLabel>Event Name</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input placeholder="e.g. Annual Global Tech Summit 2026" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -148,7 +141,7 @@ export default function EventForm({ defaultValues }: any) {
                       <FormItem>
                         <FormLabel>Location</FormLabel>
                         <FormControl>
-                          <Input {...field} />
+                          <Input placeholder="e.g. Grand Ballroom, Hilton Hotel or Zoom Link" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -162,7 +155,11 @@ export default function EventForm({ defaultValues }: any) {
                       <FormItem>
                         <FormLabel>Description</FormLabel>
                         <FormControl>
-                          <Textarea rows={4} {...field} />
+                          <Textarea
+                            rows={4}
+                            placeholder="Provide a detailed overview of the event, including the agenda and what participants can expect..."
+                            {...field}
+                          />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -170,10 +167,10 @@ export default function EventForm({ defaultValues }: any) {
                   />
                 </section>
 
-                {/* Logistics */}
+                {/* Scheduling & Investment */}
                 <section className="space-y-4 border-t pt-6">
-                  <div className="flex items-center gap-2 text-sm font-semibold uppercase text-primary">
-                    <Tag className="h-4 w-4" /> Logistics
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
+                    <Tag className="h-4 w-4" /> Date & Pricing
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -182,9 +179,9 @@ export default function EventForm({ defaultValues }: any) {
                       name="type"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Type</FormLabel>
+                          <FormLabel>Event Category</FormLabel>
                           <FormControl>
-                            <Input {...field} />
+                            <Input placeholder="e.g. Workshop, Conference, Webinar" {...field} />
                           </FormControl>
                           <FormMessage />
                         </FormItem>
@@ -196,23 +193,23 @@ export default function EventForm({ defaultValues }: any) {
                       name="date"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Date</FormLabel>
+                          <FormLabel>Scheduled Date</FormLabel>
                           <Popover>
                             <PopoverTrigger asChild>
                               <Button
                                 variant="outline"
                                 className={cn(
-                                  "w-full justify-start",
+                                  "w-full justify-start font-normal",
                                   !field.value && "text-muted-foreground"
                                 )}
                               >
                                 <CalendarIcon className="mr-2 h-4 w-4" />
                                 {field.value
                                   ? format(new Date(field.value), "PPP")
-                                  : "Select date"}
+                                  : "Pick a date"}
                               </Button>
                             </PopoverTrigger>
-                            <PopoverContent className="p-0">
+                            <PopoverContent className="p-0" align="start">
                               <Calendar
                                 mode="single"
                                 selected={
@@ -241,14 +238,14 @@ export default function EventForm({ defaultValues }: any) {
                         <FormItem>
                           <FormLabel>
                             Joining Fee{" "}
-                            <span className="text-muted-foreground text-xs">(optional)</span>
+                            <span className="text-muted-foreground text-xs font-normal">(USD)</span>
                           </FormLabel>
 
                           <FormControl>
                             <Input
                               type="number"
                               min={0}
-                              placeholder="0 = Free event"
+                              placeholder="0.00 (Leave 0 for free events)"
                               {...field}
                               value={field.value ?? ""}
                               onChange={(e) =>
@@ -263,14 +260,13 @@ export default function EventForm({ defaultValues }: any) {
                         </FormItem>
                       )}
                     />
-
                   </div>
                 </section>
 
-                {/* Capacity */}
+                {/* Attendance Capacity */}
                 <section className="space-y-4 border-t pt-6">
-                  <div className="flex items-center gap-2 text-sm font-semibold uppercase text-primary">
-                    <Users className="h-4 w-4" /> Capacity
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
+                    <Users className="h-4 w-4" /> Attendance Capacity
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
@@ -279,10 +275,11 @@ export default function EventForm({ defaultValues }: any) {
                       name="minParticipants"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Min</FormLabel>
+                          <FormLabel>Min Participants</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
+                              placeholder="Minimum required"
                               value={field.value}
                               onChange={(e) => field.onChange(Number(e.target.value))}
                             />
@@ -297,10 +294,11 @@ export default function EventForm({ defaultValues }: any) {
                       name="maxParticipants"
                       render={({ field }) => (
                         <FormItem>
-                          <FormLabel>Max</FormLabel>
+                          <FormLabel>Max Capacity</FormLabel>
                           <FormControl>
                             <Input
                               type="number"
+                              placeholder="Maximum allowed"
                               value={field.value}
                               onChange={(e) => field.onChange(Number(e.target.value))}
                             />
@@ -309,25 +307,29 @@ export default function EventForm({ defaultValues }: any) {
                         </FormItem>
                       )}
                     />
-
                   </div>
                 </section>
               </div>
 
-              {/* Footer */}
+              {/* Form Actions */}
               <div className="flex flex-col gap-3 bg-muted/30 p-4 sm:flex-row sm:justify-end sm:p-6">
+                {onCancel && (
+                  <Button type="button" variant="ghost" onClick={onCancel} className="w-full sm:w-auto">
+                    Cancel
+                  </Button>
+                )}
                 <Button
                   type="submit"
                   disabled={isPending}
-                  className="w-full sm:w-auto w-full md:min-w-[140px]"
+                  className="w-full sm:w-auto md:min-w-[160px] shadow-sm"
                 >
                   {isPending ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                      Saving…
+                      Publishing Event...
                     </>
                   ) : (
-                    "Create Event"
+                    "Publish Event"
                   )}
                 </Button>
               </div>

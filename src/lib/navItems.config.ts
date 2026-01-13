@@ -63,6 +63,12 @@ export const adminNavItems: NavSection[] = [
                 icon: "CalendarCog",
                 roles: ["ADMIN"],
             },
+            {
+                title: "Create Event",
+                href: "/admin/dashboard/create-event",
+                icon: "CalendarPlus",
+                roles: ["ADMIN"],
+            },
         ],
     },
 ];
@@ -72,15 +78,15 @@ export const hostNavItems: NavSection[] = [
         title: "Events",
         items: [
             {
-                title: "Create Event",
-                href: "/host/dashboard/create-event",
-                icon: "CalendarPlus",
-                roles: ["HOST"],
-            },
-            {
                 title: "Event Management",
                 href: "/host/dashboard/event-management",
                 icon: "CalendarDays",
+                roles: ["HOST"],
+            },
+            {
+                title: "Create Event",
+                href: "/host/dashboard/create-event",
+                icon: "CalendarPlus",
                 roles: ["HOST"],
             },
         ],

@@ -6,9 +6,20 @@ export const createEventZodSchema = z
         type: z.string().min(1, "Event type is required"),
         location: z.string().min(1, "Location is required"),
         description: z.string().min(1, "Description is required"),
-        date: z.string().refine((val) => !isNaN(Date.parse(val)), {
-            message: "Invalid date",
-        }),
+        date: z
+            .string()
+            .min(1, "Please select a date for your event")
+            .refine(
+                (val) => {
+                    const selectedDate = new Date(val);
+                    const today = new Date();
+                    today.setHours(0, 0, 0, 0);
+                    return selectedDate >= today;
+                },
+                {
+                    message: "Event date cannot be in the past",
+                }
+            ),
         joiningFee: z.number().min(0, "Joining fee cannot be negative"),
         minParticipants: z.number().min(1, "Minimum 1 participant required"),
         maxParticipants: z.number().min(1, "Maximum 1 participant required"),

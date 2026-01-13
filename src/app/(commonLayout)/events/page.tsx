@@ -1,13 +1,11 @@
+import EventCard from "@/components/modules/Events/EventCard";
 import { serverFetch } from "@/lib/server-fetch";
-import EventCard from "@/components/modules/event/EventCard";
 import { IEvent } from "@/types/event.interface";
 
 export default async function ExploreEventsPage() {
   const res = await serverFetch.get(`/event/all-events`);
   const { data, meta } = await res.json();
   const events: IEvent[] = data;
-
-  console.log(events);
 
   return (
     <div>

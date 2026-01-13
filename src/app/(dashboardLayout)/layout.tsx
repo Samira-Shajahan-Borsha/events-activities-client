@@ -3,8 +3,8 @@ import {
     SidebarInset,
     SidebarProvider,
 } from "@/components/ui/sidebar"
-import DashboardNavbar from '@/components/modules/dashboard/DashboardNavbar'
-import DashboardSidebar from "@/components/modules/dashboard/DashboardSidebar"
+import DashboardNavbar from '@/components/modules/Dashboard/DashboardNavbar'
+import DashboardSidebar from "@/components/modules/Dashboard/DashboardSidebar"
 
 const CommonDashboardLayout = async ({ children }: { children: React.ReactNode }) => {
     return (

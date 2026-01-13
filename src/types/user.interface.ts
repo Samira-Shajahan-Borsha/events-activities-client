@@ -20,3 +20,19 @@ export interface IUser {
     isVerified?: boolean;
     isDeleted?: boolean;
 }
+
+export interface IHost {
+    _id: string;
+    fullName: string;
+    email: string;
+    status: STATUS;
+    createdAt: string;
+    updatedAt: string;
+    profile: {
+        _id: string;
+        location: string;
+        profilePhoto: string;
+        bio: string;
+        interests: string[];
+    };
+}
