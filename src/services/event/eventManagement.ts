@@ -11,8 +11,6 @@ export const createEvent = async (formData: FormData) => {
 
         const result = await response.json();
 
-        console.log("insider create createEvent", result);
-
         return result;
     } catch (error: any) {
         return {
@@ -29,8 +27,6 @@ export const updateEvent = async (id: string, formData: FormData) => {
             body: formData,
         });
         const result = await response.json();
-
-        console.log("insider update updateEvent", result);
 
         return result;
     } catch (error: any) {

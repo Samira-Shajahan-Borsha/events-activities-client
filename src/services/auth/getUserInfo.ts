@@ -25,7 +25,7 @@ export const getUserInfo = async (): Promise<IUserInfo | null> => {
         }
 
         const userInfo: IUserInfo = {
-            userId: verifiedToken.sub as string,
+            userId: verifiedToken.userId as string,
             email: verifiedToken.email as string,
             role: verifiedToken.role as string,
         };

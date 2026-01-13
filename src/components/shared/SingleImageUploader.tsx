@@ -55,8 +55,6 @@ export default function SingleImageUploader({
    */
   const previewUrl = files[0]?.preview || initialImageUrl || null;
 
-  console.log(previewUrl)
-
   return (
     <div className="flex flex-col gap-2">
       <div className="relative">

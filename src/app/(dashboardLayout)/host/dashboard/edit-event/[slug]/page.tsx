@@ -19,8 +19,6 @@ const EditEventPage = async ({ params }: IEditEventPageProps) => {
 
     const event = result.data;
 
-    console.log(event, "event data in edit page");
-
     return (
         <div className="flex flex-col gap-4">
             <EditEventPageHeader />

@@ -44,3 +44,14 @@ export interface IHost {
         interests: string[];
     };
 }
+
+export interface IProfile {
+    _id: string;
+    user: IUser;
+    location: string;
+    profilePhoto: string;
+    bio: string;
+    interests: string[];
+    createdAt: string;
+    updatedAt: string;
+}

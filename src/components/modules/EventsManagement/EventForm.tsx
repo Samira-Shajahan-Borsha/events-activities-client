@@ -63,10 +63,9 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
     },
   });
 
-  const onSubmit = (values: SubmitHandler<EventFormValues>) => {
+  const onSubmit: SubmitHandler<CreateEventFormValues | UpdateEventFormValues> = (values) => {
     startTransition(async () => {
       try {
-        console.log("Submitting form", { isEditMode, eventId, values });
 
         const formData = new FormData();
         Object.entries(values).forEach(([key, value]) => {
@@ -285,7 +284,7 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
                     Cancel
                   </Button>
                 )}
-                <Button type="submit" disabled={isPending} className="w-full sm:w-auto md:min-w-[160px] shadow-sm">
+                <Button type="submit" disabled={isPending} className="w-full sm:w-auto md:min-w-40 shadow-sm">
                   {isPending ? (
                     <>
                       <Loader2 className="mr-2 h-4 w-4 animate-spin" />
