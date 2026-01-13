@@ -25,7 +25,7 @@ const UserTable = ({ users }: IUserTableProps) => {
             <ManagementTable
                 data={users}
                 columns={userColumns}
-                onView={(user) => router.push(`/user/${user._id}`)}
+                onView={(user) => router.push(`/profile/${user._id}`)}
                 onEdit={handleEdit}
                 getRowKey={(user) => user._id}
                 emptyMessage="No users found"

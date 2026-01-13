@@ -5,25 +5,28 @@ import { User } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { IHost, STATUS } from "@/types/user.interface";
+import Link from "next/link";
 
 export const hostColumns: Column<IHost>[] = [
     {
         header: "Profile",
         accessor: (row) => (
-            <div className="relative h-12 w-12 rounded-full border border-border bg-muted flex items-center justify-center overflow-hidden">
-                {row.profile.profilePhoto ? (
-                    <Image
-                        src={row.profile.profilePhoto}
-                        alt={row.fullName}
-                        fill
-                        className="object-cover"
-                    />
-                ) : (
-                    <div className="flex h-full w-full items-center justify-center">
-                        <User className="h-6 w-6 text-muted-foreground" />
-                    </div>
-                )}
-            </div>
+            <Link href={`/profile/${row._id}`}>
+                <div className="relative h-12 w-12 rounded-full border border-border bg-muted flex items-center justify-center overflow-hidden">
+                    {row.profile.profilePhoto ? (
+                        <Image
+                            src={row.profile.profilePhoto}
+                            alt={row.fullName}
+                            fill
+                            className="object-cover"
+                        />
+                    ) : (
+                        <div className="flex h-full w-full items-center justify-center">
+                            <User className="h-6 w-6 text-muted-foreground" />
+                        </div>
+                    )}
+                </div>
+            </Link>
         ),
         className: "w-[30px]",
     },
@@ -31,7 +34,12 @@ export const hostColumns: Column<IHost>[] = [
         header: "Full Name",
         accessor: (row) => (
             <div className="flex flex-col">
-                <span className="font-semibold text-foreground line-clamp-1">{row.fullName}</span>
+                <Link
+                    href={`/profile/${row._id}`}
+                    className="font-semibold text-foreground hover:text-primary transition-colors line-clamp-1"
+                >
+                    {row.fullName}
+                </Link>
                 <span className="text-xs text-muted-foreground uppercase tracking-tight">ID: {row._id.slice(-6)}</span>
             </div>
         ),

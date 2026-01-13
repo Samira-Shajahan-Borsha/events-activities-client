@@ -1,7 +1,6 @@
 "use client"
 
 import ManagementPageHeader from '@/components/shared/ManagementPageHeader'
-import { CalendarPlus } from 'lucide-react';
 
 const HostManagementHeader = () => {
     return (
