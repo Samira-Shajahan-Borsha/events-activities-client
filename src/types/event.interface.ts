@@ -6,7 +6,7 @@ export type IEvent = {
     image: string;
     date: string;
     location: string;
-    isPaid: "PAID" | "FREE";
+    isPaid: IS_PAID;
     joiningFee: number;
     status: EVENT_STATUS;
     slug: string;
@@ -20,4 +20,9 @@ export enum EVENT_STATUS {
     FULL = "FULL",
     CANCELLED = "CANCELLED",
     COMPLETED = "COMPLETED",
+}
+
+export enum IS_PAID {
+    PAID = "PAID",
+    FREE = "FREE",
 }

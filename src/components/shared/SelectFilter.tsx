@@ -1,3 +1,5 @@
+"use client";
+
 import { useRouter, useSearchParams } from "next/navigation";
 import { useTransition } from "react";
 import {
@@ -9,7 +11,7 @@ import {
 } from "../ui/select";
 
 interface SelectFilterProps {
-  paramName: string; // ?gender=
+  paramName: string;
   placeholder?: string;
   options: { label: string; value: string }[];
 }

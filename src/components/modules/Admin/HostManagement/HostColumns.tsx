@@ -1,18 +1,19 @@
 import { Column } from "@/components/shared/ManagementTable";
 import { Badge } from "@/components/ui/badge";
 import Image from "next/image";
-import { User } from "lucide-react";
 import { format } from "date-fns";
 import { cn } from "@/lib/utils";
 import { IHost, STATUS } from "@/types/user.interface";
 import Link from "next/link";
+import { Avatar } from "@/components/ui/avatar";
+import { getInitials } from "@/lib/formatters";
 
 export const hostColumns: Column<IHost>[] = [
     {
         header: "Profile",
         accessor: (row) => (
             <Link href={`/profile/${row._id}`}>
-                <div className="relative h-12 w-12 rounded-full border border-border bg-muted flex items-center justify-center overflow-hidden">
+                <Avatar>
                     {row.profile.profilePhoto ? (
                         <Image
                             src={row.profile.profilePhoto}
@@ -21,11 +22,11 @@ export const hostColumns: Column<IHost>[] = [
                             className="object-cover"
                         />
                     ) : (
-                        <div className="flex h-full w-full items-center justify-center">
-                            <User className="h-6 w-6 text-muted-foreground" />
+                        <div className="flex h-full w-full items-center justify-center bg-primary/10 text-primary font-semibold">
+                            {getInitials(row.fullName)}
                         </div>
                     )}
-                </div>
+                </Avatar>
             </Link>
         ),
         className: "w-[30px]",
