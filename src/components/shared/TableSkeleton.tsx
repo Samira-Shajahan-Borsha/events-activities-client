@@ -30,7 +30,7 @@ export function TableSkeleton({
               </TableHead>
             ))}
             {showActions && (
-              <TableHead className="w-[70px]">
+              <TableHead className="w-17.5">
                 <Skeleton className="h-4 w-full" />
               </TableHead>
             )}
