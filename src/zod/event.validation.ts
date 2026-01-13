@@ -2,28 +2,24 @@ import z from "zod";
 
 export const createEventZodSchema = z
     .object({
-        name: z.string().nonempty("Event name is required"),
-        type: z.string().nonempty("Event type is required"),
-        description: z.string().nonempty("Description is required"),
+        name: z.string().min(1, "Event name is required"),
+        type: z.string().min(1, "Event type is required"),
+        location: z.string().min(1, "Location is required"),
+        description: z.string().min(1, "Description is required"),
         date: z.string().refine((val) => !isNaN(Date.parse(val)), {
-            message: "Invalid date format",
+            message: "Invalid date",
         }),
-        location: z.string().nonempty("Location is required"),
-        minParticipants: z.number().min(1, "Minimum participants must be at least 1").optional(),
-        maxParticipants: z.number().min(1, "Maximum participants must be at least 1").optional(),
-        joiningFee: z.number().min(0, "Joining fee cannot be negative").optional().default(0),
-        isFeatured: z.boolean().optional().default(false),
+        joiningFee: z.number().min(0, "Joining fee cannot be negative"),
+        minParticipants: z.number().min(1, "Minimum 1 participant required"),
+        maxParticipants: z.number().min(1, "Maximum 1 participant required"),
+        file: z.instanceof(File, {
+            message: "Please upload an event image",
+        }),
     })
-    .refine(
-        (data) =>
-            data.minParticipants === undefined ||
-            data.maxParticipants === undefined ||
-            data.minParticipants <= data.maxParticipants,
-        {
-            message: "Minimum participants cannot be greater than maximum participants",
-            path: ["minParticipants"],
-        }
-    );
+    .refine((data) => data.maxParticipants >= data.minParticipants, {
+        path: ["maxParticipants"],
+        message: "Max participants cannot be less than min participants",
+    });
 
 export const updateEventZodSchema = z.object({
     name: z.string().nonempty("Event name cannot be empty").optional(),

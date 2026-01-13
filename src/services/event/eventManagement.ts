@@ -5,7 +5,7 @@ import { serverFetch } from "@/lib/server-fetch";
 import { zodValidator } from "@/lib/zodValidator";
 import { createEventZodSchema, updateEventZodSchema } from "@/zod/event.validation";
 
-export const createEvent = async (_prevState: any, formData: FormData) => {
+/* export const createEvent = async (_prevState: any, formData: FormData) => {
     try {
         const payload = {
             name: formData.get("name") as string,
@@ -40,6 +40,24 @@ export const createEvent = async (_prevState: any, formData: FormData) => {
         console.log(response);
 
         return await response.json();
+    } catch (error: any) {
+        return {
+            success: false,
+            message:
+                process.env.NODE_ENV === "development" ? error.message : "Something went wrong",
+        };
+    }
+}; */
+
+export const createEvent = async (formData: FormData) => {
+    try {
+        const response = await serverFetch.post("/event/create", {
+            body: formData,
+        });
+
+        const result = await response.json();
+
+        return result;
     } catch (error: any) {
         return {
             success: false,

@@ -1,232 +1,339 @@
 "use client";
 
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useTransition } from "react";
+import { useForm } from "react-hook-form";
+import { format, startOfToday } from "date-fns";
+import { toast } from "sonner";
+import {
+  CalendarIcon,
+  Loader2,
+  Tag,
+  Users,
+  FileText,
+  Image as ImageIcon,
+} from "lucide-react";
+
 import { Button } from "@/components/ui/button";
 import { Calendar } from "@/components/ui/calendar";
-import { Field, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
-import { format, startOfToday } from "date-fns";
-import { 
-  CalendarIcon, 
-  Loader2, 
-  MapPin, 
-  Tag, 
-  Users, 
-  DollarSign, 
-  FileText,
-  Image as ImageIcon 
-} from "lucide-react";
-import { useActionState, useEffect, useState } from "react";
-import { toast } from "sonner";
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
 
-import InputFieldError from "@/components/shared/InputFieldError";
-import SingleImageUploader from "@/components/shared/SingleImageUploader";
 import { createEvent } from "@/services/event/eventManagement";
 import { cn } from "@/lib/utils";
-import { IEvent } from "@/types/event.interface";
+import SingleImageUploader from "@/components/shared/SingleImageUploader";
 
-interface IEventFormPageProps {
-  defaultValues?: Partial<IEvent>;
-  onCancel?: () => void;
-}
+import {
+  createEventZodSchema,
+} from "@/zod/event.validation";
+import z from "zod";
+import { useRouter } from "next/navigation";
 
-export default function EventForm({ defaultValues, onCancel }: IEventFormPageProps) {
-  const [state, formAction, isPending] = useActionState(createEvent, null);
+export type EventFormValues = z.infer<typeof createEventZodSchema>;
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export default function EventForm({ defaultValues }: any) {
+  const [isPending, startTransition] = useTransition();
   const today = startOfToday();
-  const [date, setDate] = useState<Date | undefined>(
-    defaultValues?.date ? new Date(defaultValues.date) : undefined
-  );
 
-  useEffect(() => {
-    if (state?.success) toast.success(state.message);
-    else if (state && !state.success) {
-      toast.error(state.message);
-    };
-  }, [state]);
+  const router = useRouter();
+
+  const form = useForm<EventFormValues>({
+    resolver: zodResolver(createEventZodSchema),
+    defaultValues: {
+      name: "",
+      type: "",
+      location: "",
+      description: "",
+      date: "",
+      joiningFee: 0,
+      minParticipants: 1,
+      maxParticipants: 1,
+      file: undefined,
+      ...defaultValues,
+    },
+  });
+
+
+  const onSubmit = (values: EventFormValues) => {
+    startTransition(async () => {
+      const formData = new FormData();
+
+      for (const [key, value] of Object.entries(values)) {
+        if (value == null) continue;
+
+        formData.append(
+          key,
+          value instanceof File ? value : String(value)
+        );
+      }
+
+      const result = await createEvent(formData);
+
+      if (result?.success) {
+        toast.success(result.message);
+        form.reset();
+        router.push(`/host/dashboard/event-management`);
+      } else {
+        toast.error(result?.message || "Check the form for errors");
+      }
+    });
+  };
+
 
   return (
-    <div className="min-h-screen bg-background py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-3xl mx-auto">
-        {/* Header Section */}
+    <div className="min-h-screen bg-background px-4 py-6 sm:px-6">
+      <div className="mx-auto max-w-3xl">
+        <Form {...form}>
+          <form onSubmit={form.handleSubmit(onSubmit)}>
+            <div className="rounded-xl border bg-card shadow-sm overflow-hidden">
 
-        <form action={formAction} className="space-y-8">
-          {/* Main Card */}
-          <div className="bg-card rounded-xl border border-border shadow-sm overflow-hidden">
-            
-            {/* Image Upload Area */}
-            <div className="p-6 border-b bg-muted/30">
-              <div className="flex items-center gap-2 mb-4 text-sm font-semibold uppercase tracking-wider text-primary">
-                <ImageIcon className="w-4 h-4" />
-                Media Assets
+              {/* Media */}
+              <div className="border-b bg-muted/30 p-4 sm:p-6">
+                <div className="mb-4 flex items-center gap-2 text-sm font-semibold uppercase text-primary">
+                  <ImageIcon className="h-4 w-4" /> Media
+                </div>
+
+                <FormField
+                  control={form.control}
+                  name="file"
+                  render={({ field }) => (
+                    <FormItem>
+                      <FormControl>
+                        <SingleImageUploader onChange={field.onChange} />
+                      </FormControl>
+                      <FormMessage />
+                    </FormItem>
+                  )}
+                />
+
               </div>
-              <Field>
-                <Input name="file" type="file" accept="image/*" id="event-file-input" className="hidden" />
-                <SingleImageUploader onChange={() => { }} inputId="event-file-input" />
-                <InputFieldError field="image" state={state} />
-              </Field>
-            </div>
 
-            <div className="p-6 sm:p-8 space-y-10">
-              {/* General Information */}
-              <section className="space-y-6">
-                <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
-                  <FileText className="w-4 h-4" />
-                  General Details
-                </div>
-                
-                <div className="grid gap-6">
-                  <Field>
-                    <FieldLabel>Event Name</FieldLabel>
-                    <Input 
-                      name="name" 
-                      className="h-11"
-                      defaultValue={defaultValues?.name} 
-                      placeholder="e.g. Modern Architecture Workshop" 
+              {/* Content */}
+              <div className="space-y-8 p-4 sm:p-8">
+
+                {/* General */}
+                <section className="space-y-4">
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase text-primary">
+                    <FileText className="h-4 w-4" /> General
+                  </div>
+
+                  <FormField
+                    control={form.control}
+                    name="name"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Event Name</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="location"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Location</FormLabel>
+                        <FormControl>
+                          <Input {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <FormField
+                    control={form.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel>Description</FormLabel>
+                        <FormControl>
+                          <Textarea rows={4} {...field} />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+                </section>
+
+                {/* Logistics */}
+                <section className="space-y-4 border-t pt-6">
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase text-primary">
+                    <Tag className="h-4 w-4" /> Logistics
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="type"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Type</FormLabel>
+                          <FormControl>
+                            <Input {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                    <InputFieldError field="name" state={state} />
-                  </Field>
 
-                  <Field>
-                    <FieldLabel>Location</FieldLabel>
-                    <div className="relative">
-                      <MapPin className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        name="location" 
-                        className="pl-9 h-11"
-                        defaultValue={defaultValues?.location} 
-                        placeholder="Street, City or Virtual Link" 
-                      />
-                    </div>
-                    <InputFieldError field="location" state={state} />
-                  </Field>
-
-                  <Field>
-                    <FieldLabel>Description</FieldLabel>
-                    <Textarea 
-                      name="description" 
-                      rows={4} 
-                      className="resize-none"
-                      defaultValue={defaultValues?.description} 
-                      placeholder="Describe what participants can expect..." 
+                    <FormField
+                      control={form.control}
+                      name="date"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Date</FormLabel>
+                          <Popover>
+                            <PopoverTrigger asChild>
+                              <Button
+                                variant="outline"
+                                className={cn(
+                                  "w-full justify-start",
+                                  !field.value && "text-muted-foreground"
+                                )}
+                              >
+                                <CalendarIcon className="mr-2 h-4 w-4" />
+                                {field.value
+                                  ? format(new Date(field.value), "PPP")
+                                  : "Select date"}
+                              </Button>
+                            </PopoverTrigger>
+                            <PopoverContent className="p-0">
+                              <Calendar
+                                mode="single"
+                                selected={
+                                  field.value
+                                    ? new Date(field.value)
+                                    : undefined
+                                }
+                                onSelect={(d) =>
+                                  field.onChange(
+                                    d ? d.toISOString() : ""
+                                  )
+                                }
+                                disabled={(d) => d < today}
+                              />
+                            </PopoverContent>
+                          </Popover>
+                          <FormMessage />
+                        </FormItem>
+                      )}
                     />
-                    <InputFieldError field="description" state={state} />
-                  </Field>
-                </div>
-              </section>
 
-              {/* Logistics & Pricing */}
-              <section className="pt-6 border-t space-y-6">
-                <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
-                  <Tag className="w-4 h-4" />
-                  Logistics & Pricing
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
-                  <Field>
-                    <FieldLabel>Event Type</FieldLabel>
-                    <Input name="type" className="h-11" defaultValue={defaultValues?.type} placeholder="Conference" />
-                    <InputFieldError field="type" state={state} />
-                  </Field>
+                    <FormField
+                      control={form.control}
+                      name="joiningFee"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>
+                            Joining Fee{" "}
+                            <span className="text-muted-foreground text-xs">(optional)</span>
+                          </FormLabel>
 
-                  <Field>
-                    <FieldLabel>Date</FieldLabel>
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Button 
-                          variant="outline" 
-                          className={cn(
-                            "w-full h-11 justify-start text-left font-normal px-3", 
-                            !date && "text-muted-foreground"
-                          )}
-                        >
-                          <CalendarIcon className="mr-2 h-4 w-4 opacity-70" />
-                          {date ? format(date, "PPP") : <span>Select date</span>}
-                        </Button>
-                      </PopoverTrigger>
-                      <PopoverContent className="w-auto p-0" align="start">
-                        <Calendar 
-                          mode="single" 
-                          selected={date} 
-                          onSelect={setDate} 
-                          disabled={(d) => d < today} 
-                          initialFocus 
-                        />
-                      </PopoverContent>
-                    </Popover>
-                    <input type="hidden" name="date" value={date?.toISOString() ?? ""} />
-                    <InputFieldError field="date" state={state} />
-                  </Field>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              min={0}
+                              placeholder="0 = Free event"
+                              {...field}
+                              value={field.value ?? ""}
+                              onChange={(e) =>
+                                field.onChange(
+                                  e.target.value === "" ? 0 : Number(e.target.value)
+                                )
+                              }
+                            />
+                          </FormControl>
 
-                  <Field className="sm:col-span-2 md:col-span-1">
-                    <FieldLabel>Joining Fee</FieldLabel>
-                    <div className="relative">
-                      <DollarSign className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
-                      <Input 
-                        name="joiningFee" 
-                        type="number" 
-                        className="pl-9 h-11"
-                        step="any" 
-                        defaultValue={defaultValues?.joiningFee || 0} 
-                      />
-                    </div>
-                    <InputFieldError field="joiningFee" state={state} />
-                  </Field>
-                </div>
-              </section>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
 
-              {/* Capacity */}
-              <section className="pt-6 border-t space-y-6">
-                <div className="flex items-center gap-2 text-sm font-semibold uppercase tracking-wider text-primary">
-                  <Users className="w-4 h-4" />
-                  Participant Capacity
-                </div>
-                
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                  <Field>
-                    <FieldLabel>Min Participants</FieldLabel>
-                    <Input name="minParticipants" type="number" className="h-11" defaultValue={defaultValues?.minParticipants} />
-                    <InputFieldError field="minParticipants" state={state} />
-                  </Field>
+                  </div>
+                </section>
 
-                  <Field>
-                    <FieldLabel>Max Participants</FieldLabel>
-                    <Input name="maxParticipants" type="number" className="h-11" defaultValue={defaultValues?.maxParticipants} />
-                    <InputFieldError field="maxParticipants" state={state} />
-                  </Field>
-                </div>
-              </section>
-            </div>
+                {/* Capacity */}
+                <section className="space-y-4 border-t pt-6">
+                  <div className="flex items-center gap-2 text-sm font-semibold uppercase text-primary">
+                    <Users className="h-4 w-4" /> Capacity
+                  </div>
 
-            {/* Form Footer */}
-            <div className="bg-muted/30 p-6 flex flex-col-reverse sm:flex-row justify-end items-center gap-3">
-              {onCancel && (
-                <Button 
-                  type="button" 
-                  variant="outline" 
-                  onClick={onCancel}
-                  className="w-full sm:w-auto"
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <FormField
+                      control={form.control}
+                      name="minParticipants"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Min</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              value={field.value}
+                              onChange={(e) => field.onChange(Number(e.target.value))}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="maxParticipants"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel>Max</FormLabel>
+                          <FormControl>
+                            <Input
+                              type="number"
+                              value={field.value}
+                              onChange={(e) => field.onChange(Number(e.target.value))}
+                            />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+
+                  </div>
+                </section>
+              </div>
+
+              {/* Footer */}
+              <div className="flex flex-col gap-3 bg-muted/30 p-4 sm:flex-row sm:justify-end sm:p-6">
+                <Button
+                  type="submit"
+                  disabled={isPending}
+                  className="w-full sm:w-auto w-full md:min-w-[140px]"
                 >
-                  Cancel
+                  {isPending ? (
+                    <>
+                      <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                      Saving…
+                    </>
+                  ) : (
+                    "Create Event"
+                  )}
                 </Button>
-              )}
-              <Button 
-                type="submit" 
-                disabled={isPending} 
-                className="w-full sm:w-auto min-w-[140px]"
-              >
-                {isPending ? (
-                  <>
-                    <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                    Saving...
-                  </>
-                ) : (
-                  "Create Event"
-                )}
-              </Button>
+              </div>
             </div>
-          </div>
-        </form>
+          </form>
+        </Form>
       </div>
     </div>
   );
