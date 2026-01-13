@@ -19,3 +19,20 @@ export const getAllHosts = async () => {
         };
     }
 };
+
+export const getAllUsers = async () => {
+    try {
+        const response = await serverFetch.get(`/user/all-users`);
+
+        const result = await response.json();
+
+        return result;
+    } catch (error: any) {
+        return {
+            success: false,
+            message: `${
+                process.env.NODE_ENV === "development" ? error.message : "Something went wrong"
+            }`,
+        };
+    }
+};

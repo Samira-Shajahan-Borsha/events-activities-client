@@ -8,7 +8,6 @@ import { Suspense } from 'react'
 const HostManagementPage = async () => {
     const result = await getAllHosts();
 
-    console.log("HostManagementPage", result);
     return (
         <div className='flex flex-col gap-4'>
             <HostManagementHeader />

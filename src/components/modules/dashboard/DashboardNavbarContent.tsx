@@ -2,8 +2,8 @@
 
 import { SidebarTrigger } from "@/components/ui/sidebar";
 import { IUserInfo } from "@/types/user.interface";
-import { Separator } from "@radix-ui/react-separator";
-import UserDropdown from "./UserDropdown";
+import UserDropdown from "@/components/modules/Dashboard/UserDropdown";
+import { Separator } from "@/components/ui/separator";
 
 interface DashboardNavbarContentProps {
     userInfo: IUserInfo

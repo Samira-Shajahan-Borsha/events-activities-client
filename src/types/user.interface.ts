@@ -13,18 +13,26 @@ export enum STATUS {
 }
 
 export interface IUser {
+    _id: string;
     fullName: string;
     readonly email: string;
     role: UserRole;
     status: STATUS;
-    isVerified?: boolean;
-    isDeleted?: boolean;
+    createdAt: string;
+    updatedAt: string;
+    profile: {
+        _id: string;
+        location: string;
+        profilePhoto: string;
+        bio: string;
+        interests: string[];
+    };
 }
 
 export interface IHost {
     _id: string;
     fullName: string;
-    email: string;
+    readonly email: string;
     status: STATUS;
     createdAt: string;
     updatedAt: string;
