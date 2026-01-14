@@ -3,7 +3,7 @@ import EditProfilePageHeader from "@/components/modules/Profile/EditProfilePageH
 import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
 import { Suspense } from "react";
 
-const EditProfilePage = async () => {
+const MyProfilePage = async () => {
   const profileData = await getMyProfileInfo();
 
   if (!profileData) {
@@ -20,4 +20,4 @@ const EditProfilePage = async () => {
   );
 };
 
-export default EditProfilePage;
+export default MyProfilePage;

@@ -2,6 +2,7 @@
 "use server";
 
 import { serverFetch } from "@/lib/server-fetch";
+import { revalidateTag } from "next/cache";
 
 export const updateProfile = async (formData: FormData) => {
     try {
@@ -9,6 +10,8 @@ export const updateProfile = async (formData: FormData) => {
             body: formData,
         });
         const result = await response.json();
+
+        revalidateTag("my-user-info", "max");
 
         return result;
     } catch (error: any) {
@@ -19,5 +22,3 @@ export const updateProfile = async (formData: FormData) => {
         };
     }
 };
-
-

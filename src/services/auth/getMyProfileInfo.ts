@@ -3,12 +3,16 @@
 
 import { serverFetch } from "@/lib/server-fetch";
 import { getUserInfo } from "./getUserInfo";
+import { IProfile } from "@/types/user.interface";
 
-export const getMyProfileInfo = async () => {
+export const getMyProfileInfo = async (): Promise<IProfile | null> => {
     try {
         const authUserInfo = await getUserInfo();
 
-        const response = await serverFetch.get(`/auth/me`);
+        const response = await serverFetch.get(`/auth/me`, {
+            cache: "force-cache",
+            next: { tags: ["my-user-info"] },
+        });
         const result = await response.json();
 
         const user = result.data?.user;

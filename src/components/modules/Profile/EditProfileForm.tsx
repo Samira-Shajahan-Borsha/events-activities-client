@@ -15,6 +15,7 @@ import { updateProfile } from "@/services/user/profile";
 import { useTransition } from "react";
 import { IProfile } from "@/types/user.interface";
 import { Loader2 } from "lucide-react";
+import { useRouter } from "next/navigation";
 
 const updateProfileSchema = z.object({
     fullName: z.string().max(100).optional(),
@@ -35,6 +36,8 @@ interface EditProfileFormProps {
 export default function EditProfileForm({ initialData, imageUrl }: EditProfileFormProps) {
     const [isPending, startTransition] = useTransition();
 
+    const router = useRouter();
+
     const form = useForm<FormValues>({
         resolver: zodResolver(updateProfileSchema),
         defaultValues: {
@@ -53,9 +56,7 @@ export default function EditProfileForm({ initialData, imageUrl }: EditProfileFo
     const onSubmit = (values: FormValues) => {
         startTransition(async () => {
             try {
-
                 const formData = new FormData();
-
                 Object.entries(values).forEach(([key, value]) => {
                     if (value === undefined || value === null) return;
 
@@ -67,7 +68,7 @@ export default function EditProfileForm({ initialData, imageUrl }: EditProfileFo
                         }
                         return;
                     }
-                    
+
                     formData.append(key, String(value));
                 });
 
@@ -76,10 +77,11 @@ export default function EditProfileForm({ initialData, imageUrl }: EditProfileFo
                 if (result.success) {
                     toast.success("Profile updated successfully!");
                     form.reset(values);
+                    router.refresh();
                 } else {
                     toast.error(result.message || "Failed to update profile.");
                 }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {
                 toast.error(err?.message || "Something went wrong");
             }
@@ -130,7 +132,6 @@ export default function EditProfileForm({ initialData, imageUrl }: EditProfileFo
                                                         <Input
                                                             value={initialData.user.email || ""}
                                                             readOnly
-                                                            className="bg-gray-100 cursor-not-allowed"
                                                         />
                                                     </FormControl>
                                                 </FormItem>
@@ -149,7 +150,6 @@ export default function EditProfileForm({ initialData, imageUrl }: EditProfileFo
                                                         <Input
                                                             value={initialData.user.fullName || ""}
                                                             readOnly
-                                                            className="bg-gray-100 cursor-not-allowed"
                                                         />
                                                     </FormControl>
                                                 </FormItem>

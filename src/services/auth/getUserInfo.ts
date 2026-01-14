@@ -10,7 +10,7 @@ export const getUserInfo = async (): Promise<IUserInfo | null> => {
         const accessToken = await getCookie("accessToken");
 
         if (!accessToken) {
-            return null;
+            throw new Error("No access token found");
         }
 
         const verifiedToken = jwt.verify(
