@@ -2,6 +2,7 @@
 "use server";
 
 import { serverFetch } from "@/lib/server-fetch";
+import { revalidateTag } from "next/cache";
 
 export const createEvent = async (formData: FormData) => {
     try {
@@ -10,6 +11,10 @@ export const createEvent = async (formData: FormData) => {
         });
 
         const result = await response.json();
+
+        if (result.success) {
+            revalidateTag("event-list", "max");
+        }
 
         return result;
     } catch (error: any) {
@@ -28,6 +33,10 @@ export const updateEvent = async (id: string, formData: FormData) => {
         });
         const result = await response.json();
 
+        if (result.success) {
+            revalidateTag("event-list", "max");
+        }
+
         return result;
     } catch (error: any) {
         return {
@@ -41,7 +50,11 @@ export const updateEvent = async (id: string, formData: FormData) => {
 export const getAllEvents = async (queryString: string) => {
     try {
         const response = await serverFetch.get(
-            `/event/all-events${queryString ? `?${queryString}` : ""}`
+            `/event/all-events${queryString ? `?${queryString}` : ""}`,
+            {
+                cache: "force-cache",
+                next: { tags: ["event-list"] },
+            }
         );
 
         const result = await response.json();
@@ -60,7 +73,11 @@ export const getAllEvents = async (queryString: string) => {
 export const getMyEvents = async (queryString: string) => {
     try {
         const response = await serverFetch.get(
-            `/event/my-events${queryString ? `?${queryString}` : ""}`
+            `/event/my-events${queryString ? `?${queryString}` : ""}`,
+            {
+                cache: "force-cache",
+                next: { tags: ["my-event-list"] },
+            }
         );
 
         const result = await response.json();

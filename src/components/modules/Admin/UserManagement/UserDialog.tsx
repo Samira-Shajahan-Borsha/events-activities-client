@@ -29,6 +29,7 @@ import {
     blockUser,
     unblockUser,
 } from "@/services/admin/userManagement";
+import { useRouter } from "next/navigation";
 
 interface UserDialogProps {
     open: boolean;
@@ -47,6 +48,8 @@ export default function UserDialog({
 }: UserDialogProps) {
     const [isPending, startTransition] = useTransition();
     const [action, setAction] = useState<AdminAction>(null);
+
+    const router = useRouter()
 
     useEffect(() => {
         if (!open) setAction(null);
@@ -69,10 +72,11 @@ export default function UserDialog({
                     toast.success("User updated successfully");
                     onSuccess();
                     onClose();
+                    router.refresh();
                 } else {
                     toast.error(result?.message || "Action failed");
                 }
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (error: any) {
                 toast.error(error?.message || "Something went wrong");
             } finally {

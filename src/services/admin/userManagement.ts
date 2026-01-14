@@ -6,7 +6,10 @@ import { serverFetch } from "@/lib/server-fetch";
 export const getAllHosts = async (queryString: string) => {
     try {
         const response = await serverFetch.get(
-            `/user/all-hosts${queryString ? `?${queryString}` : ""}`
+            `/user/all-hosts${queryString ? `?${queryString}` : ""}`,
+            {
+                cache: "force-cache",
+            }
         );
 
         const result = await response.json();
