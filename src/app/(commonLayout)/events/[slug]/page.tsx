@@ -1,27 +1,27 @@
-import Image from "next/image";
-import Link from "next/link";
 import { format } from "date-fns";
 import {
-  Calendar,
-  MapPin,
   ArrowLeft,
+  Calendar,
+  ChevronRight,
+  MapPin,
   ShieldCheck,
   TrendingUp,
-  ChevronRight,
 } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Separator } from "@/components/ui/separator";
 
-import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
-import { getEvent } from "@/services/event/eventManagement";
-import EventNotFound from "@/components/modules/EventDetails/EventNotFound";
 import EventActionButton from "@/components/modules/EventDetails/EventActionButton";
-import { IProfile, IUser } from "@/types/user.interface";
+import EventNotFound from "@/components/modules/EventDetails/EventNotFound";
 import InfoItem from "@/components/modules/EventDetails/InfoItem";
 import ProgressBar from "@/components/modules/EventDetails/ProgressBar";
+import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
+import { getEvent } from "@/services/event/eventManagement";
+import { IProfile, IUser } from "@/types/user.interface";
 
 type EventDetailsPageProps = {
   params: Promise<{ slug: string }>;
@@ -65,21 +65,19 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
           className="object-cover"
         />
 
-        <div className="absolute inset-0 bg-linear-to-t from-white via-white/70 to-transparent" />
+        <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/40 to-black/10" />
 
-        {/* <Link
+        <Link
           href="/events"
           className="absolute top-6 left-8 z-10 inline-flex items-center gap-2 rounded-lg border bg-white/90 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur hover:text-primary transition"
         >
           <ArrowLeft size={16} />
           Back to Events
-        </Link> */}
+        </Link>
       </div>
 
-      {/* ---------------- CONTENT ---------------- */}
       <div className="-mt-20 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {/* ================= MAIN ================= */}
           <div className="lg:col-span-2 space-y-6">
             {/* EVENT INFO */}
             <Card className="rounded-2xl shadow-sm">
@@ -188,11 +186,11 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
                   <p className="text-xs font-semibold uppercase text-muted-foreground mb-1">
                     Entry Fee
                   </p>
-                  <p className="text-3xl font-semibold">
+                  <p className="text-2xl font-semibold">
                     {event.isPaid === "FREE" ? (
                       <span className="text-primary">Free</span>
                     ) : (
-                      `$${event.joiningFee}`
+                      `BDT ${event.joiningFee}`
                     )}
                   </p>
                 </div>
