@@ -9,7 +9,6 @@ export default async function ExploreEventsPage() {
 
   return (
     <div>
-      {/* ---------------- Header ---------------- */}
       <section className="border-b">
         <div className="container py-12 space-y-6">
           <div>
@@ -23,7 +22,6 @@ export default async function ExploreEventsPage() {
         </div>
       </section>
 
-      {/* ---------------- Events Grid ---------------- */}
       <main className="container py-12">
         {events.length ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
