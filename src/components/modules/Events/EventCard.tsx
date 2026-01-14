@@ -1,3 +1,4 @@
+import * as Icons from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import { format } from "date-fns";
@@ -5,18 +6,17 @@ import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { IEvent } from "@/types/event.interface";
-import { getIconComponent } from "@/lib/icon-mapper";
+
+export const CalendarIcon = Icons.Calendar;
+export const MapPinIcon = Icons.MapPin;
+export const UsersIcon = Icons.Users;
+export const ArrowUpRightIcon = Icons.ArrowUpRight;
 
 export default function EventCard({ event }: { event: IEvent }) {
     const formattedDate = format(new Date(event.date), "eee, MMM dd • hh:mm a");
 
-    const CalendarIcon = getIconComponent("Calendar");
-    const MapPinIcon = getIconComponent("MapPin");
-    const UsersIcon = getIconComponent("Users");
-    const ArrowUpRightIcon = getIconComponent("ArrowUpRight");
-
     return (
-        <Card className="relative rounded-2xl bg-white dark:bg-zinc-950 py-0 shadow-sm border-[1px]">
+        <Card className="relative rounded-2xl bg-white dark:bg-zinc-950 py-0 shadow-sm border">
             <div className="relative h-48 w-full">
                 <Image
                     src={event.image}
@@ -24,11 +24,11 @@ export default function EventCard({ event }: { event: IEvent }) {
                     fill
                     className="object-cover rounded-t-2xl"
                 />
-                <div className="absolute inset-0 bg-gradient-to-t from-black/25 via-transparent to-transparent rounded-t-2xl" />
+                <div className="absolute inset-0 bg-linear-to-t from-black/25 via-transparent to-transparent rounded-t-2xl" />
 
                 <Badge
-                    className={`absolute top-2 right-2 px-2 py-0.5 rounded-md text-xs font-semibold
-                        ${event.isPaid === "FREE" ? "bg-emerald-500/90 text-white" : "bg-teal-600/90 text-white"}`}
+                    className={`absolute top-2 right-2 px-2 py-0.5 rounded-md text-xs font-semibold ${event.isPaid === "FREE" ? "bg-emerald-500/90 text-white" : "bg-teal-600/90 text-white"
+                        }`}
                 >
                     {event.isPaid === "FREE" ? "FREE" : `$${event.joiningFee}`}
                 </Badge>
