@@ -11,21 +11,23 @@ export const eventColumns: Column<IEvent>[] = [
     {
         header: "Image",
         accessor: (row) => (
-            <div className="relative h-12 w-12 overflow-hidden rounded-lg border border-border bg-muted">
-                {row.image ? (
-                    <Image
-                        src={row.image}
-                        alt={row.name}
-                        fill
-                        sizes="48px"
-                        className="object-cover"
-                    />
-                ) : (
-                    <div className="flex h-full w-full items-center justify-center">
-                        <ImageIcon className="h-5 w-5 text-muted-foreground" />
-                    </div>
-                )}
-            </div>
+            <Link href={`/events/${row.slug}`}>
+                <div className="relative h-8 w-8 overflow-hidden rounded-sm border border-border bg-muted">
+                    {row.image ? (
+                        <Image
+                            src={row.image}
+                            alt={row.name}
+                            fill
+                            sizes="48px"
+                            className="object-cover"
+                        />
+                    ) : (
+                        <div className="flex h-full w-full items-center justify-center">
+                            <ImageIcon className="h-5 w-5 text-muted-foreground" />
+                        </div>
+                    )}
+                </div>
+            </Link>
         ),
         className: "w-[100px]",
     },

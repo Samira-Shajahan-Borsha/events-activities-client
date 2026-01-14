@@ -3,6 +3,7 @@ import EventTable from '@/components/modules/EventsManagement/EventTable'
 import RefreshButton from '@/components/shared/RefreshButton'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
+import TablePagination from '@/components/shared/TablePagination'
 import { TableSkeleton } from '@/components/shared/TableSkeleton'
 import { queryStringFormatter } from '@/lib/formatters'
 import { getAllEvents } from '@/services/event/eventManagement'
@@ -41,6 +42,7 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
             </div>
             <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
                 <EventTable events={result.data} />
+                <TablePagination currentPage={result.meta.page} totalPages={result.meta.totalPage} />
             </Suspense>
         </div>
     )

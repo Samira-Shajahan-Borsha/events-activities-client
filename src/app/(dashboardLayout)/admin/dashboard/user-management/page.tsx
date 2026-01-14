@@ -3,6 +3,7 @@ import UserTable from '@/components/modules/Admin/UserManagement/UserTable'
 import RefreshButton from '@/components/shared/RefreshButton'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
+import TablePagination from '@/components/shared/TablePagination'
 import { TableSkeleton } from '@/components/shared/TableSkeleton'
 import { queryStringFormatter } from '@/lib/formatters'
 import { getAllUsers } from '@/services/admin/userManagement'
@@ -31,6 +32,7 @@ const UserManagementPage = async ({ searchParams }: { searchParams: Promise<{ [k
       </div>
       <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
         <UserTable users={result.data} />
+        <TablePagination currentPage={result.meta.page} totalPages={result.meta.totalPage} />
       </Suspense>
     </div>
   )

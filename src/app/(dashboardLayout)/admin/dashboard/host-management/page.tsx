@@ -3,6 +3,7 @@ import HostTable from '@/components/modules/Admin/HostManagement/HostTable'
 import RefreshButton from '@/components/shared/RefreshButton'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
+import TablePagination from '@/components/shared/TablePagination'
 import { TableSkeleton } from '@/components/shared/TableSkeleton'
 import { queryStringFormatter } from '@/lib/formatters'
 import { getAllHosts } from '@/services/admin/userManagement'
@@ -34,6 +35,7 @@ const HostManagementPage = async ({ searchParams }: { searchParams: Promise<{ [k
             </div>
             <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
                 <HostTable hosts={result.data} />
+                <TablePagination currentPage={result.meta.page} totalPages={result.meta.totalPage} />
             </Suspense>
         </div>
     )

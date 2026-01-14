@@ -76,7 +76,7 @@ export const hostColumns: Column<IHost>[] = [
         },
     },
     {
-        header: "Created At",
+        header: "Joined",
         accessor: (row) => format(new Date(row.createdAt), "MMM do, yyyy 'at' h:mm a"),
         className: "whitespace-nowrap text-sm text-foreground",
     },
