@@ -25,6 +25,6 @@ export const getMyProfileInfo = async (): Promise<IProfile | null> => {
         return result.data;
     } catch (error: any) {
         console.log(error);
-        throw new Error("Failed to get user info: " + error.message);
+        return null;
     }
 };

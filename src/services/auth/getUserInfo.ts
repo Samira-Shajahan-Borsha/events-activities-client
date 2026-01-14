@@ -10,7 +10,7 @@ export const getUserInfo = async (): Promise<IUserInfo | null> => {
         const accessToken = await getCookie("accessToken");
 
         if (!accessToken) {
-            throw new Error("No access token found");
+            return null;
         }
 
         const verifiedToken = jwt.verify(
@@ -33,6 +33,6 @@ export const getUserInfo = async (): Promise<IUserInfo | null> => {
         return userInfo;
     } catch (error: any) {
         console.log(error);
-        throw new Error("Failed to get user info: ", error.message);
+        return null;
     }
 };
