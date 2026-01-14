@@ -1,5 +1,5 @@
-import { Edit, Eye, Loader2, MoreHorizontal, Trash } from "lucide-react";
-import React from "react";
+import { ArrowDown, ArrowUp, ArrowUpDown, Edit, Eye, Loader2, MoreHorizontal, Trash } from "lucide-react";
+import React, { useTransition } from "react";
 import { Button } from "../ui/button";
 import {
     DropdownMenu,
@@ -15,11 +15,13 @@ import {
     TableHeader,
     TableRow,
 } from "../ui/table";
+import { useRouter, useSearchParams } from "next/navigation";
 
 export interface Column<T> {
     header: string;
     accessor: keyof T | ((row: T) => React.ReactNode);
     className?: string;
+    sortKey?: keyof T
 }
 
 interface ManagementTableProps<T> {
@@ -46,7 +48,50 @@ function ManagementTable<T>({
 }: ManagementTableProps<T>) {
 
     const hasActions = onView || onEdit || onDelete;
-    
+
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const [, startTransition] = useTransition();
+
+    const sortParam = searchParams.get("sort") || "";
+
+    const handleSort = (sortKey: string) => {
+        const params = new URLSearchParams(searchParams.toString());
+
+        let newSortValue = `-${sortKey}`; 
+
+        if (sortParam === `-${sortKey}`) {
+            newSortValue = sortKey; 
+        } else if (sortParam === sortKey) {
+            newSortValue = `-${sortKey}`; 
+        }
+
+        params.set("sort", newSortValue);
+        params.set("page", "1");
+
+
+        params.delete("sortBy");
+        params.delete("sortOrder");
+
+        startTransition(() => {
+            router.push(`?${params.toString()}`);
+        });
+    };
+
+    const getSortIcon = (sortKey?: string) => {
+        if (!sortKey) return null;
+
+        if (sortParam === `-${sortKey}`) {
+            return <ArrowDown className="ml-2 h-4 w-4" />;
+        }
+
+        if (sortParam === sortKey) {
+            return <ArrowUp className="ml-2 h-4 w-4" />;
+        }
+
+        return <ArrowUpDown className="ml-2 h-4 w-4 text-muted-foreground" />;
+    };
+
     return (
         <>
             <div className="rounded-lg border relative">
@@ -65,10 +110,19 @@ function ManagementTable<T>({
                         <TableRow>
                             {columns?.map((column, colIndex) => (
                                 <TableHead key={colIndex} className={column.className}>
-                                    {column.header}
+                                    {column.sortKey ? (
+                                        <span
+                                            onClick={() => handleSort(column.sortKey!)}
+                                            className="flex items-center p-2 hover:text-foreground transition-colors font-medium cursor-pointer select-none"
+                                        >
+                                            {column.header}
+                                            {getSortIcon(column.sortKey)}
+                                        </span>
+                                    ) : (
+                                        column.header
+                                    )}
                                 </TableHead>
                             ))}
-
                             {hasActions && (
                                 <TableHead className="w-[70px]">Actions</TableHead>
                             )}

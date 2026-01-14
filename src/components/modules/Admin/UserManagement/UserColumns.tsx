@@ -41,17 +41,23 @@ export const userColumns: Column<IUser>[] = [
                 >
                     {row.fullName}
                 </Link>
-                <span className="text-xs text-muted-foreground uppercase tracking-tight">ID: {row._id.slice(-6)}</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-tight">
+                    ID: {row._id.slice(-6)}
+                </span>
             </div>
         ),
         className: "min-w-[180px]",
+        sortKey: "fullName", 
     },
     {
         header: "Email",
         accessor: (row) => (
-            <span className="text-sm text-muted-foreground truncate">{row.email}</span>
+            <span className="text-sm text-muted-foreground truncate">
+                {row.email}
+            </span>
         ),
         className: "max-w-[220px]",
+        sortKey: "email",
     },
     {
         header: "Status",
@@ -65,7 +71,10 @@ export const userColumns: Column<IUser>[] = [
             return (
                 <Badge
                     variant="outline"
-                    className={cn("px-2 py-0.5 text-xs", statusColor[row.status])}
+                    className={cn(
+                        "px-2 py-0.5 text-xs",
+                        statusColor[row.status]
+                    )}
                 >
                     {row.status}
                 </Badge>
@@ -77,11 +86,12 @@ export const userColumns: Column<IUser>[] = [
         accessor: (row) =>
             format(new Date(row.createdAt), "MMM do, yyyy 'at' h:mm a"),
         className: "whitespace-nowrap text-sm text-foreground",
+        sortKey: "createdAt",
     },
     {
         header: "Updated At",
         accessor: (row) =>
             format(new Date(row.updatedAt), "MMM do, yyyy 'at' h:mm a"),
-        className: "whitespace-nowrap text-sm text-foreground",
+        className: "whitespace-nowrap text-sm text-foreground"
     },
 ];

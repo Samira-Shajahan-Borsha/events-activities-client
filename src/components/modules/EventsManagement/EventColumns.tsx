@@ -41,10 +41,13 @@ export const eventColumns: Column<IEvent>[] = [
                 >
                     {row.name}
                 </Link>
-                <span className="text-xs text-muted-foreground uppercase tracking-tight">ID: {row._id.slice(-6)}</span>
+                <span className="text-xs text-muted-foreground uppercase tracking-tight">
+                    ID: {row._id.slice(-6)}
+                </span>
             </div>
         ),
         className: "min-w-[200px]",
+        sortKey: "name",
     },
     {
         header: "Type",
@@ -53,28 +56,39 @@ export const eventColumns: Column<IEvent>[] = [
                 {row.type}
             </Badge>
         ),
+        sortKey: "type",
     },
     {
         header: "Date & Time",
-        accessor: (row) => <span className="text-sm text-muted-foreground truncate">{format(new Date(row.date), "MMM do, yyyy 'at' h:mm a")}</span>,
+        accessor: (row) => (
+            <span className="text-sm text-muted-foreground truncate">
+                {format(new Date(row.date), "MMM do, yyyy 'at' h:mm a")}
+            </span>
+        ),
         className: "max-w-[220px]",
+        sortKey: "date",
     },
     {
         header: "Location",
         accessor: (row) => (
-            <span className="text-sm text-muted-foreground truncate">{row.location}</span>
+            <span className="text-sm text-muted-foreground truncate">
+                {row.location}
+            </span>
         ),
         className: "max-w-[220px]",
+        sortKey: "location",
     },
     {
         header: "Price",
         accessor: (row) => (
             <span className="font-medium text-sm text-foreground">
-                {row.isPaid === "PAID" ? `$${row.joiningFee.toFixed(2)}` : (
-                    <span className="text-primary font-bold">Free</span>
-                )}
+                {row.isPaid === "PAID"
+                    ? `$${row.joiningFee.toFixed(2)}`
+                    : <span className="text-primary font-bold">Free</span>
+                }
             </span>
         ),
+        sortKey: "joiningFee",
     },
     {
         header: "Capacity",
@@ -98,12 +112,12 @@ export const eventColumns: Column<IEvent>[] = [
                 <Badge
                     className={cn(
                         "font-bold shadow-none pointer-events-none px-2.5 py-0.5",
-                        statusConfig[row.status as EVENT_STATUS]
+                        statusConfig[row.status]
                     )}
                 >
                     {row.status}
                 </Badge>
             );
-        },
-    }
+        }
+    },
 ];
