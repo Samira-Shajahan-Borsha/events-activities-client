@@ -7,6 +7,7 @@ import {
   ArrowLeft,
   ShieldCheck,
   TrendingUp,
+  ChevronRight,
 } from "lucide-react";
 
 import { Badge } from "@/components/ui/badge";
@@ -19,46 +20,43 @@ import { getEvent } from "@/services/event/eventManagement";
 import EventNotFound from "@/components/modules/EventDetails/EventNotFound";
 import EventActionButton from "@/components/modules/EventDetails/EventActionButton";
 import { IProfile, IUser } from "@/types/user.interface";
+import InfoItem from "@/components/modules/EventDetails/InfoItem";
+import ProgressBar from "@/components/modules/EventDetails/ProgressBar";
 
 type EventDetailsPageProps = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }>;
 };
 
-const EventDetailsPage = async ({
-  params
-}: EventDetailsPageProps) => {
+const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
   const { slug } = await params;
 
   const eventResponse = await getEvent(slug);
-
-  const myProfileResponse = await getMyProfileInfo();
-
-  const user = (myProfileResponse?.user as IUser) ?? null;
+  const profileResponse = await getMyProfileInfo();
+  const user = (profileResponse?.user as IUser) ?? null;
 
   if (!eventResponse?.success) {
-    return <EventNotFound />
+    return <EventNotFound />;
   }
 
   const { event, participants, participantsCount } = eventResponse.data;
 
   const isFull = participantsCount >= event.maxParticipants;
-  const formattedDate = format(new Date(event.date), "EEEE, MMM dd, yyyy • hh:mm a");
-
+  const formattedDate = format(
+    new Date(event.date),
+    "EEEE, MMM dd, yyyy • hh:mm a"
+  );
 
   const isParticipant =
     !!user &&
     participants.some(
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      (p: any) =>
-        p.user?._id === user._id ||
-        p.user === user._id
+      (p: any) => p.user?._id === user._id || p.user === user._id
     );
 
-
   return (
-    <div className="min-h-screen pb-20">
-      {/* HERO */}
-      <div className="relative h-[32vh] md:h-[38vh] w-full overflow-hidden">
+    <div className="min-h-screen pb-24">
+      {/* ---------------- HERO ---------------- */}
+      <div className="relative -mx-6 h-[36vh] md:h-[42vh] overflow-hidden border-b">
         <Image
           src={event.image}
           alt={event.name}
@@ -66,80 +64,71 @@ const EventDetailsPage = async ({
           priority
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/40 to-transparent" />
 
-        <Link
+        <div className="absolute inset-0 bg-linear-to-t from-white via-white/70 to-transparent" />
+
+        {/* <Link
           href="/events"
-          className="absolute top-6 left-6 z-10 flex items-center gap-2 rounded-lg bg-background/80 px-3 py-2 text-sm font-medium backdrop-blur"
+          className="absolute top-6 left-8 z-10 inline-flex items-center gap-2 rounded-lg border bg-white/90 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur hover:text-primary transition"
         >
           <ArrowLeft size={16} />
-          Back
-        </Link>
+          Back to Events
+        </Link> */}
       </div>
 
-      <main className="container mx-auto px-4 -mt-20 relative z-10">
+      {/* ---------------- CONTENT ---------------- */}
+      <div className="-mt-20 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-          {/* MAIN */}
+          {/* ================= MAIN ================= */}
           <div className="lg:col-span-2 space-y-6">
-            <Card className="rounded-xl">
+            {/* EVENT INFO */}
+            <Card className="rounded-2xl shadow-sm">
               <CardContent className="p-6 md:p-8">
-                {/* BADGES */}
+                {/* Badges */}
                 <div className="flex flex-wrap gap-2 mb-4">
-                  <Badge variant="outline" className="text-[11px]">
+                  <Badge className="bg-primary/5 text-primary font-medium">
                     {event.type}
                   </Badge>
 
                   {isFull && (
-                    <Badge variant="destructive" className="text-[11px]">
+                    <Badge variant="destructive" className="font-medium">
                       Full
                     </Badge>
                   )}
 
                   {event.isFeatured && (
-                    <Badge className="bg-primary/10 text-primary border border-primary/20 text-[11px]">
+                    <Badge className="bg-amber-500/5 text-amber-600 font-medium">
                       Featured
                     </Badge>
                   )}
                 </div>
 
-                {/* TITLE */}
-                <h1 className="text-3xl md:text-4xl font-semibold tracking-tight mb-6">
+                {/* Title */}
+                <h1 className="font-heading text-2xl md:text-3xl font-semibold tracking-tight mb-6">
                   {event.name}
                 </h1>
 
-                {/* META */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-secondary text-primary">
-                      <Calendar size={16} />
-                    </div>
-                    <div>
-                      <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
-                        Date & Time
-                      </p>
-                      <p className="text-sm font-medium">{formattedDate}</p>
-                    </div>
-                  </div>
-
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 rounded-lg bg-secondary text-primary">
-                      <MapPin size={16} />
-                    </div>
-                    <div>
-                      <p className="text-[11px] uppercase tracking-wider text-muted-foreground">
-                        Location
-                      </p>
-                      <p className="text-sm font-medium">{event.location}</p>
-                    </div>
-                  </div>
+                {/* Meta */}
+                <div className="grid md:grid-cols-2 gap-5">
+                  <InfoItem
+                    icon={<Calendar size={18} />}
+                    label="Date & Time"
+                    value={formattedDate}
+                  />
+                  <InfoItem
+                    icon={<MapPin size={18} />}
+                    label="Location"
+                    value={event.location}
+                  />
                 </div>
 
                 <Separator className="my-6" />
 
-                {/* DESCRIPTION */}
+                {/* Description */}
                 <div className="space-y-2">
-                  <h3 className="text-lg font-semibold">Description</h3>
+                  <h3 className="font-heading text-lg font-semibold">
+                    About this Event
+                  </h3>
                   <p className="text-sm leading-relaxed text-muted-foreground whitespace-pre-wrap">
                     {event.description}
                   </p>
@@ -148,80 +137,70 @@ const EventDetailsPage = async ({
             </Card>
 
             {/* PARTICIPANTS */}
-            <Card className="rounded-xl">
+            <Card className="rounded-2xl shadow-sm">
               <CardContent className="p-6 md:p-8">
                 <div className="flex items-center justify-between mb-6">
-                  <h3 className="text-lg font-semibold">
+                  <h3 className="font-heading text-lg font-semibold">
                     Participants
-                    <span className="ml-2 text-sm text-muted-foreground">
-                      ({participantsCount})
-                    </span>
                   </h3>
-
-                  <div className="flex items-center gap-1 text-xs text-muted-foreground">
-                    <TrendingUp size={14} />
-                    {Math.round((participantsCount / event.maxParticipants) * 100)}%
-                  </div>
+                  <span className="flex items-center gap-2 rounded-full bg-muted px-3 py-1 text-xs font-medium">
+                    <TrendingUp size={14} className="text-primary" />
+                    {participantsCount}/{event.maxParticipants}
+                  </span>
                 </div>
 
                 {participants.length ? (
                   <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
                     {participants.map((p: IProfile) => (
-                      <div
+                      <Link
                         key={p._id}
-                        className="flex items-center gap-3 rounded-lg bg-secondary/40 p-3"
+                        href={`/profile/${p.user._id}`}
+                        className="flex items-center gap-3 rounded-xl bg-muted/40 p-3 hover:bg-muted transition"
                       >
                         <Avatar className="h-9 w-9">
                           <AvatarImage src={p.user.profile?.profilePhoto} />
-                          <AvatarFallback className="text-xs">
+                          <AvatarFallback className="font-medium">
                             {p.user.fullName.charAt(0)}
                           </AvatarFallback>
                         </Avatar>
-                        <span className="text-sm font-medium truncate">
+                        <span className="text-xs font-medium truncate">
                           {p.user.fullName}
                         </span>
-                      </div>
+                      </Link>
                     ))}
                   </div>
                 ) : (
-                  <p className="text-sm text-muted-foreground text-center py-8">
-                    No participants yet
+                  <p className="py-10 text-center text-sm text-muted-foreground italic">
+                    No one has joined yet.
                   </p>
                 )}
               </CardContent>
             </Card>
           </div>
 
-          {/* SIDEBAR */}
-          <div className="space-y-6">
-            <Card className="rounded-xl sticky top-6">
-              <CardContent className="p-6 space-y-6">
-                {/* PRICE */}
+          {/* ================= SIDEBAR ================= */}
+          <aside className="space-y-6">
+            <Card className="rounded-2xl shadow-md sticky top-6">
+              <div className="h-1.5 bg-primary" />
+              <CardContent className="p-6 space-y-7">
+                {/* Price */}
                 <div>
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Price
+                  <p className="text-xs font-semibold uppercase text-muted-foreground mb-1">
+                    Entry Fee
                   </p>
                   <p className="text-3xl font-semibold">
-                    {event.isPaid === "FREE" ? "Free" : `$${event.joiningFee}`}
+                    {event.isPaid === "FREE" ? (
+                      <span className="text-primary">Free</span>
+                    ) : (
+                      `$${event.joiningFee}`
+                    )}
                   </p>
                 </div>
 
-                {/* PROGRESS */}
-                <div className="space-y-2">
-                  <div className="flex justify-between text-xs text-muted-foreground">
-                    <span>Available slots</span>
-                    <span>{event.maxParticipants - participantsCount}</span>
-                  </div>
-
-                  <div className="h-2 rounded-full bg-secondary">
-                    <div
-                      className="h-full rounded-full bg-primary"
-                      style={{
-                        width: `${(participantsCount / event.maxParticipants) * 100}%`,
-                      }}
-                    />
-                  </div>
-                </div>
+                <ProgressBar
+                  current={participantsCount}
+                  max={event.maxParticipants}
+                />
 
                 <EventActionButton
                   user={user}
@@ -230,42 +209,46 @@ const EventDetailsPage = async ({
                   participantsCount={participantsCount}
                 />
 
-                <div className="flex items-center justify-center gap-2 text-[11px] text-muted-foreground">
-                  <ShieldCheck size={14} />
+                <div className="flex justify-center items-center gap-2 text-xs font-medium text-muted-foreground">
+                  <ShieldCheck size={14} className="text-primary" />
                   {event.isPaid === "FREE"
-                    ? "Instant enrollment"
-                    : "Secure payment"}
+                    ? "Instant Access"
+                    : "Secure Payment"}
                 </div>
 
                 <Separator />
 
                 {/* HOST */}
-                <div className="space-y-3">
-                  <p className="text-xs uppercase tracking-wider text-muted-foreground">
-                    Hosted by
-                  </p>
-
-                  <Link href={`/profile/${event.host._id}`}>
-                    <div className="flex items-center gap-3 rounded-lg bg-secondary/40 p-3">
-                      <Avatar className="h-10 w-10">
-                        <AvatarImage src={event.host.profile?.profilePhoto} className="object-cover" />
-                        <AvatarFallback>
-                          {event.host.fullName.charAt(0)}
-                        </AvatarFallback>
-                      </Avatar>
-                      <p className="text-sm font-medium">
+                <Link
+                  href={`/profile/${event.host._id}`}
+                  className="flex items-center justify-between rounded-xl bg-muted/40 p-4 hover:bg-muted transition"
+                >
+                  <div className="flex items-center gap-3">
+                    <Avatar className="h-10 w-10">
+                      <AvatarImage src={event.host.profile?.profilePhoto} className="object-cover" />
+                      <AvatarFallback className="font-medium">
+                        {event.host.fullName.charAt(0)}
+                      </AvatarFallback>
+                    </Avatar>
+                    <div>
+                      <p className="text-sm font-semibold">
                         {event.host.fullName}
                       </p>
+                      <p className="text-xs text-muted-foreground">
+                        Organizer
+                      </p>
                     </div>
-                  </Link>
-                </div>
+                  </div>
+                  <ChevronRight size={18} className="text-muted-foreground" />
+                </Link>
               </CardContent>
             </Card>
-          </div>
+          </aside>
         </div>
-      </main>
+      </div>
     </div>
   );
 };
 
 export default EventDetailsPage;
+
