@@ -4,7 +4,11 @@ import ManagementPageHeader from "@/components/shared/ManagementPageHeader"
 import { ArrowLeft } from "lucide-react"
 import { useRouter } from "next/navigation"
 
-const CreateEventManagementHeader = () => {
+interface CreateEventManagementHeaderProps {
+    role: string
+}
+
+const CreateEventManagementHeader = ({ role }: CreateEventManagementHeaderProps) => {
     const router = useRouter()
 
     return (
@@ -14,7 +18,9 @@ const CreateEventManagementHeader = () => {
             action={{
                 label: "Back to Events",
                 icon: ArrowLeft,
-                onClick: () => router.push("/host/dashboard/event-management"),
+                onClick: async () => {
+                    router.push(`${role === "HOST" ? '/host' : "/admin"}/dashboard/event-management`)
+                }
             }}
         />
     )

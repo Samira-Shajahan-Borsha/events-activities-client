@@ -11,9 +11,10 @@ import { useRouter } from "next/navigation";
 
 interface IEventTableProps {
     events: IEvent[];
+    role: string
 }
 
-const EventTable = ({ events }: IEventTableProps) => {
+const EventTable = ({ events, role }: IEventTableProps) => {
     const router = useRouter();
     const [, startTransition] = useTransition();
     const [isDeleting, setIsDeleting] = useState(false);
@@ -56,7 +57,7 @@ const EventTable = ({ events }: IEventTableProps) => {
                 data={events}
                 columns={eventColumns}
                 onDelete={handleDelete}
-                onEdit={(event) => router.push(`/host/dashboard/edit-event/${event.slug}`)}
+                onEdit={(event) => router.push(`${role === "HOST" ? '/host' : "/admin"}/dashboard/edit-event/${event.slug}`)}
                 onView={(event) => router.push(`/events/${event.slug}`)}
                 getRowKey={(event) => event._id}
                 emptyMessage="No events found"

@@ -36,12 +36,13 @@ interface EventFormProps {
   onCancel?: () => void;
   eventId?: string;
   imageUrl?: string;
+  role: string
 }
 
 export type CreateEventFormValues = z.infer<typeof createEventZodSchema>;
 export type UpdateEventFormValues = z.infer<typeof updateEventZodSchema>;
 
-export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }: EventFormProps) {
+export default function EventForm({ defaultValues, onCancel, eventId, imageUrl, role }: EventFormProps) {
   const [isPending, startTransition] = useTransition();
   const today = startOfToday();
   const router = useRouter();
@@ -89,7 +90,7 @@ export default function EventForm({ defaultValues, onCancel, eventId, imageUrl }
         if (result?.success) {
           toast.success(result.message);
           if (!isEditMode) form.reset();
-          router.push("/host/dashboard/event-management");
+          router.push(`${role === "HOST" ? '/host' : "/admin"}/dashboard/event-management`)
         } else {
           toast.error(result?.message || "Check the form for errors");
         }

@@ -6,8 +6,10 @@ import SelectFilter from '@/components/shared/SelectFilter'
 import TablePagination from '@/components/shared/TablePagination'
 import { TableSkeleton } from '@/components/shared/TableSkeleton'
 import { queryStringFormatter } from '@/lib/formatters'
+import { getUserInfo } from '@/services/auth/getUserInfo'
 import { getAllEvents } from '@/services/event/eventManagement'
 import { EVENT_STATUS, IS_PAID, } from '@/types/event.interface'
+import { IUserInfo } from '@/types/user.interface'
 import { Suspense } from 'react'
 
 const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) => {
@@ -17,9 +19,11 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
 
     const result = await getAllEvents(queryString);
 
+    const authInfo = await getUserInfo() as IUserInfo;
+
     return (
         <div className='flex flex-col gap-4'>
-            <EventManagementHeader />
+            <EventManagementHeader role={authInfo && authInfo!.role} />
             <div className="flex items-center gap-4 flex-wrap">
                 <SearchFilter paramName="searchTerm" placeholder="Search events..." />
                 <SelectFilter
@@ -41,7 +45,7 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
                 <RefreshButton />
             </div>
             <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
-                <EventTable events={result.data} />
+                <EventTable events={result.data} role={authInfo && authInfo!.role} />
                 <TablePagination currentPage={result.meta.page} totalPages={result.meta.totalPage} />
             </Suspense>
         </div>

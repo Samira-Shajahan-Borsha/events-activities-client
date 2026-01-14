@@ -1,44 +1,28 @@
 "use client"
 
-import EventFormDialog from "./EventForm"
 import ManagementPageHeader from "@/components/shared/ManagementPageHeader"
-import { CalendarPlus, Plus } from "lucide-react"
-import { useState, useTransition } from "react"
+import { CalendarPlus } from "lucide-react"
 import { useRouter } from "next/navigation"
-import RefreshButton from "@/components/shared/RefreshButton"
-import { getUserInfo } from "@/services/auth/getUserInfo"
 
-const EventManagementHeader = () => {
-    const [isDialogOpen, setIsDialogOpen] = useState(false);
-    const [, startTransition] = useTransition();
-    const router = useRouter()
+interface EventManagementHeaderProps {
+    role: string
+}
 
-    const handleSuccess = () => {
-        startTransition(() => {
-            router.refresh()
-        })
-    }
+const EventManagementHeader = ({ role }: EventManagementHeaderProps) => {
+    const router = useRouter();
 
     return (
-        <>
-            {/* <EventFormDialog
-                open={isDialogOpen}
-                onClose={() => setIsDialogOpen(false)}
-                onSuccess={handleSuccess}
-            /> */}
-
-            <ManagementPageHeader
-                title="Event Management"
-                description="Manage event information and details"
-                action={{
-                    label: "Add Event",
-                    icon: CalendarPlus,
-                    onClick: async () => {
-                        router.push('/host/dashboard/create-event')
-                    }
-                }}
-            />
-        </>
+        <ManagementPageHeader
+            title="Event Management"
+            description="Manage event information and details"
+            action={{
+                label: "Add Event",
+                icon: CalendarPlus,
+                onClick: async () => {
+                    router.push(`${role === "HOST" ? '/host' : "/admin"}/dashboard/create-event`)
+                }
+            }}
+        />
     )
 }
 
