@@ -1,4 +1,5 @@
 import { ArrowDown, ArrowUp, ArrowUpDown, Edit, Eye, Loader2, MoreHorizontal, Trash } from "lucide-react";
+import { useRouter, useSearchParams } from "next/navigation";
 import React, { useTransition } from "react";
 import { Button } from "../ui/button";
 import {
@@ -15,13 +16,12 @@ import {
     TableHeader,
     TableRow,
 } from "../ui/table";
-import { useRouter, useSearchParams } from "next/navigation";
 
 export interface Column<T> {
     header: string;
     accessor: keyof T | ((row: T) => React.ReactNode);
     className?: string;
-    sortKey?: keyof T
+    sortKey?: Extract<keyof T, string>;
 }
 
 interface ManagementTableProps<T> {
@@ -58,12 +58,12 @@ function ManagementTable<T>({
     const handleSort = (sortKey: string) => {
         const params = new URLSearchParams(searchParams.toString());
 
-        let newSortValue = `-${sortKey}`; 
+        let newSortValue = `-${sortKey}`;
 
         if (sortParam === `-${sortKey}`) {
-            newSortValue = sortKey; 
+            newSortValue = sortKey;
         } else if (sortParam === sortKey) {
-            newSortValue = `-${sortKey}`; 
+            newSortValue = `-${sortKey}`;
         }
 
         params.set("sort", newSortValue);
