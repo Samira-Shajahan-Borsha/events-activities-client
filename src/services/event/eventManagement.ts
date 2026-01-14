@@ -26,6 +26,25 @@ export const createEvent = async (formData: FormData) => {
     }
 };
 
+export const joinEvent = async (payload: { eventId: string }) => {
+    try {
+        const response = await serverFetch.post("/ticket/create-ticket", {
+            body: JSON.stringify(payload),
+            headers: { "Content-Type": "application/json" },
+        });
+
+        const result = await response.json();
+
+        return result;
+    } catch (error: any) {
+        return {
+            success: false,
+            message:
+                process.env.NODE_ENV === "development" ? error.message : "Something went wrong",
+        };
+    }
+};
+
 export const updateEvent = async (id: string, formData: FormData) => {
     try {
         const response = await serverFetch.patch(`/event/${id}`, {
