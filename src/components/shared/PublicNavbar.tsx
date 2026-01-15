@@ -26,84 +26,88 @@ export default async function PublicNavbar() {
     const userInfo = await getMyProfileInfo();
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-background backdrop-blur max-w-7xl mx-auto">
-            <div className="container mx-auto flex h-16 items-center justify-between px-4">
-                {/* Logo */}
-                <Link href="/" className="flex items-center gap-2">
+        <header className="sticky top-0 z-50 w-full border-b bg-white">
+            <div className="max-w-7xl mx-auto flex h-16 items-center justify-between px-4 md:px-0">
+                {/* Logo Section */}
+                <Link href="/" className="flex items-center gap-2 transition-opacity hover:opacity-90">
                     <CalendarDays className="h-6 w-6 text-primary" />
-                    <span className="text-xl font-semibold text-primary">
+                    <span className="text-xl font-bold tracking-tight text-primary">
                         EventHub
                     </span>
                 </Link>
 
-                {/* Desktop Nav */}
-                <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-                    <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-                        {navItems.map((item) => (
-                            <NavLink key={item.label} {...item} />
-                        ))}
+                {/* Desktop Nav - Centered with consistent spacing */}
+                <nav className="hidden md:flex items-center gap-6">
+                    {navItems.map((item) => (
+                        <NavLink key={item.label} {...item} />
+                    ))}
 
-                        {userInfo && (
-                            <NavLink
-                                href={getDefaultDashboardRoute(userInfo.user.role)}
-                                label="Dashboard"
-                            />
-                        )}
-                    </nav>
+                    {userInfo && (
+                        <NavLink
+                            href={getDefaultDashboardRoute(userInfo.user.role)}
+                            label="Dashboard"
+                        />
+                    )}
                 </nav>
 
-                {/* Desktop Auth */}
+                {/* Desktop Auth Section */}
                 <div className="hidden md:flex items-center gap-3">
                     {userInfo ? (
                         <UserDropdown userInfo={userInfo} />
                     ) : (
                         <>
-                            <Button variant="ghost" size="sm" asChild>
+                            <Button variant="ghost" size="sm" asChild className="rounded-xl font-medium">
                                 <Link href="/login">Login</Link>
                             </Button>
-                            <Button size="sm" asChild>
+                            <Button size="sm" asChild className="rounded-xl font-medium px-5">
                                 <Link href="/register">Register</Link>
                             </Button>
                         </>
                     )}
                 </div>
 
-                {/* Mobile Menu */}
-                <div className="md:hidden">
+                {/* Mobile Menu Section */}
+                <div className="md:hidden flex items-center gap-2">
+                    {/* If user is logged in, show dropdown even on mobile next to menu */}
+                    {userInfo && <UserDropdown userInfo={userInfo} />}
+
                     <Sheet>
                         <SheetTrigger asChild>
-                            <Button variant="ghost" size="icon">
+                            <Button variant="ghost" size="icon" className="rounded-xl">
                                 <Menu className="h-6 w-6" />
                             </Button>
                         </SheetTrigger>
 
-                        <SheetContent side="right" className="px-6 py-6">
-                            <SheetHeader className="mb-6">
-                                <SheetTitle>Menu</SheetTitle>
+                        <SheetContent side="right" className="w-75 px-6 py-6">
+                            <SheetHeader className="mb-8 text-left">
+                                <SheetTitle className="text-primary flex items-center gap-2">
+                                    <CalendarDays className="h-5 w-5" />
+                                    EventHub
+                                </SheetTitle>
                             </SheetHeader>
 
-                            <nav className="flex flex-col space-y-4">
-                                <nav className="flex flex-col space-y-4">
-                                    {navItems.map((item) => (
-                                        <NavLink key={item.label} {...item} />
-                                    ))}
-                                </nav>
-                            </nav>
+                            <div className="flex flex-col gap-2">
+                                {navItems.map((item) => (
+                                    <NavLink key={item.label} {...item} />
+                                ))}
+                            </div>
 
-                            <div className="my-6 h-px bg-border" />
+                            <div className="my-6 h-px bg-border/60" />
 
-                            {userInfo ? (
-                                <MobileUserMenu userInfo={userInfo} />
-                            ) : (
-                                <div className="flex flex-col gap-3">
-                                    <Button variant="outline" asChild className="w-full">
-                                        <Link href="/login">Login</Link>
-                                    </Button>
-                                    <Button asChild className="w-full">
-                                        <Link href="/register">Register</Link>
-                                    </Button>
-                                </div>
-                            )}
+                            <div className="space-y-4">
+                                {userInfo ? (
+                                    <MobileUserMenu userInfo={userInfo} />
+                                ) : (
+                                    <div className="flex flex-col gap-3">
+                                        <Button variant="outline" asChild className="w-full rounded-xl">
+                                            <Link href="/login">Login</Link>
+                                        </Button>
+                                        <Button asChild className="w-full rounded-xl">
+                                            <Link href="/register">Register</Link>
+                                        </Button>
+                                    </div>
+                                )}
+                            </div>
                         </SheetContent>
                     </Sheet>
                 </div>
