@@ -12,6 +12,7 @@ import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
 import { getDefaultDashboardRoute } from "@/lib/auth-utils";
 import UserDropdown from "../modules/Dashboard/UserDropdown";
 import MobileUserMenu from "./MobileUserMenu";
+import NavLink from "./NavLink";
 
 const navItems = [
     { href: "/", label: "Home" },
@@ -37,24 +38,18 @@ export default async function PublicNavbar() {
 
                 {/* Desktop Nav */}
                 <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
-                    {navItems.map((item) => (
-                        <Link
-                            key={item.label}
-                            href={item.href}
-                            className="text-muted-foreground hover:text-primary"
-                        >
-                            {item.label}
-                        </Link>
-                    ))}
+                    <nav className="hidden md:flex items-center gap-8 text-sm font-medium">
+                        {navItems.map((item) => (
+                            <NavLink key={item.label} {...item} />
+                        ))}
 
-                    {userInfo && (
-                        <Link
-                            href={getDefaultDashboardRoute(userInfo.user.role)}
-                            className="text-muted-foreground hover:text-primary"
-                        >
-                            Dashboard
-                        </Link>
-                    )}
+                        {userInfo && (
+                            <NavLink
+                                href={getDefaultDashboardRoute(userInfo.user.role)}
+                                label="Dashboard"
+                            />
+                        )}
+                    </nav>
                 </nav>
 
                 {/* Desktop Auth */}
@@ -88,15 +83,11 @@ export default async function PublicNavbar() {
                             </SheetHeader>
 
                             <nav className="flex flex-col space-y-4">
-                                {navItems.map((item) => (
-                                    <Link
-                                        key={item.label}
-                                        href={item.href}
-                                        className="text-base font-medium text-muted-foreground hover:text-primary"
-                                    >
-                                        {item.label}
-                                    </Link>
-                                ))}
+                                <nav className="flex flex-col space-y-4">
+                                    {navItems.map((item) => (
+                                        <NavLink key={item.label} {...item} />
+                                    ))}
+                                </nav>
                             </nav>
 
                             <div className="my-6 h-px bg-border" />
