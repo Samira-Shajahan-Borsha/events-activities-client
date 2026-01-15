@@ -44,7 +44,11 @@ export default function SingleImageUploader({
    */
   useEffect(() => {
     if (files.length > 0) {
-      onChange(files[0].file);
+      const file = files[0].file;
+
+      if (file instanceof File) {
+        onChange(file);
+      }
     }
   }, [files, onChange]);
 

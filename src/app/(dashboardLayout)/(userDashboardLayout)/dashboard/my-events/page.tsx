@@ -9,6 +9,10 @@ const MyEventsPage = async () => {
 
     const result = await getMyTickets();
 
+    if (!result.success) {
+        <div>Something went wrong</div>
+    }
+
     return (
         <div className='flex flex-col gap-4'>
             <MyEventPageHeader />
@@ -16,7 +20,7 @@ const MyEventsPage = async () => {
                 <RefreshButton />
             </div>
             <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
-                <MyEventTable tickets={result.data} />
+                <MyEventTable tickets={result?.data} />
             </Suspense>
         </div>
     )

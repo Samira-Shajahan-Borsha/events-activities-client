@@ -10,8 +10,6 @@ const DashboardSidebar = async () => {
   const navItems: NavSection[] = getNavItemsByRole(userInfo?.user.role as UserRole)
   const dashboardHome = getDefaultDashboardRoute(userInfo?.user.role as UserRole)
 
-  console.log(userInfo)
-
   return <DashboardSidebarContent
     userInfo={userInfo}
     navItems={navItems}

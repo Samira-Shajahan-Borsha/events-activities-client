@@ -4,6 +4,7 @@ import "./globals.css";
 import { Toaster } from "sonner";
 import LogoutSuccessToast from "@/components/shared/LogoutSuccessToast";
 import LoginSuccessToast from "@/components/shared/LoginSuccessToast";
+import { Suspense } from "react";
 
 const inter = Inter({
   variable: "--font-sans",
@@ -40,8 +41,10 @@ export default function RootLayout({
       >
         {children}
         <Toaster position="top-right" richColors />
-        <LoginSuccessToast />
-        <LogoutSuccessToast />
+        <Suspense fallback={null}>
+          <LoginSuccessToast />
+          <LogoutSuccessToast />
+        </Suspense>
       </body>
     </html>
   );
