@@ -19,7 +19,7 @@ const EditEventPage = async ({ params }: IEditEventPageProps) => {
         throw new Error("Failed to load event");
     }
 
-    const event = result.data;
+    const event = result.data?.event;
     const authInfo = await getUserInfo() as IUserInfo;
 
     return (

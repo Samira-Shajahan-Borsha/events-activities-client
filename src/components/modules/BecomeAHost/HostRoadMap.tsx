@@ -41,7 +41,7 @@ export function HostRoadMap() {
                 {steps.map((item) => (
                     <div 
                         key={item.title} 
-                        className="p-6 bg-white border border-zinc-200 rounded-[1.5rem] shadow-sm transition-all hover:shadow-md"
+                        className="p-6 bg-white border border-zinc-200 rounded-3xl shadow-sm transition-all hover:shadow-md"
                     >
                         {/* Icon Container matches Benefits style */}
                         <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${item.color}`}>

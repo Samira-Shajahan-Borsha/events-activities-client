@@ -18,7 +18,7 @@ export const getUserInfo = async (): Promise<IUserInfo | null> => {
             process.env.JWT_ACCESS_TOKEN_SECRET as string
         ) as JwtPayload;
 
-        console.log(verifiedToken, "verifiedToken");
+        // console.log(verifiedToken, "verifiedToken");
 
         if (!verifiedToken) {
             return null;

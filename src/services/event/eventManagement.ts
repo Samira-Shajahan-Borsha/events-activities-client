@@ -69,11 +69,11 @@ export const updateEvent = async (id: string, formData: FormData) => {
 export const getAllEvents = async (queryString: string) => {
     try {
         const response = await serverFetch.get(
-            `/event/all-events${queryString ? `?${queryString}` : ""}`,
-            {
+            `/event/all-events${queryString ? `?${queryString}` : ""}`
+            /* {
                 cache: "force-cache",
                 next: { tags: ["event-list"] },
-            }
+            } */
         );
 
         const result = await response.json();
@@ -92,11 +92,7 @@ export const getAllEvents = async (queryString: string) => {
 export const getMyEvents = async (queryString: string) => {
     try {
         const response = await serverFetch.get(
-            `/event/my-events${queryString ? `?${queryString}` : ""}`,
-            {
-                cache: "force-cache",
-                next: { tags: ["my-event-list"] },
-            }
+            `/event/my-events${queryString ? `?${queryString}` : ""}`
         );
 
         const result = await response.json();

@@ -1,9 +1,9 @@
-import { ShieldCheck, BadgeDollarSign, Users, Sparkles } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
 import { BecomeAHostHero } from "@/components/modules/BecomeAHost/BecomeAHostHero";
 import { HostEarnings } from "@/components/modules/BecomeAHost/HostEarnings";
 import { HostRoadMap } from "@/components/modules/BecomeAHost/HostRoadMap";
+import { Button } from "@/components/ui/button";
+import { BadgeDollarSign, ShieldCheck, Sparkles, Users } from "lucide-react";
+import Link from "next/link";
 
 export default function BecomeAHostPage() {
     const benefits = [
@@ -58,7 +58,7 @@ export default function BecomeAHostPage() {
                     {benefits.map((item) => (
                         <div
                             key={item.title}
-                            className="p-6 bg-white border border-zinc-200 rounded-[1.5rem] shadow-sm hover:shadow-md transition-all duration-300"
+                            className="p-6 bg-white border border-zinc-200 rounded-3xl shadow-sm hover:shadow-md transition-all duration-300"
                         >
                             <div className={`w-10 h-10 rounded-xl flex items-center justify-center mb-4 ${item.color}`}>
                                 <item.icon size={20} />

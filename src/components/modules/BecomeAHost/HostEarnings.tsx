@@ -2,7 +2,7 @@ import { CreditCard, Wallet, BarChart3 } from "lucide-react";
 
 export function HostEarnings() {
     return (
-        <section className="mt-24 p-8 md:p-12 bg-white rounded-[2rem] border border-zinc-200">
+        <section className="mt-24 p-8 md:p-12 bg-white rounded-4xl border border-zinc-200">
             <div className="grid md:grid-cols-2 gap-12 items-center">
                 <div>
                     <h2 className="text-xl font-bold text-zinc-900 mb-4">Monetize Your Skills</h2>
