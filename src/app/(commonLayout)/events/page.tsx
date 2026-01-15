@@ -8,7 +8,7 @@ export default async function ExploreEventsPage() {
   const events: IEvent[] = data;
 
   return (
-    <div>
+    <div className="px-6">
       <section className="border-b">
         <div className="container py-12 space-y-6">
           <div>

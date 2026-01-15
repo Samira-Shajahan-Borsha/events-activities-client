@@ -24,7 +24,7 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
   const user = profile.user;
 
   return (
-    <div className="min-h-screen pb-24 space-y-12">
+    <div className="min-h-screen pb-24 space-y-12 px-6">
       <section className="bg-muted/10 py-12">
         <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
           <Avatar className="h-24 w-24 md:h-32 md:w-32">

@@ -22,6 +22,7 @@ export default function EventCard({ event }: { event: IEvent }) {
                     src={event.image}
                     alt={event.name}
                     fill
+                    loading="eager"
                     className="object-cover rounded-t-2xl"
                 />
                 <div className="absolute inset-0 bg-linear-to-t from-black/25 via-transparent to-transparent rounded-t-2xl" />

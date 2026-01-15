@@ -54,7 +54,7 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
     );
 
   return (
-    <div className="min-h-screen pb-24">
+    <div className="min-h-screen pb-24 px-6">
       {/* ---------------- HERO ---------------- */}
       <div className="relative -mx-6 h-[36vh] md:h-[42vh] overflow-hidden border-b">
         <Image
@@ -156,7 +156,7 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
                         className="flex items-center gap-3 rounded-xl bg-muted/40 p-3 hover:bg-muted transition"
                       >
                         <Avatar className="h-9 w-9">
-                          <AvatarImage src={p.user.profile?.profilePhoto} />
+                          <AvatarImage src={p.user.profile?.profilePhoto} className="object-cover" />
                           <AvatarFallback className="font-medium">
                             {p.user.fullName.charAt(0)}
                           </AvatarFallback>
