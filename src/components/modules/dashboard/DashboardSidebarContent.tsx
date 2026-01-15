@@ -5,11 +5,11 @@ import { NavMain } from "@/components/ui/nav-main";
 
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, SidebarMenuItem } from "@/components/ui/sidebar";
 import { NavSection } from "@/types/dashboard.interface";
-import { IUserInfo } from "@/types/user.interface";
+import { IProfile } from "@/types/user.interface";
 import Link from "next/link";
 
 interface DashboardSidebarContentProps {
-    userInfo: IUserInfo;
+    userInfo: IProfile;
     navItems: NavSection[];
     dashboardHome: string;
 }
@@ -32,7 +32,7 @@ const DashboardSidebarContent = ({ userInfo, navItems, dashboardHome }: Dashboar
                 <NavMain sections={navItems} />
             </SidebarContent>
             <SidebarFooter>
-                <NavUser user={userInfo} />
+                <NavUser userInfo={userInfo} />
             </SidebarFooter>
         </Sidebar>
     )

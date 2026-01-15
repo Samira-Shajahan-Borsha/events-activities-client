@@ -15,16 +15,16 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 import { capitalize } from "@/lib/capitalize"
+import { getInitials } from "@/lib/formatters"
+import { IProfile } from "@/types/user.interface"
+
+interface NavUserProps {
+  userInfo: IProfile;
+}
 
 export function NavUser({
-  user,
-}: {
-  user: {
-    name?: string
-    email: string
-    role: string
-  }
-}) {
+  userInfo,
+}: NavUserProps) {
 
   return (
     <SidebarMenu>
@@ -35,14 +35,14 @@ export function NavUser({
               size="lg"
               className="data-[state=open]:bg-sidebar-accent data-[state=open]:text-sidebar-accent-foreground"
             >
-              <Avatar className="h-8 w-8 rounded-lg grayscale">
-                <AvatarImage src={user.avatar} alt={user.name} />
-                <AvatarFallback className="rounded-lg">CN</AvatarFallback>
+              <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={userInfo?.profilePhoto} alt={userInfo?.user.fullName} className="object-cover" />
+                <AvatarFallback className="rounded-lg font-semibold">{getInitials(userInfo?.user.fullName)}</AvatarFallback>
               </Avatar>
               <div className="grid flex-1 text-left text-sm leading-tight">
-                <span className="truncate font-medium">{user.name || "capitalize"}</span>
+                <span className="truncate font-medium">{userInfo?.user.fullName}</span>
                 <span className="text-muted-foreground truncate text-xs">
-                  {capitalize(user.role)}
+                  {capitalize(userInfo?.user.role)}
                 </span>
               </div>
             </SidebarMenuButton>

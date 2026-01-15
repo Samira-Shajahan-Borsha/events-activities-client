@@ -1,10 +1,10 @@
-import { getUserInfo } from "@/services/auth/getUserInfo"
-import { IUserInfo } from "@/types/user.interface";
+import { IProfile } from "@/types/user.interface";
 import DashboardNavbarContent from "./DashboardNavbarContent";
+import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
 
 const DashboardNavbar = async () => {
-    const userInfo = await getUserInfo() as IUserInfo;
-    
+    const userInfo = await getMyProfileInfo() as IProfile;
+
     return (
         <DashboardNavbarContent userInfo={userInfo} />
     )

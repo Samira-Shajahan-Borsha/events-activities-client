@@ -1,13 +1,13 @@
 "use client";
 
 import { SidebarTrigger } from "@/components/ui/sidebar";
-import { IUserInfo } from "@/types/user.interface";
+import { IProfile } from "@/types/user.interface";
 import UserDropdown from "@/components/modules/Dashboard/UserDropdown";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
 
 interface DashboardNavbarContentProps {
-    userInfo: IUserInfo
+    userInfo: IProfile
 }
 
 const DashboardNavbarContent = ({ userInfo }: DashboardNavbarContentProps) => {

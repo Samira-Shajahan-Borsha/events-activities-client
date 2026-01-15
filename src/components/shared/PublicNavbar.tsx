@@ -1,8 +1,6 @@
 import Link from "next/link";
 import { CalendarDays, Menu } from "lucide-react";
-import {
-    Button,
-} from "@/components/ui/button";
+import { Button } from "@/components/ui/button";
 import {
     Sheet,
     SheetContent,
@@ -10,29 +8,29 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "@/components/ui/sheet";
-import { getCookie } from "@/services/auth/tokenHandlers";
-import LogoutButton from "../logout-button";
+import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
+import { getDefaultDashboardRoute } from "@/lib/auth-utils";
+import UserDropdown from "../modules/Dashboard/UserDropdown";
+import MobileUserMenu from "./MobileUserMenu";
 
 const navItems = [
+    { href: "/", label: "Home" },
     { href: "/events", label: "Explore Events" },
     { href: "/how-it-works", label: "How It Works" },
-    { href: "/about", label: "About Us" },
+    { href: "/become-a-host", label: "Become a Host" },
+    { href: "/contact", label: "Contact" },
 ];
 
 export default async function PublicNavbar() {
-    const accessToken = await getCookie("accessToken");
+    const userInfo = await getMyProfileInfo();
 
     return (
-        <header className="sticky top-0 z-50 w-full border-b bg-background/95 backdrop-blur">
+        <header className="sticky top-0 z-50 w-full border-b bg-background backdrop-blur max-w-7xl mx-auto">
             <div className="container mx-auto flex h-16 items-center justify-between px-4">
-
                 {/* Logo */}
-                <Link
-                    href="/"
-                    className="flex items-center gap-2 transition-opacity hover:opacity-90"
-                >
+                <Link href="/" className="flex items-center gap-2">
                     <CalendarDays className="h-6 w-6 text-primary" />
-                    <span className="text-xl font-semibold tracking-tight text-primary">
+                    <span className="text-xl font-semibold text-primary">
                         EventHub
                     </span>
                 </Link>
@@ -43,32 +41,36 @@ export default async function PublicNavbar() {
                         <Link
                             key={item.label}
                             href={item.href}
-                            className="text-muted-foreground transition-colors hover:text-primary"
+                            className="text-muted-foreground hover:text-primary"
                         >
                             {item.label}
                         </Link>
                     ))}
-                    <Link
-                        href="/register?role=HOST"
-                        className="text-muted-foreground transition-colors hover:text-primary"
-                    >
-                        Become a Host
-                    </Link>
+
+                    {userInfo && (
+                        <Link
+                            href={getDefaultDashboardRoute(userInfo.user.role)}
+                            className="text-muted-foreground hover:text-primary"
+                        >
+                            Dashboard
+                        </Link>
+                    )}
                 </nav>
 
                 {/* Desktop Auth */}
                 <div className="hidden md:flex items-center gap-3">
-                    {
-                        accessToken ? <LogoutButton /> :
-                            <>
-                                <Button variant="ghost" size="sm" asChild>
-                                    <Link href="/login">Login</Link>
-                                </Button>
-                                <Button size="sm" asChild>
-                                    <Link href="/register">Register</Link>
-                                </Button>
-                            </>
-                    }
+                    {userInfo ? (
+                        <UserDropdown userInfo={userInfo} />
+                    ) : (
+                        <>
+                            <Button variant="ghost" size="sm" asChild>
+                                <Link href="/login">Login</Link>
+                            </Button>
+                            <Button size="sm" asChild>
+                                <Link href="/register">Register</Link>
+                            </Button>
+                        </>
+                    )}
                 </div>
 
                 {/* Mobile Menu */}
@@ -80,43 +82,37 @@ export default async function PublicNavbar() {
                             </Button>
                         </SheetTrigger>
 
-                        <SheetContent side="right" className="flex flex-col px-6 py-6">
+                        <SheetContent side="right" className="px-6 py-6">
                             <SheetHeader className="mb-6">
-                                <SheetTitle className="text-lg font-semibold">
-                                    Menu
-                                </SheetTitle>
+                                <SheetTitle>Menu</SheetTitle>
                             </SheetHeader>
 
-                            {/* Mobile Nav Items */}
                             <nav className="flex flex-col space-y-4">
                                 {navItems.map((item) => (
                                     <Link
                                         key={item.label}
                                         href={item.href}
-                                        className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
+                                        className="text-base font-medium text-muted-foreground hover:text-primary"
                                     >
                                         {item.label}
                                     </Link>
                                 ))}
-                                <Link
-                                    href="/register?role=HOST"
-                                    className="text-base font-medium text-muted-foreground transition-colors hover:text-primary"
-                                >
-                                    Become a Host
-                                </Link>
                             </nav>
 
                             <div className="my-6 h-px bg-border" />
 
-                            {/* Mobile Auth */}
-                            <div className="flex flex-col gap-3">
-                                <Button variant="outline" asChild className="w-full justify-start">
-                                    <Link href="/login">Login</Link>
-                                </Button>
-                                <Button asChild className="w-full justify-start">
-                                    <Link href="/register">Register</Link>
-                                </Button>
-                            </div>
+                            {userInfo ? (
+                                <MobileUserMenu userInfo={userInfo} />
+                            ) : (
+                                <div className="flex flex-col gap-3">
+                                    <Button variant="outline" asChild className="w-full">
+                                        <Link href="/login">Login</Link>
+                                    </Button>
+                                    <Button asChild className="w-full">
+                                        <Link href="/register">Register</Link>
+                                    </Button>
+                                </div>
+                            )}
                         </SheetContent>
                     </Sheet>
                 </div>

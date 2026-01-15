@@ -1,6 +1,6 @@
 "use client";
 
-import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import {
     DropdownMenu,
@@ -11,13 +11,14 @@ import {
     DropdownMenuSeparator,
     DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { getInitials } from "@/lib/formatters";
 import { logout } from "@/services/auth/logout";
-import { IUserInfo } from "@/types/user.interface";
+import { IProfile } from "@/types/user.interface";
 import { KeyRoundIcon, LogOutIcon, UserCircle, UserPenIcon } from "lucide-react";
 import Link from "next/link";
 
 interface UserDropdownProps {
-    userInfo: IUserInfo
+    userInfo: IProfile
 }
 
 const UserDropdown = ({ userInfo }: UserDropdownProps) => {
@@ -28,31 +29,29 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
                 <Button variant="ghost" className="h-auto p-0">
-                    <div className="relative">
-                        <Avatar className="h-9 w-9">
-                            <AvatarFallback className="font-semibold">
-                                {/* {userData?.data?.name?.charAt(0)}  */}
-                                p
-                            </AvatarFallback>
-                        </Avatar>
+                    <div className="relative cursor-pointer">
+                        <Avatar className="h-8 w-8 rounded-lg">
+                <AvatarImage src={userInfo?.profilePhoto} alt={userInfo?.user.fullName} className="object-cover" />
+                <AvatarFallback className="rounded-lg">{getInitials(userInfo?.user.fullName)}</AvatarFallback>
+              </Avatar>
                     </div>
                 </Button>
             </DropdownMenuTrigger>
 
             <DropdownMenuContent align="end" className="w-64">
                 <DropdownMenuLabel>
-                    <p className="text-foreground truncate text-sm font-medium">{userInfo?.role}</p>
-                    <p className="text-xs text-muted-foreground">{userInfo?.email}</p>
+                    <p className="text-foreground truncate text-sm font-medium">{userInfo?.user.fullName}</p>
+                    <p className="text-xs text-muted-foreground">{userInfo?.user?.email}</p>
                 </DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                    <Link href="/my-profile">
+                    <Link href={`/profile/${userInfo?.user._id}`}>
                         <DropdownMenuItem>
                             <UserCircle size={16} className="opacity-60" />
                             <span>My Profile</span>
                         </DropdownMenuItem>
                     </Link>
-                    <Link href="/edit-profile">
+                    <Link href="/my-profile">
                         <DropdownMenuItem>
                             <UserPenIcon size={16} className="opacity-60" aria-hidden="true" />
                             <span>Edit Profile</span>
