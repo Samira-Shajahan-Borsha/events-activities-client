@@ -58,13 +58,13 @@ const UserDropdown = ({ userInfo }: UserDropdownProps) => {
                         </DropdownMenuItem>
                     </Link>
 
-                    <Link href='/change-password'>
+                    {/* <Link href='/change-password'>
                         <DropdownMenuItem
                         >
                             <KeyRoundIcon size={16} className="opacity-60" />
                             <span>Change Password</span>
                         </DropdownMenuItem>
-                    </Link>
+                    </Link> */}
                 </DropdownMenuGroup>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem onClick={handleLogout}>

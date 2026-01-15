@@ -57,7 +57,7 @@ export const getRouteOwner = (pathname: string): "ADMIN" | "HOST" | "USER" | "CO
     return null;
 };
 
-export const getDefaultDashboardRoute = (role: UserRole): string => {
+/* export const getDefaultDashboardRoute = (role: UserRole): string => {
     switch (role) {
         case "ADMIN":
             return "/admin/dashboard";
@@ -65,6 +65,18 @@ export const getDefaultDashboardRoute = (role: UserRole): string => {
             return "/host/dashboard";
         case "USER":
             return "/dashboard";
+        default:
+            return "/";
+    }
+}; */
+export const getDefaultDashboardRoute = (role: UserRole): string => {
+    switch (role) {
+        case "ADMIN":
+            return "/my-profile";
+        case "HOST":
+            return "/my-profile";
+        case "USER":
+            return "/my-profile";
         default:
             return "/";
     }

@@ -8,12 +8,12 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
     return [
         {
             items: [
-                {
+                /* {
                     title: "Dashboard",
                     href: defaultDashboard,
                     icon: "LayoutDashboard",
                     roles: ["ADMIN", "HOST", "USER"],
-                },
+                }, */
                 {
                     title: "My Profile",
                     href: "/my-profile",
@@ -22,7 +22,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                 },
             ],
         },
-        {
+        /* {
             title: "Settings",
             items: [
                 {
@@ -32,7 +32,7 @@ export const getCommonNavItems = (role: UserRole): NavSection[] => {
                     roles: ["ADMIN", "HOST", "USER"],
                 },
             ],
-        },
+        }, */
     ];
 };
 
@@ -102,7 +102,7 @@ export const userNavItems: NavSection[] = [
                 href: "/dashboard/my-events",
                 icon: "CalendarDays",
                 roles: ["USER"],
-            }
+            },
         ],
     },
 ];
