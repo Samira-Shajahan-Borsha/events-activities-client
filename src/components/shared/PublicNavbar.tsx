@@ -18,8 +18,7 @@ const navItems = [
     { href: "/", label: "Home" },
     { href: "/events", label: "Explore Events" },
     { href: "/how-it-works", label: "How It Works" },
-    { href: "/become-a-host", label: "Become a Host" },
-    { href: "/contact", label: "Contact" },
+    { href: "/become-a-host", label: "Become a Host" }
 ];
 
 export default async function PublicNavbar() {

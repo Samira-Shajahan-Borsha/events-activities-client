@@ -103,9 +103,9 @@ export default function PublicFooter() {
                 <div className="mt-16 pt-8 border-t flex flex-col md:flex-row justify-between items-center gap-4 text-xs text-muted-foreground">
                     <p>© {new Date().getFullYear()} EventHub Platform. All rights reserved.</p>
                     <div className="flex gap-6">
-                        <Link href="/privacy" className="hover:text-primary">Privacy Policy</Link>
-                        <Link href="/terms" className="hover:text-primary">Terms of Service</Link>
-                        <Link href="/cookies" className="hover:text-primary">Cookie Settings</Link>
+                        <Link href="/" className="hover:text-primary">Privacy Policy</Link>
+                        <Link href="/" className="hover:text-primary">Terms of Service</Link>
+                        <Link href="/" className="hover:text-primary">Cookie Settings</Link>
                     </div>
                 </div>
             </div>

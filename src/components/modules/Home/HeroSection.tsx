@@ -17,7 +17,7 @@ export default function HeroSection() {
                         2,400+ Active Events Nearby
                     </div>
 
-                    <h1 className="text-5xl md:text-7xl font-extrabold text-foreground leading-[1.1] tracking-tight">
+                    <h1 className="text-5xl md:text-5xl font-extrabold text-foreground leading-[1.1] tracking-tight">
                         Don&apos;t miss out <br />
                         <span className="text-primary">just because</span> <br />
                         you&apos;re alone.
