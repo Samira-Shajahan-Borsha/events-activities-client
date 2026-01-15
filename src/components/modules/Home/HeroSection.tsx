@@ -82,7 +82,7 @@ export default function HeroSection() {
                     </div>
 
                     {/* Floating Activity Card */}
-                    <div className="absolute bottom-24 left-10 bg-white p-4 rounded-2xl shadow-2xl border border-border z-30 flex flex-col gap-2 min-w-45">
+                    {/* <div className="absolute bottom-24 left-10 bg-white p-4 rounded-2xl shadow-2xl border border-border z-30 flex flex-col gap-2 min-w-45">
                         <div className="flex -space-x-3 overflow-hidden">
                             {[1, 2, 3, 4].map((i) => (
                                 <div key={i} className="inline-block h-8 w-8 rounded-full ring-2 ring-white bg-zinc-200" />
@@ -92,7 +92,7 @@ export default function HeroSection() {
                             </div>
                         </div>
                         <p className="text-xs font-bold text-zinc-800 leading-tight">Join Sarah & others for <br />Friday Night Jazz</p>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

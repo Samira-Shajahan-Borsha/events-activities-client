@@ -18,7 +18,7 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
 
   const events: IEvent[] = result?.data;
 
-  const eventTypes = Array.from(new Set(events.map((e) => e.type))).map((type) => ({
+  const eventTypes = Array.from(new Set(events?.map((e) => e.type))).map((type) => ({
     label: type,
     value: type,
   }));
