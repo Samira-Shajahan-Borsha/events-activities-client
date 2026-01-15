@@ -1,9 +1,7 @@
-import React from 'react'
-
-const UserPage = () => {
+const UserDashboardPage = () => {
   return (
     <div>UserPage</div>
   )
 }
 
-export default UserPage
+export default UserDashboardPage

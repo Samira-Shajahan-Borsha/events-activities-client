@@ -1,3 +1,4 @@
+"use client"
 import { ArrowDown, ArrowUp, ArrowUpDown, Edit, Eye, Loader2, MoreHorizontal, Trash } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import React, { useTransition } from "react";

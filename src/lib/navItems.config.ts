@@ -102,13 +102,7 @@ export const userNavItems: NavSection[] = [
                 href: "/dashboard/my-events",
                 icon: "CalendarDays",
                 roles: ["USER"],
-            },
-            {
-                title: "My Tickets",
-                href: "/dashboard/my-tickets",
-                icon: "Ticket",
-                roles: ["USER"],
-            },
+            }
         ],
     },
 ];
