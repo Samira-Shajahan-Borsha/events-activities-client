@@ -12,28 +12,9 @@ export const createEvent = async (formData: FormData) => {
 
         const result = await response.json();
 
-        if (result.success) {
+        /* if (result.success) {
             revalidateTag("event-list", "max");
-        }
-
-        return result;
-    } catch (error: any) {
-        return {
-            success: false,
-            message:
-                process.env.NODE_ENV === "development" ? error.message : "Something went wrong",
-        };
-    }
-};
-
-export const joinEvent = async (payload: { eventId: string }) => {
-    try {
-        const response = await serverFetch.post("/ticket/create-ticket", {
-            body: JSON.stringify(payload),
-            headers: { "Content-Type": "application/json" },
-        });
-
-        const result = await response.json();
+        } */
 
         return result;
     } catch (error: any) {
@@ -69,11 +50,11 @@ export const updateEvent = async (id: string, formData: FormData) => {
 export const getAllEvents = async (queryString: string) => {
     try {
         const response = await serverFetch.get(
-            `/event/all-events${queryString ? `?${queryString}` : ""}`
+            `/event/all-events${queryString ? `?${queryString}` : ""}`,
             /* {
                 cache: "force-cache",
                 next: { tags: ["event-list"] },
-            } */
+            }, */
         );
 
         const result = await response.json();
@@ -92,7 +73,7 @@ export const getAllEvents = async (queryString: string) => {
 export const getMyEvents = async (queryString: string) => {
     try {
         const response = await serverFetch.get(
-            `/event/my-events${queryString ? `?${queryString}` : ""}`
+            `/event/my-events${queryString ? `?${queryString}` : ""}`,
         );
 
         const result = await response.json();
@@ -130,6 +111,10 @@ export const deleteEvent = async (id: string) => {
         const response = await serverFetch.delete(`/event/${id}`);
 
         const result = await response.json();
+
+        /* if (result.success) {
+            revalidateTag("event-list", "max");
+        } */
 
         return result;
     } catch (error: any) {

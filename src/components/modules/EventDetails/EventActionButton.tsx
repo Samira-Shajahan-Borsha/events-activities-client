@@ -6,9 +6,9 @@ import { CheckCircle2 } from "lucide-react";
 import Link from "next/link";
 import { IEvent, IS_PAID } from "@/types/event.interface";
 import { IUser } from "@/types/user.interface";
-import { joinEvent } from "@/services/event/eventManagement";
 import { useRouter } from "next/navigation";
 import { useTransition } from "react";
+import { joinEvent } from "@/services/ticket/ticket";
 
 interface IEventActionButtonProps {
     user: IUser | null;

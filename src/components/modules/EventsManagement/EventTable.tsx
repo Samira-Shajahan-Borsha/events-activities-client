@@ -44,7 +44,9 @@ const EventTable = ({ events, role }: IEventTableProps) => {
             } else {
                 toast.error(res.message || "Failed to delete event");
             }
-        } catch (error) {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        } catch (error: any) {
+            console.log(error);
             toast.error("An unexpected error occurred");
         } finally {
             setIsDeleting(false);
