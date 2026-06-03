@@ -6,6 +6,14 @@ import HowItWorks from "@/components/modules/Home/HowItWorks";
 import Testimonials from "@/components/modules/Home/Testimonials";
 import TopHosts from "@/components/modules/Home/TopHosts";
 import WhyChooseUs from "@/components/modules/Home/WhyChooseUs";
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Discover & Join Amazing Local Events | EventHub",
+  description:
+    "Discover, join, and host amazing local events near you. Connect with people through workshops, meetups, and community experiences on EventHub.",
+};
+
 
 export default function HomePage() {
   return (

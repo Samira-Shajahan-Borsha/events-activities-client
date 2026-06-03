@@ -45,7 +45,7 @@ const FinalCTA = async () => {
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
                         </Button>
-                        <Button size="lg" variant="outline" asChild className="h-11 px-10 text-sm font-medium bg-white ">
+                        <Button size="lg" variant="outline" asChild className="h-11 px-10 text-sm font-medium bg-white">
                             <Link href={href} >
                                 Create Your First Event
                             </Link>
