@@ -17,7 +17,7 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
   const result = await getAllEvents(queryString);
 
   const events: IEvent[] = result?.data;
-
+  
   const eventTypes = Array.from(new Set(events?.map((e) => e.type))).map((type) => ({
     label: type,
     value: type,
@@ -66,7 +66,7 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
       </section>
 
       <div className="container py-12">
-        {events.length ? (
+        {events?.length ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {events.map((event) => (
               <EventCard key={event._id} event={event} />
@@ -77,7 +77,9 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
         )}
 
         <div className="mt-10">
-          <TablePagination currentPage={result.meta.page} totalPages={result.meta.totalPage} />
+          {
+            events?.length ? <TablePagination currentPage={result.meta?.page} totalPages={result.meta?.totalPage} /> : <></>
+          }
         </div>
       </div>
     </div>

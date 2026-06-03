@@ -1,25 +1,23 @@
-import HomeCategories from "@/components/modules/Home/HomeCategories"
-import HeroSection from "@/components/modules/Home/HeroSection"
-import { getAllEvents } from "@/services/event/eventManagement";
-import HomeFeaturedEvents from "@/components/modules/Home/HomeFeaturedEvents";
-import HomeHowItWorks from "@/components/modules/Home/HomeHowItWorks";
-import HomeTopHosts from "@/components/modules/Home/HomeTopHosts";
-import HomeTestimonials from "@/components/modules/Home/HomeTestimonials";
-import HomeCTA from "@/components/modules/Home/HomeCTA";
+import EventCategories from "@/components/modules/Home/EventCategories";
+import FeaturedEvents from "@/components/modules/Home/FeaturedEvents";
+import FinalCTA from "@/components/modules/Home/FinalCTA";
+import HeroSection from "@/components/modules/Home/HeroSection";
+import HowItWorks from "@/components/modules/Home/HowItWorks";
+import Testimonials from "@/components/modules/Home/Testimonials";
+import TopHosts from "@/components/modules/Home/TopHosts";
+import WhyChooseUs from "@/components/modules/Home/WhyChooseUs";
 
-const HomePage = async () => {
-  const result = await getAllEvents('');
+export default function HomePage() {
   return (
-    <div className="px-6 md:px-0">
+    <main className="min-h-screen bg-background">
       <HeroSection />
-      <HomeCategories />
-      <HomeFeaturedEvents events={result.data} />
-      <HomeHowItWorks />
-      <HomeTopHosts />
-      <HomeTestimonials />
-      <HomeCTA />
-    </div>
-  )
+      <EventCategories />
+      <HowItWorks />
+      <FeaturedEvents />
+      <TopHosts />
+      <Testimonials />
+      <WhyChooseUs />
+      <FinalCTA />
+    </main>
+  );
 }
-
-export default HomePage

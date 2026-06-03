@@ -1,83 +1,73 @@
-import * as Icons from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { format } from "date-fns";
+import { Calendar, MapPin, Users } from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import Image from "next/image";
 import { IEvent } from "@/types/event.interface";
+import { format } from "date-fns";
+import Link from "next/link";
 
-export const CalendarIcon = Icons.Calendar;
-export const MapPinIcon = Icons.MapPin;
-export const UsersIcon = Icons.Users;
-export const ArrowUpRightIcon = Icons.ArrowUpRight;
+const formatPrice = (isPaid: "FREE" | "PAID", fee: number): string => {
+    if (isPaid === "FREE") return "Free";
+    return `৳ ${fee}`;
+};
 
 export default function EventCard({ event }: { event: IEvent }) {
-    const formattedDate = format(new Date(event.date), "eee, MMM dd • hh:mm a");
 
     return (
-        <Card className="relative rounded-2xl bg-white dark:bg-zinc-950 py-0 shadow-sm border">
-            <div className="relative h-48 w-full">
-                <Image
-                    src={event.image}
-                    alt={event.name}
-                    fill
-                    loading="eager"
-                    className="object-cover rounded-t-2xl"
-                />
-                <div className="absolute inset-0 bg-linear-to-t from-black/25 via-transparent to-transparent rounded-t-2xl" />
-
-                <Badge
-                    className={`absolute top-2 right-2 px-2 py-0.5 rounded-md text-xs font-semibold ${event.isPaid === "FREE" ? "bg-emerald-500/90 text-white" : "bg-teal-600/90 text-white"
-                        }`}
-                >
-                    {event.isPaid === "FREE" ? "FREE" : `$${event.joiningFee}`}
-                </Badge>
-
-                <Badge className="absolute top-2 left-2 bg-white/30 backdrop-blur-sm text-xs text-white px-2 py-0.5 rounded-md uppercase font-bold">
-                    {event.type}
-                </Badge>
-            </div>
-
-            <div className="p-4 space-y-2">
-                <div className="flex items-center gap-1 text-xs text-teal-600 font-medium uppercase tracking-tight">
-                    <CalendarIcon className="h-3 w-3" />
-                    {formattedDate}
-                </div>
-
-                <Link href={`/events/${event.slug}`}>
-                    <h3 className="text-sm font-bold text-zinc-900 dark:text-white line-clamp-1 hover:text-teal-500 transition-all">
-                        {event.name}
-                    </h3>
-                </Link>
-
-                <p className="text-xs text-zinc-500 dark:text-zinc-400 line-clamp-2">
-                    {event.description}
-                </p>
-
-                <div className="pt-1 flex items-center justify-between text-xs text-zinc-400">
-                    <div className="flex items-center gap-1">
-                        <MapPinIcon className="h-3 w-3" />
-                        <span>{event.location.split(",")[0]}</span>
+        <Link href={`/events/${event.slug}`}>
+            <Card
+                className="group overflow-hidden border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-xl hover:-translate-y-1 pt-0"
+            >
+                <div className="relative overflow-hidden">
+                    <div className="relative h-48 overflow-hidden">
+                        <Image
+                            src={event.image}
+                            alt={event.name}
+                            fill
+                            loading="eager"
+                            unoptimized
+                            className="object-cover transition-transform duration-500 group-hover:scale-110"
+                        />
                     </div>
-                    <div className="flex items-center gap-1">
-                        <UsersIcon className="h-3 w-3" />
-                        <span>{event.maxParticipants} max</span>
+                    <div className="absolute top-2 left-3 flex gap-2">
+                        <Badge variant="secondary" className="bg-primary text-primary-foreground">{event.type}</Badge>
+                    </div>
+                    <div className="absolute top-2 right-3">
+                        <span className="bg-card/90 backdrop-blur-sm px-3 py-1 rounded-full text-sm font-semibold text-foreground">
+                            {formatPrice(event.isPaid, event.joiningFee)}
+                        </span>
                     </div>
                 </div>
 
-                <div className="mt-4">
-                    <Button
-                        asChild
-                        variant="secondary"
-                        className="w-full flex items-center justify-center gap-2 px-5 py-2 text-white bg-teal-600 hover:bg-teal-500 transition-all rounded-xl font-semibold text-sm"
-                    >
-                        <Link href={`/events/${event.slug}`}>
-                            View Details <ArrowUpRightIcon className="h-4 w-4" />
-                        </Link>
-                    </Button>
-                </div>
-            </div>
-        </Card>
+                <CardContent className="px-5 flex flex-col gap-4">
+                    <div>
+                        <h3 className="font-semibold text-lg leading-snug text-foreground line-clamp-1 group-hover:text-primary transition-colors">
+                            {event.name}
+                        </h3>
+
+                        <p className="mt-1 text-sm leading-relaxed text-muted-foreground line-clamp-2">
+                            {event.description}
+                        </p>
+                    </div>
+
+                    <div className="space-y-2 text-sm">
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Calendar className="w-4 h-4 text-primary shrink-0" />
+                            <span>{format(new Date(event.date), "MMM d, yyyy")}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <MapPin className="w-4 h-4 text-primary shrink-0" />
+                            <span className="line-clamp-1">{event.location}</span>
+                        </div>
+
+                        <div className="flex items-center gap-2 text-muted-foreground">
+                            <Users className="w-4 h-4 text-primary shrink-0" />
+                            <span>{event.maxParticipants} max participants</span>
+                        </div>
+                    </div>
+                </CardContent>
+            </Card>
+        </Link>
     );
 }

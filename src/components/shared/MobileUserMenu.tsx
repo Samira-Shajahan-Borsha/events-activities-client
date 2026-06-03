@@ -6,6 +6,7 @@ import { logout } from "@/services/auth/logout";
 import { IProfile } from "@/types/user.interface";
 import {
     KeyRoundIcon,
+    LayoutDashboard,
     LogOutIcon,
     UserCircle,
     UserPenIcon,
@@ -21,7 +22,6 @@ interface MobileUserMenuProps {
 const MobileUserMenu = ({ userInfo }: MobileUserMenuProps) => {
     return (
         <div className="space-y-4">
-
             <div className="flex gap-x-2 items-center">
                 <Avatar className="h-9 w-9 rounded-full">
                     <AvatarImage src={userInfo.profilePhoto} alt={userInfo?.user.fullName} className="object-cover" />
@@ -44,6 +44,7 @@ const MobileUserMenu = ({ userInfo }: MobileUserMenuProps) => {
             <nav className="flex flex-col gap-3">
                 <Link href={getDefaultDashboardRoute(userInfo.user.role)}>
                     <Button variant="ghost" className="w-full justify-start">
+                        <LayoutDashboard size={16} className="mr-2 opacity-60" />
                         Dashboard
                     </Button>
                 </Link>

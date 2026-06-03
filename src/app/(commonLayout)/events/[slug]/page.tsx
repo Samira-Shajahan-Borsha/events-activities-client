@@ -68,7 +68,7 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
         <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/40 to-black/10" />
 
         <Link
-          href="/events"
+          href="/explore-events"
           className="absolute top-6 left-8 z-10 inline-flex items-center gap-2 rounded-lg border bg-white/90 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur hover:text-primary transition"
         >
           <ArrowLeft size={16} />
