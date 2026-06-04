@@ -111,7 +111,7 @@ const BecomeHost = async () => {
                             Share what you love, grow your audience, and earn from every event — all from a single, secure platform.
                         </p>
                         {
-                            userInfo &&
+                            !userInfo &&
                             <div className="pt-2">
                                 <Link href='/register'>
                                     <Button size="lg" className="px-8">
@@ -157,12 +157,12 @@ const BecomeHost = async () => {
                     </div>
                     <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-10 relative">
                         {/* Connecting line - hidden on mobile */}
-                        <div className="hidden lg:block absolute top-16 left-[12%] right-[12%] h-0.5 bg-gradient-to-r from-primary/20 via-primary to-primary/20" />
+                        <div className="hidden lg:block absolute top-16 left-[12%] right-[12%] h-0.5 bg-linear-to-r from-primary/20 via-primary to-primary/20" />
 
                         {steps.map((s) => (
                             <div key={s.step} className="relative text-center group">
                                 <div className="relative z-10 mb-6">
-                                    <div className="w-32 h-32 mx-auto rounded-full bg-gradient-to-br from-primary/10 to-accent/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
+                                    <div className="w-32 h-32 mx-auto rounded-full bg-linear-to-r from-primary/10 to-accent/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-105">
                                         <div className="w-24 h-24 rounded-full bg-card border-2 border-primary/20 flex items-center justify-center shadow-lg">
                                             <s.icon className="w-10 h-10 text-primary" />
                                         </div>
