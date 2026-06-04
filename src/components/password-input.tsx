@@ -12,9 +12,9 @@ interface PasswordInputProps {
     name: string;
     label?: string;
     placeholder?: string;
-    value: string;
+    value?: string;
     state?: IInputErrorState;
-    setPassword: (value: React.ChangeEvent<HTMLInputElement>) => void
+    setPassword?: (value: React.ChangeEvent<HTMLInputElement>) => void
 }
 
 export default function PasswordInput({
