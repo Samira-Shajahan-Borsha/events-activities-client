@@ -36,16 +36,16 @@ const FinalCTA = async () => {
                     <div className="flex flex-col sm:flex-row gap-4 justify-center">
                         <Button
                             size="lg"
-                            className="text-sm font-medium tracking-tight h-11"
+                            className="text-sm font-medium tracking-tight"
                             asChild
-                            variant='outline'
+                            variant="secondary"
                         >
                             <Link href='/explore-events'>
                                 Explore Events
                                 <ArrowRight className="w-4 h-4" />
                             </Link>
                         </Button>
-                        <Button size="lg" variant="outline" asChild className="h-11 px-10 text-sm font-medium bg-white">
+                        <Button size="lg" variant="outline" asChild className="bg-transparent text-primary-foreground border-primary-foreground/40 hover:bg-primary-foreground/10 hover:text-primary-foreground">
                             <Link href={href} >
                                 Create Your First Event
                             </Link>

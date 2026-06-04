@@ -304,7 +304,7 @@ const BecomeHost = async () => {
             {/* Final CTA */}
             <section className="py-24 relative overflow-hidden">
                 {/* Background gradient */}
-                <div className="absolute inset-0 bg-gradient-to-br from-primary via-primary/90 to-primary/80" />
+                <div className="absolute inset-0 bg-linear-to-br from-primary via-primary/90 to-primary/80" />
 
                 {/* Decorative elements */}
                 <div className="absolute top-0 left-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
@@ -324,7 +324,11 @@ const BecomeHost = async () => {
                         </p>
                         <div className="flex justify-center">
                             {!userInfo &&
-                                <Button size="lg" variant="outline" asChild className="h-11 px-10 text-sm font-medium bg-white">
+                                <Button
+                                    size="lg"
+                                    className="text-sm font-medium tracking-tight"
+                                    asChild
+                                    variant="secondary">
                                     <Link href='/register'>
                                         Become a Host Today
                                         <ArrowRight className="ml-2 w-5 h-5" />

@@ -10,11 +10,13 @@ import { ModeToggle } from "./ModeToggler";
 import NavLink from "./NavLink";
 import Logo from "./Logo";
 
-const navItems = [
+export const navItems = [
     { href: "/", label: "Home" },
     { href: "/explore-events", label: "Explore Events" },
     { href: "/how-it-works", label: "How It Works" },
     { href: "/become-a-host", label: "Become a Host" },
+    { href: "/about", label: "About" },
+    { href: "/contact", label: "Contact" },
 ];
 
 export default async function PublicNavbar() {
