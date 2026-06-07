@@ -1,5 +1,6 @@
 import EventManagementHeader from '@/components/modules/EventsManagement/EventManagementHeader'
 import EventTable from '@/components/modules/EventsManagement/EventTable'
+import ClearFiltersButton from '@/components/shared/ClearFiltersButton'
 import RefreshButton from '@/components/shared/RefreshButton'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
@@ -43,6 +44,7 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
                     }))}
                 />
                 <RefreshButton />
+                <ClearFiltersButton />
             </div>
             <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
                 <EventTable events={result.data} role={authInfo && authInfo!.role} />

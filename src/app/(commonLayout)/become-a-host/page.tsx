@@ -95,32 +95,35 @@ const BecomeHost = async () => {
 
     return (
         <div className="min-h-screen bg-background">
+            {/* Hero */}
+            <section className="relative overflow-hidden bg-linear-to-br from-primary/10 via-background to-accent/20 py-20 md:py-28">
+                <div className="absolute top-20 -right-20 w-96 h-96 bg-primary/15 rounded-full blur-3xl" />
+                <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/30 rounded-full blur-3xl" />
 
-            {/* Hero — minimal */}
-            <section className="border-b border-border/60">
-                <div className="container mx-auto px-4 py-20 md:py-28">
-                    <div className="max-w-2xl mx-auto text-center space-y-6">
+                <div className="container mx-auto px-4 relative z-10">
+                    <div className="max-w-3xl mx-auto text-center space-y-6">
                         <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium">
                             <Sparkles className="w-4 h-4" />
-                            <span>For event hosts</span>
+                            <span>Host Events. Build Communities.</span>
                         </div>
-                        <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight">
-                            Become an Event Host on EventHub
+                        <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground tracking-tight">
+                            Turn Your Passion Into{" "}
+                            <span className="text-primary">Experiences People Love</span>
                         </h1>
-                        <p className="text-base md:text-lg text-muted-foreground">
-                            Share what you love, grow your audience, and earn from every event — all from a single, secure platform.
+                        <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                            EventHub gives creators, organizers, instructors, and communities everything they need to launch successful events — from beautiful event pages to secure payments and powerful management tools.
                         </p>
-                        {
-                            !userInfo &&
-                            <div className="pt-2">
-                                <Link href='/register'>
-                                    <Button size="lg" className="px-8">
-                                        Start Hosting
-                                        <ArrowRight className="ml-2 w-4 h-4" />
-                                    </Button>
-                                </Link>
-                            </div>
-                        }
+                        <div className="flex flex-wrap justify-center gap-3 pt-2">
+                            {
+                                !userInfo && <Button size="lg" className="px-8">
+                                    Become a Host
+                                    <ArrowRight className="ml-2 w-4 h-4" />
+                                </Button>
+                            }
+                            <Button size="lg" variant="outline" className="px-8">
+                                <Link href='/explore-events'>Explore Events</Link>
+                            </Button>
+                        </div>
                     </div>
                 </div>
             </section>

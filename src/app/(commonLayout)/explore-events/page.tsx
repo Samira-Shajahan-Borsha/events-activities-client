@@ -6,6 +6,8 @@ import { IEvent } from "@/types/event.interface";
 import { EVENT_STATUS, IS_PAID } from "@/types/event.interface";
 import { getAllEvents } from "@/services/event/eventManagement";
 import TablePagination from "@/components/shared/TablePagination";
+import { Compass } from "lucide-react";
+import ClearFiltersButton from "@/components/shared/ClearFiltersButton";
 
 export default async function ExploreEventsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const searchParamsObj = await searchParams;
@@ -17,28 +19,37 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
   const result = await getAllEvents(queryString);
 
   const events: IEvent[] = result?.data;
-  
+
   const eventTypes = Array.from(new Set(events?.map((e) => e.type))).map((type) => ({
     label: type,
     value: type,
   }));
 
-
   return (
-    <div className="px-6">
-      <section className="border-b">
-        <div className="container py-12 space-y-6">
-          <div>
-            <h1 className="text-4xl font-bold">
-              Discover <span className="text-teal-600">Events</span>
-            </h1>
-            <p className="text-muted-foreground mt-2">
-              Explore networking nights, masterclasses, and festivals near you.
-            </p>
+    <main>
+      <section className="relative overflow-hidden bg-linear-to-br from-primary/10 via-background to-accent/20 py-20 md:py-24">
+        <div className="absolute top-20 -right-20 w-96 h-96 bg-primary/15 rounded-full blur-3xl" />
+        <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/30 rounded-full blur-3xl" />
+        <div className="container mx-auto px-4 relative z-10 text-center max-w-3xl">
+          <div className="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 rounded-full text-primary text-sm font-medium mb-6">
+            <Compass className="w-4 h-4" />
+            <span>Discover Experiences</span>
           </div>
+          <h1 className="text-4xl md:text-5xl font-bold text-foreground tracking-tight mb-6">
+            Find Events That Match Your{" "}
+            <span className="text-primary">Interests</span>
+          </h1>
+          <p className="text-lg text-muted-foreground">
+            Explore workshops, networking sessions, sports activities, conferences,
+            community gatherings, and more — all in one place.
+          </p>
+        </div>
+      </section>
 
+      <section className="border-b container mx-auto px-4 lg:px-0 max-w-342">
+        <div className="container py-12 space-y-6">
           {/* Search & Filter */}
-          <div className="flex flex-wrap items-center gap-4">
+          <div className="flex flex-wrap gap-4 w-full">
             <SearchFilter paramName="searchTerm" placeholder="Search events..." />
             <SelectFilter
               paramName="status"
@@ -61,11 +72,12 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
               placeholder="Filter by event type"
               options={eventTypes}
             />
+            <ClearFiltersButton />
           </div>
         </div>
       </section>
 
-      <div className="container py-12">
+      <div className="container mx-auto px-4 lg:px-0 max-w-342 py-12">
         {events?.length ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {events.map((event) => (
@@ -82,6 +94,6 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
           }
         </div>
       </div>
-    </div>
+    </main>
   );
 }
