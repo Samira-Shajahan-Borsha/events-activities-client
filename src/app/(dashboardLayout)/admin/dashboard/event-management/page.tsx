@@ -9,7 +9,7 @@ import { TableSkeleton } from '@/components/shared/TableSkeleton'
 import { queryStringFormatter } from '@/lib/formatters'
 import { getUserInfo } from '@/services/auth/getUserInfo'
 import { getAllEvents } from '@/services/event/eventManagement'
-import { EVENT_STATUS, IS_PAID, } from '@/types/event.interface'
+import { EVENT_STATUS, IEvent, IS_PAID, } from '@/types/event.interface'
 import { IUserInfo } from '@/types/user.interface'
 import { Suspense } from 'react'
 
@@ -21,6 +21,11 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
     const result = await getAllEvents(queryString);
 
     const authInfo = await getUserInfo() as IUserInfo;
+
+    const eventTypes = Array.from(new Set(result?.data?.map((e: IEvent) => e.type))).map((type) => ({
+        label: type as string,
+        value: type as string,
+    }));
 
     return (
         <div className='flex flex-col gap-4'>
@@ -42,6 +47,11 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
                         label: isPaid === "PAID" ? "Paid" : "Free",
                         value: isPaid,
                     }))}
+                />
+                <SelectFilter
+                    paramName="type"
+                    placeholder="Filter by event type"
+                    options={eventTypes}
                 />
                 <RefreshButton />
                 <ClearFiltersButton />
