@@ -1,33 +1,33 @@
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle, CardDescription } from "@/components/ui/card";
 import {
     Accordion,
     AccordionContent,
     AccordionItem,
     AccordionTrigger,
 } from "@/components/ui/accordion";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
 import {
     ArrowRight,
-    DollarSign,
-    Users,
-    Settings,
-    ShieldCheck,
-    UserPlus,
-    CalendarPlus,
-    Ticket,
-    Wallet,
-    LayoutDashboard,
+    BadgeCheck,
     BarChart3,
+    CalendarPlus,
     ClipboardList,
     CreditCard,
-    Lock,
-    BadgeCheck,
+    DollarSign,
     Gavel,
+    LayoutDashboard,
+    Lock,
+    Settings,
+    ShieldCheck,
     Sparkles,
+    Ticket,
+    UserPlus,
+    Users,
+    Wallet,
 } from "lucide-react";
-import Link from "next/link";
-import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
 import { Metadata } from "next";
+import Link from "next/link";
 
 export const metadata: Metadata = {
     title: "Become a Host | EventHub",
@@ -130,7 +130,7 @@ const BecomeHost = async () => {
 
             {/* Why Become a Host */}
             <section className="py-20 bg-muted/30">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-14 max-w-2xl mx-auto">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Why become a host</h2>
                         <p className="text-base md:text-lg text-muted-foreground">Everything you need to turn your ideas and gatherings into real, thriving events.</p>
@@ -153,7 +153,7 @@ const BecomeHost = async () => {
 
             {/* How It Works */}
             <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-14 max-w-2xl mx-auto">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">How it works</h2>
                         <p className="text-base md:text-lg text-muted-foreground">From sign-up to your first payout in four simple steps.</p>
@@ -186,7 +186,7 @@ const BecomeHost = async () => {
 
             {/* Host Dashboard Features */}
             <section className="py-20  bg-muted/30">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-14 max-w-2xl mx-auto">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Host dashboard features</h2>
                         <p className="text-base md:text-lg text-muted-foreground">A complete toolkit built around how real hosts run events.</p>
@@ -209,7 +209,7 @@ const BecomeHost = async () => {
 
             {/* Earnings & Payment System */}
             <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="grid lg:grid-cols-2 gap-12 items-center max-w-6xl mx-auto">
                         <div>
                             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
@@ -259,7 +259,7 @@ const BecomeHost = async () => {
 
             {/* Trust & Safety */}
             <section className="py-20 bg-muted/30">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="text-center mb-14 max-w-2xl mx-auto">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Trust & safety</h2>
                         <p className="text-base md:text-lg text-muted-foreground">Built with security, moderation, and reliability at the core.</p>
@@ -282,7 +282,7 @@ const BecomeHost = async () => {
 
             {/* FAQ */}
             <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="max-w-3xl mx-auto">
                         <div className="text-center mb-12">
                             <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Frequently asked questions</h2>

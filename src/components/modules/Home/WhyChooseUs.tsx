@@ -1,4 +1,4 @@
-import { ShieldCheck, Target, MessageSquareHeart, CalendarX2 } from "lucide-react";
+import { CalendarX2, MessageSquareHeart, ShieldCheck, Target } from "lucide-react";
 
 const features = [
   {
@@ -26,7 +26,7 @@ const features = [
 const WhyChooseUs = () => {
   return (
     <section className="py-20 bg-background">
-      <div className="container mx-auto px-4 lg:px-0 max-w-342">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
             Why Choose Us
@@ -35,17 +35,17 @@ const WhyChooseUs = () => {
             We&apos;ve built a platform that puts community, safety, and great experiences first.
           </p>
         </div>
-        
+
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {features.map((feature) => (
-            <div 
+            <div
               key={feature.title}
               className="group text-center p-6 rounded-2xl bg-card border border-border/50 hover:border-primary/30 transition-all duration-300 hover:shadow-lg hover:-translate-y-1"
             >
               <div className="w-16 h-16 mx-auto mb-6 rounded-2xl bg-linear-to-br from-primary/10 to-accent/10 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                 <feature.icon className="w-8 h-8 text-primary" />
               </div>
-              
+
               <h3 className="font-bold text-lg text-foreground mb-3">{feature.title}</h3>
               <p className="text-muted-foreground text-sm leading-relaxed">
                 {feature.description}

@@ -16,7 +16,7 @@ export default function PublicFooter() {
 
     return (
         <footer className="w-full border-t bg-background mt-20">
-            <div className="max-w-342 mx-auto px-4 lg:px-0 py-12 md:py-16">
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-12 md:py-16">
 
                 {/* Main Grid */}
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">

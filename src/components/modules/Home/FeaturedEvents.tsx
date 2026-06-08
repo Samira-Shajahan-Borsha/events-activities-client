@@ -1,15 +1,15 @@
-import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { getAllEvents } from "@/services/event/eventManagement";
-import EventCard from "../Events/EventCard";
 import { IEvent } from "@/types/event.interface";
+import { ArrowRight } from "lucide-react";
 import Link from "next/link";
+import EventCard from "../Events/EventCard";
 
 const FeaturedEvents = async () => {
     const result = await getAllEvents('');
     return (
         <section className="py-20 bg-muted/30">
-            <div className="container mx-auto px-4 lg:px-0 max-w-342">
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
                     <div>
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

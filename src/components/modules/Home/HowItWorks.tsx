@@ -1,4 +1,4 @@
-import { Search, UserPlus, PartyPopper } from "lucide-react";
+import { PartyPopper, Search, UserPlus } from "lucide-react";
 
 const steps = [
     {
@@ -24,7 +24,7 @@ const steps = [
 const HowItWorks = () => {
     return (
         <section className="py-12 md:py-20 bg-background">
-            <div className="container mx-auto px-4 lg:px-0 max-w-342">
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="text-center mb-12 md:mb-16">
                     <h2 className="text-2xl md:text-4xl font-bold text-foreground mb-3 md:mb-4">
                         How It Works

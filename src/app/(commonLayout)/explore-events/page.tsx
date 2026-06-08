@@ -1,13 +1,12 @@
 import EventCard from "@/components/modules/Events/EventCard";
+import ClearFiltersButton from "@/components/shared/ClearFiltersButton";
 import SearchFilter from "@/components/shared/SearchFilter";
 import SelectFilter from "@/components/shared/SelectFilter";
-import { queryStringFormatter } from "@/lib/formatters";
-import { IEvent } from "@/types/event.interface";
-import { EVENT_STATUS, IS_PAID } from "@/types/event.interface";
-import { getAllEvents } from "@/services/event/eventManagement";
 import TablePagination from "@/components/shared/TablePagination";
+import { queryStringFormatter } from "@/lib/formatters";
+import { getAllEvents } from "@/services/event/eventManagement";
+import { EVENT_STATUS, IEvent, IS_PAID } from "@/types/event.interface";
 import { Compass } from "lucide-react";
-import ClearFiltersButton from "@/components/shared/ClearFiltersButton";
 
 export default async function ExploreEventsPage({ searchParams }: { searchParams: Promise<{ [key: string]: string | string[] | undefined }> }) {
   const searchParamsObj = await searchParams;
@@ -46,7 +45,7 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
         </div>
       </section>
 
-      <section className="border-b container mx-auto px-4 lg:px-0 max-w-342">
+      <section className="border-b mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="container py-12 space-y-6">
           {/* Search & Filter */}
           <div className="flex flex-wrap gap-4 w-full">
@@ -77,7 +76,7 @@ export default async function ExploreEventsPage({ searchParams }: { searchParams
         </div>
       </section>
 
-      <div className="container mx-auto px-4 lg:px-0 max-w-342 py-12">
+      <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 py-12">
         {events?.length ? (
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {events.map((event) => (

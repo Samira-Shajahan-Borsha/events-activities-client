@@ -1,13 +1,13 @@
+import RegisterForm from "@/components/register-form";
+import { BadgeCheck, CalendarDays, Lock, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
-import { CalendarDays, ShieldCheck, Lock, BadgeCheck } from "lucide-react";
-import RegisterForm from "@/components/register-form";
 
 import {
-    Compass,
-    Zap,
-    Heart,
     Bell,
+    Compass,
+    Heart,
+    Zap,
 } from "lucide-react";
 
 export const metadata: Metadata = {
@@ -24,10 +24,10 @@ const highlights = [
 
 export default function RegisterPage() {
     return (
-        <div className="grid lg:grid-cols-2 bg-background container mx-auto px-4 lg:px-0 max-w-342 h-dvh">
+        <main className="grid lg:grid-cols-2 bg-background mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 h-175 justify-items-center-safe">
 
             {/* LEFT SIDE */}
-            <aside className="relative hidden lg:flex flex-col justify-center pr-44 py-12">
+            <aside className="relative hidden lg:flex flex-col justify-center py-12 w-full max-w-lg space-y-6">
 
                 {/* blobs */}
                 <div className="absolute top-20 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
@@ -81,21 +81,21 @@ export default function RegisterPage() {
             </aside>
 
             {/* RIGHT SIDE */}
-            <main className="flex items-center justify-center p-6 sm:p-10">
-                <div className="w-full max-w-md space-y-6">
+            <div className="flex items-center justify-center py-20">
+                <div className="w-full sm:max-w-md md:max-w-2xl space-y-6">
 
                     {/* mobile logo */}
-                    <Link href="/" className="lg:hidden flex items-center gap-2">
+                    {/* <Link href="/" className="lg:hidden flex items-center gap-2">
                         <div className="w-9 h-9 rounded-lg bg-primary flex items-center justify-center">
                             <span className="text-primary-foreground font-bold">E</span>
                         </div>
                         <span className="font-bold text-lg">EventHub</span>
-                    </Link>
+                    </Link> */}
 
                     <div className="text-center space-y-2">
                         <h1 className="text-3xl font-bold">Create account</h1>
                         <p className="text-muted-foreground text-sm">
-                            Join and start exploring events near you
+                            Join EventHub and start exploring experiences near you.
                         </p>
                     </div>
 
@@ -124,7 +124,7 @@ export default function RegisterPage() {
                         </Link>
                     </p>
                 </div>
-            </main >
-        </div >
+            </div>
+        </main>
     );
 }

@@ -1,18 +1,18 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import {
-    Sparkles,
-    Target,
-    Eye,
-    Users,
-    Briefcase,
-    ShieldCheck,
-    Heart,
-    Globe,
-    Lock,
     Accessibility,
     ArrowRight,
     BadgeCheck,
+    Briefcase,
+    Eye,
+    Globe,
+    Heart,
+    Lock,
+    ShieldCheck,
+    Sparkles,
+    Target,
+    Users,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -78,7 +78,7 @@ const AboutPage = () => {
 
             {/* Mission & Vision */}
             <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342 grid lg:grid-cols-2 gap-6">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2 gap-6">
                     <Card className="border-border/60">
                         <CardContent className="p-8 space-y-4">
                             <div className="w-12 h-12 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -118,7 +118,7 @@ const AboutPage = () => {
 
             {/* What We Offer */}
             <section className="py-20 bg-muted/30">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground">What We Offer</h2>
                         <p className="text-base md:text-lg text-muted-foreground">
@@ -143,7 +143,7 @@ const AboutPage = () => {
 
             {/* Why EventHub */}
             <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground">Why EventHub</h2>
                         <p className="text-base md:text-lg text-muted-foreground">
@@ -169,7 +169,7 @@ const AboutPage = () => {
 
             {/* Values */}
             <section className="py-20 bg-muted/30">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground">Our Values</h2>
                         <p className="text-base md:text-lg text-muted-foreground">
@@ -194,7 +194,7 @@ const AboutPage = () => {
 
             {/* CTA */}
             <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-primary via-primary/90 to-primary/80 p-10 md:p-16 text-center">
                         <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
                         <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />

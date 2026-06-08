@@ -18,7 +18,7 @@ const FinalCTA = async () => {
             <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl translate-x-1/2 translate-y-1/2" />
 
             <div className="container mx-auto px-4 relative z-10">
-                <div className="text-center container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="text-center mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 rounded-full text-primary-foreground text-sm font-medium mb-6">
                         <Sparkles className="w-4 h-4" />
                         <span>Start your journey today</span>

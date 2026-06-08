@@ -24,7 +24,7 @@ export default async function PublicNavbar() {
 
     return (
         <header className="sticky top-0 z-50 w-full border-b border-border/40 bg-background supports-backdrop-filter:bg-background">
-            <div className="max-w-342 mx-auto flex h-16 items-center justify-between px-4 lg:px-0">
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex h-16 items-center justify-between">
                 <Logo />
 
                 {/* Desktop Navigation */}

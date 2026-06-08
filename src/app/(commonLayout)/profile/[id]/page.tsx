@@ -1,8 +1,8 @@
+import EventCard from "@/components/modules/Events/EventCard";
+import ProfileNotFound from "@/components/modules/Profile/ProfileNotFound";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Badge } from "@/components/ui/badge";
 import { getUserProfile } from "@/services/user/profile";
-import EventCard from "@/components/modules/Events/EventCard";
-import ProfileNotFound from "@/components/modules/Profile/ProfileNotFound";
 import { IEvent } from "@/types/event.interface";
 
 interface IProfilePageProps {
@@ -26,7 +26,7 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
   return (
     <div className="min-h-screen pb-24 space-y-12 px-6">
       <section className="bg-muted/10 py-12">
-        <div className="container mx-auto flex flex-col md:flex-row items-center gap-6">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center gap-6">
           <Avatar className="h-24 w-24 md:h-32 md:w-32">
             {profile.profilePhoto ? (
               <AvatarImage src={profile.profilePhoto} className="object-cover" />
@@ -42,7 +42,7 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
               {user.fullName || "Unnamed User"}
             </h1>
             <p className="text-sm text-muted-foreground">{profile.location || "Unknown location"}</p>
-            {profile.bio && <p className="text-sm text-muted-foreground">{profile.bio}</p>}
+            {profile.bio && <p className="text-sm text-muted-foreground max-w-xl">{profile.bio}</p>}
 
             {profile.interests?.length > 0 && (
               <div className="flex flex-wrap gap-2 mt-2">
@@ -58,7 +58,7 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
       </section>
 
       {hostedEvents.length > 0 && (
-        <section className="container mx-auto space-y-6">
+        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-2xl font-heading font-semibold">Hosted Events</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {hostedEvents.map((event: IEvent) => (
@@ -69,7 +69,7 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
       )}
 
       {joinedEvents.length > 0 && (
-        <section className="container mx-auto space-y-6">
+        <section className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 space-y-6">
           <h2 className="text-2xl font-heading font-semibold">Joined Events</h2>
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-8">
             {joinedEvents.map((event: IEvent) => (
@@ -80,7 +80,7 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
       )}
 
       {hostedEvents.length === 0 && joinedEvents.length === 0 && (
-        <div className="container mx-auto text-center text-muted-foreground">
+        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-muted-foreground">
           No hosted or joined events yet.
         </div>
       )}

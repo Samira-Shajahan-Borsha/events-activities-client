@@ -52,7 +52,6 @@ export default function LoginForm({ redirect }: { redirect?: string }) {
 
     return (
         <div className="space-y-6">
-
             <form action={formAction} className="space-y-5">
                 {redirect && (
                     <input type="hidden" name="redirect" value={redirect} />

@@ -1,7 +1,7 @@
-import { Star, Calendar, ArrowRight } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { Card, CardContent } from "@/components/ui/card";
+import { ArrowRight, Calendar, Star } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -51,7 +51,7 @@ const hosts = [
 const TopHosts = () => {
     return (
         <section className="py-20 bg-background">
-            <div className="container mx-auto px-4 lg:px-0 max-w-342">
+            <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-12">
                     <div>
                         <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">

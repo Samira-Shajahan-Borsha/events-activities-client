@@ -2,13 +2,13 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
 import {
+    ArrowRight,
+    Briefcase,
     Compass,
+    ShieldCheck,
+    Sparkles,
     Ticket,
     Users,
-    Briefcase,
-    ShieldCheck,
-    ArrowRight,
-    Sparkles,
 } from "lucide-react";
 import Link from "next/link";
 
@@ -129,7 +129,7 @@ const HowItWorksPage = async () => {
 
             {/* Final CTA */}
             <section className="py-20">
-                <div className="container mx-auto px-4 lg:px-0 max-w-342">
+                <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
                     <div className="relative overflow-hidden rounded-3xl bg-linear-to-br from-primary via-primary/90 to-primary/80 p-10 md:p-16 text-center">
                         <div className="absolute -top-20 -right-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
                         <div className="absolute -bottom-20 -left-20 w-72 h-72 bg-white/10 rounded-full blur-3xl" />
