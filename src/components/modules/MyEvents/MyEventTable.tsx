@@ -14,7 +14,6 @@ const MyEventTable = ({ tickets }: IEventTableProps) => {
             data={tickets}
             columns={myTicketColumns}
             getRowKey={(ticket) => ticket._id}
-            emptyMessage="No events found"
         />
     )
 }

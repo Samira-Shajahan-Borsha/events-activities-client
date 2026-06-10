@@ -22,7 +22,6 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
   }
 
   const user = profile.user;
-
   return (
     <div className="min-h-screen pb-24 space-y-12 px-6">
       <section className="bg-muted/10 py-12">
@@ -45,7 +44,7 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
             {profile.bio && <p className="text-sm text-muted-foreground max-w-xl">{profile.bio}</p>}
 
             {profile.interests?.length > 0 && (
-              <div className="flex flex-wrap gap-2 mt-2">
+              <div className="flex flex-wrap gap-2 mt-2 max-w-xl">
                 {profile.interests.map((interest: string) => (
                   <Badge key={interest} className="bg-primary/5 text-primary font-medium">
                     {interest}
@@ -79,9 +78,15 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
         </section>
       )}
 
-      {hostedEvents.length === 0 && joinedEvents.length === 0 && (
-        <div className="mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-muted-foreground">
-          No hosted or joined events yet.
+      {hostedEvents.length === 0 && user?.role === 'HOST' && (
+        <div className="text-center text-muted-foreground">
+          You haven&apos;t hosted any events yet.
+        </div>
+      )}
+
+      {joinedEvents.length === 0 && user?.role === 'USER' && (
+        <div className="text-center text-muted-foreground">
+          You haven&apos;t joined any events yet.
         </div>
       )}
     </div>
