@@ -11,7 +11,6 @@ interface IProfilePageProps {
 
 const ProfilePage = async ({ params }: IProfilePageProps) => {
   const { id } = await params;
-
   const result = await getUserProfile(id);
   const { profile, hostedEvents = [], joinedEvents = [] } = result?.data || {};
 
@@ -78,15 +77,9 @@ const ProfilePage = async ({ params }: IProfilePageProps) => {
         </section>
       )}
 
-      {hostedEvents.length === 0 && user?.role === 'HOST' && (
+      {hostedEvents.length === 0 && joinedEvents.length === 0 && (
         <div className="text-center text-muted-foreground">
-          You haven&apos;t hosted any events yet.
-        </div>
-      )}
-
-      {joinedEvents.length === 0 && user?.role === 'USER' && (
-        <div className="text-center text-muted-foreground">
-          You haven&apos;t joined any events yet.
+          No records found.
         </div>
       )}
     </div>
