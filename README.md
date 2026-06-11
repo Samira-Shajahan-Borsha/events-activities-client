@@ -512,7 +512,7 @@ npm run lint
 
 ---
 
-## 📁 Project Folder Structure (events-activities-client)
+## 📁 Project Folder Structure
 
 ```
 events-activities-client/
