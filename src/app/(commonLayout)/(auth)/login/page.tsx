@@ -1,5 +1,10 @@
 import LoginForm from "@/components/login-form";
-import { BadgeCheck, CalendarDays, Lock, ShieldCheck } from "lucide-react";
+import {
+    BadgeCheck,
+    CalendarDays,
+    Lock,
+    ShieldCheck,
+} from "lucide-react";
 import { Metadata } from "next";
 import Link from "next/link";
 
@@ -16,64 +21,60 @@ const LoginPage = async ({
     const params = (await searchParams) || {};
 
     return (
-        <main className="grid lg:grid-cols-2 bg-background mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8 h-175 justify-items-center-safe">
-            {/* LEFT SIDE - Branding */}
-            <aside className="relative hidden lg:flex flex-col justify-center py-12 w-full max-w-lg space-y-6">
+        <main className="relative mx-auto w-full max-w-7xl min-h-[calc(100vh-80px)] px-4 sm:px-6 lg:px-8 grid lg:grid-cols-2">
 
-                {/* background blobs stay but no container bg */}
-                <div className="absolute top-20 -right-20 w-96 h-96 bg-primary/20 rounded-full blur-3xl" />
-                <div className="absolute -bottom-20 -left-20 w-96 h-96 bg-accent/30 rounded-full blur-3xl" />
+            {/* LEFT SIDE */}
+            <aside className="relative hidden lg:flex flex-col justify-center max-w-xl">
 
-                <div className="relative z-10 space-y-6 ">
-                    <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium">
-                        <CalendarDays className="w-4 h-4" />
+                <div className="absolute top-20 -right-20 w-96 h-96 rounded-full bg-primary/20 blur-3xl" />
+                <div className="absolute -bottom-20 -left-20 w-96 h-96 rounded-full bg-accent/30 blur-3xl" />
+
+                <div className="relative z-10 space-y-6">
+                    <div className="inline-flex items-center gap-2 rounded-full bg-primary/10 px-4 py-2 text-sm font-medium text-primary">
+                        <CalendarDays className="h-4 w-4" />
                         Trusted Event Platform
                     </div>
 
-                    <h1 className="text-4xl font-bold leading-tight text-foreground">
+                    <h1 className="text-5xl font-bold leading-tight">
                         Discover Experiences{" "}
                         <span className="text-primary">That Matter</span>
                     </h1>
 
-                    <p className="text-muted-foreground text-lg">
-                        Join local events, workshops, meetups, and activities that connect people together.
+                    <p className="max-w-md text-lg text-muted-foreground">
+                        Join local events, workshops, meetups, and activities that connect
+                        people together.
                     </p>
 
-                </div>
+                    <div className="flex flex-wrap gap-6 pt-6 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                            <ShieldCheck className="h-4 w-4 text-primary" />
+                            Secure authentication
+                        </div>
 
-                <div className="relative z-10 mt-10 flex items-center gap-6 text-sm text-muted-foreground">
+                        <div className="flex items-center gap-2">
+                            <Lock className="h-4 w-4 text-primary" />
+                            Protected data
+                        </div>
 
-                    <div className="flex items-center gap-2">
-                        <ShieldCheck className="w-4 h-4 text-primary" />
-                        Secure authentication
+                        <div className="flex items-center gap-2">
+                            <BadgeCheck className="h-4 w-4 text-primary" />
+                            Verified hosts
+                        </div>
                     </div>
-
-                    <div className="flex items-center gap-2">
-                        <Lock className="w-4 h-4 text-primary" />
-                        Protected data
-                    </div>
-
-                    <div className="flex items-center gap-2">
-                        <BadgeCheck className="w-4 h-4 text-primary" />
-                        Verified hosts
-                    </div>
-
                 </div>
             </aside>
 
-            {/* RIGHT SIDE - FORM */}
-            <div className="flex items-center py-20">
-                <div className="w-full sm:max-w-md md:max-w-2xl space-y-6">
-                    <div className="text-center space-y-2">
-                        <h1 className="text-3xl font-bold">Welcome back</h1>
-                        <p className="text-muted-foreground text-sm">
+            {/* RIGHT SIDE */}
+            <section className="flex items-center justify-center py-0">
+                <div className="w-full max-w-xl space-y-6">
+                    <div className="space-y-2 text-center">
+                        <h1 className="text-4xl font-bold">Welcome back</h1>
+                        <p className="text-sm text-muted-foreground">
                             Sign in to continue exploring events near you
                         </p>
                     </div>
 
-                    {/* Login Form */}
                     <LoginForm redirect={params.redirect} />
-
                     {/* <div className="relative">
                         <Separator />
                         <span className="absolute inset-0 -top-2.5 flex justify-center">
@@ -89,16 +90,18 @@ const LoginPage = async ({
                         </svg>
                         Continue with Google
                     </Button> */}
-
-                    {/* Register link */}
                     <p className="text-center text-sm text-muted-foreground">
                         Don&apos;t have an account?{" "}
-                        <Link href="/register" className="text-primary font-medium hover:underline">
+                        <Link
+                            href="/register"
+                            className="font-medium text-primary hover:underline"
+                        >
                             Sign up
                         </Link>
                     </p>
+
                 </div>
-            </div >
+            </section>
         </main>
     );
 };
