@@ -19,6 +19,7 @@ export const userColumns: Column<IUser>[] = [
                             src={row.profile.profilePhoto}
                             alt={row.fullName}
                             fill
+                            unoptimized
                             className="object-cover"
                         />
                     ) : (

@@ -84,6 +84,7 @@ export default function SingleImageUploader({
               width={400}
               height={300}
               priority
+              unoptimized
               alt="Event cover image"
               className="absolute inset-0 h-full w-full object-cover"
             />

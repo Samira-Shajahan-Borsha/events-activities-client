@@ -82,6 +82,7 @@ const TopHosts = () => {
                                         alt={host.name}
                                         width={96}
                                         height={96}
+                                        unoptimized
                                         loading="eager"
                                         className="w-24 h-24 rounded-full object-cover border-4 border-primary/20 transition-transform duration-300 group-hover:scale-105"
                                     />

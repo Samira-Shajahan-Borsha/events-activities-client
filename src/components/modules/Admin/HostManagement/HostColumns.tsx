@@ -19,6 +19,7 @@ export const hostColumns: Column<IHost>[] = [
                             src={row.profile.profilePhoto}
                             alt={row.fullName}
                             fill
+                            unoptimized
                             className="object-cover"
                         />
                     ) : (

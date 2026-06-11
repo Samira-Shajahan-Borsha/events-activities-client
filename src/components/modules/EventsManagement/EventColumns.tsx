@@ -18,6 +18,7 @@ export const eventColumns: Column<IEvent>[] = [
                             src={row.image}
                             alt={row.name}
                             fill
+                            unoptimized
                             sizes="48px"
                             className="object-cover"
                         />

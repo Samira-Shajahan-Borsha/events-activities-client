@@ -19,6 +19,7 @@ export const myTicketColumns: Column<ITicket>[] = [
                                 src={row.event.image}
                                 alt={row.event.name}
                                 fill
+                                unoptimized
                                 sizes="48px"
                                 className="object-cover"
                             />

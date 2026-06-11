@@ -95,6 +95,7 @@ const HeroSection = async () => {
               <Image
                 width={800}
                 height={600}
+                unoptimized
                 src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?w=600&h=700&fit=crop"
                 alt="People enjoying an outdoor activity together"
                 className="w-full h-150 object-cover"
@@ -110,6 +111,7 @@ const HeroSection = async () => {
                       alt="Participant 1"
                       width={40}
                       height={40}
+                      unoptimized
                       className="rounded-full border-2 border-card object-cover"
                     />
                     <Image
@@ -117,6 +119,7 @@ const HeroSection = async () => {
                       alt="Participant 2"
                       width={40}
                       height={40}
+                      unoptimized
                       className="rounded-full border-2 border-card object-cover"
                     />
                     <Image
@@ -124,6 +127,7 @@ const HeroSection = async () => {
                       alt="Participant 3"
                       width={40}
                       height={40}
+                      unoptimized
                       className="rounded-full border-2 border-card object-cover"
                     />
                   </div>

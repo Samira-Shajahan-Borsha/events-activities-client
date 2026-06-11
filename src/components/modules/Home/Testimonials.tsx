@@ -78,6 +78,7 @@ const Testimonials = () => {
                                         alt={testimonial.author}
                                         height={48}
                                         width={48}
+                                        unoptimized
                                         className="w-12 h-12 rounded-full object-cover"
                                     />
                                     <div>

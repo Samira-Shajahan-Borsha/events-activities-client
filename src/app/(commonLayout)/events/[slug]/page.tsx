@@ -63,6 +63,7 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
           alt={event.name}
           fill
           priority
+          unoptimized
           className="object-cover max-w-7xl"
         />
 
