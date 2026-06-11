@@ -1,61 +1,58 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 
+import { useActionState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Field, FieldGroup, FieldLabel } from "@/components/ui/field";
 import { Input } from "@/components/ui/input";
-import { useActionState, useEffect } from "react";
-import { Loader2, User, Mail } from "lucide-react";
+import { Loader2, User, Mail, ArrowRight } from "lucide-react";
 import { register } from "@/services/auth/register";
-import PasswordInput from "./password-input";
 import { toast } from "sonner";
 import InputFieldError from "./shared/InputFieldError";
+import PasswordInput from "./password-input";
 
 export default function RegisterForm() {
 
     const [state, formAction, isPending] = useActionState(register, null);
-
     /* const getFieldError = (fieldName: string) => {
-        if (state && state?.errors) {
-            const error = state?.errors?.find((err: any) => err.field === fieldName)
-            if (error) {
-                return error?.message;
+            if (state && state?.errors) {
+                const error = state?.errors?.find((err: any) => err.field === fieldName)
+                if (error) {
+                    return error?.message;
+                } else {
+                    return null;
+                }
             } else {
                 return null;
             }
-        } else {
-            return null;
-        }
-    } */
-
+        } */
     useEffect(() => {
         if (state && !state?.success && state?.message) {
-            toast.error(state?.message)
+            toast.error(state?.message);
         }
-    }, [state])
+    }, [state]);
 
     return (
-        <form action={formAction} className="space-y-6">
+        <form action={formAction} className="space-y-5">
+
             <FieldGroup>
                 <div className="grid grid-cols-1 gap-4">
-                    {/* Full Name */}
+
+                    {/* FULL NAME */}
                     <Field>
-                        <FieldLabel htmlFor="name">Full Name</FieldLabel>
+                        <FieldLabel htmlFor="fullName">Full Name</FieldLabel>
                         <div className="relative">
                             <User className="absolute left-3 top-3 h-4 w-4 text-muted-foreground" />
                             <Input
                                 id="fullName"
                                 name="fullName"
-                                type="text"
                                 placeholder="John Doe"
-                                className="pl-9"
+                                className="pl-9 h-11"
                             />
                             <InputFieldError field="fullName" state={state} />
                         </div>
-
                     </Field>
 
-                    {/* Email */}
+                    {/* EMAIL */}
                     <Field>
                         <FieldLabel htmlFor="email">Email</FieldLabel>
                         <div className="relative">
@@ -64,14 +61,14 @@ export default function RegisterForm() {
                                 id="email"
                                 name="email"
                                 type="email"
-                                placeholder="m@example.com"
-                                className="pl-9"
+                                placeholder="you@example.com"
+                                className="pl-9 h-11"
                             />
                             <InputFieldError field="email" state={state} />
                         </div>
                     </Field>
 
-                    {/* Password */}
+                    {/* PASSWORD */}
                     <PasswordInput
                         id="password"
                         name="password"
@@ -79,7 +76,7 @@ export default function RegisterForm() {
                         state={state}
                     />
 
-                    {/* Confirm Password */}
+                    {/* CONFIRM PASSWORD */}
                     <PasswordInput
                         id="confirmPassword"
                         name="confirmPassword"
@@ -89,11 +86,18 @@ export default function RegisterForm() {
                 </div>
             </FieldGroup>
 
-            {/* Submit Button */}
+            {/* SUBMIT */}
             <FieldGroup>
-                <Button type="submit" className="w-full" disabled={isPending}>
-                    {isPending && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+                <Button
+                    type="submit"
+                    className="w-full h-11"
+                    disabled={isPending}
+                >
+                    {isPending && (
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                    )}
                     Create Account
+                    <ArrowRight className="ml-2 w-4 h-4" />
                 </Button>
             </FieldGroup>
         </form>

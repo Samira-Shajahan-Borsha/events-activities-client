@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Fira_Code } from "next/font/google";
-import "./globals.css";
 import { Toaster } from "sonner";
 import LogoutSuccessToast from "@/components/shared/LogoutSuccessToast";
 import LoginSuccessToast from "@/components/shared/LoginSuccessToast";
 import { Suspense } from "react";
+import { ThemeProvider } from "@/components/shared/theme-provider";
+import './globals.css';
 
 const inter = Inter({
   variable: "--font-sans",
@@ -35,16 +36,23 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
         className={`${inter.variable} ${poppins.variable} ${firaMono.variable} antialiased`}
       >
-        {children}
-        <Toaster position="top-right" richColors />
-        <Suspense fallback={null}>
-          <LoginSuccessToast />
-          <LogoutSuccessToast />
-        </Suspense>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+          <Toaster position="top-right" richColors />
+          <Suspense fallback={null}>
+            <LoginSuccessToast />
+            <LogoutSuccessToast />
+          </Suspense>
+        </ThemeProvider>
       </body>
     </html>
   );

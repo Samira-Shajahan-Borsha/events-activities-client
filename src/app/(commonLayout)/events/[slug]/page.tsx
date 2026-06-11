@@ -22,6 +22,7 @@ import ProgressBar from "@/components/modules/EventDetails/ProgressBar";
 import { getMyProfileInfo } from "@/services/auth/getMyProfileInfo";
 import { getEvent } from "@/services/event/eventManagement";
 import { IProfile, IUser } from "@/types/user.interface";
+import { Button } from "@/components/ui/button";
 
 type EventDetailsPageProps = {
   params: Promise<{ slug: string }>;
@@ -54,29 +55,28 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
     );
 
   return (
-    <div className="min-h-screen pb-24 px-6">
+    <main>
       {/* ---------------- HERO ---------------- */}
-      <div className="relative -mx-6 h-[36vh] md:h-[42vh] overflow-hidden border-b">
+      <div className="relative h-[36vh] md:h-[42vh] overflow-hidden border-b mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <Image
           src={event.image}
           alt={event.name}
           fill
           priority
-          className="object-cover"
+          className="object-cover max-w-7xl"
         />
 
-        <div className="absolute inset-0 bg-linear-to-t from-background/90 via-background/40 to-black/10" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/60 to-black/20" />
 
-        <Link
-          href="/events"
-          className="absolute top-6 left-8 z-10 inline-flex items-center gap-2 rounded-lg border bg-white/90 px-4 py-2 text-sm font-medium shadow-sm backdrop-blur hover:text-primary transition"
-        >
-          <ArrowLeft size={16} />
-          Back to Events
-        </Link>
+        <Button size="lg" variant="outline" asChild className="h-11 px-10 text-sm font-medium bg-white absolute top-6 left-8 z-10 inline-flex items-center gap-2">
+          <Link href="/explore-events">
+            <ArrowLeft size={16} />
+            Back to Events
+          </Link>
+        </Button>
       </div>
 
-      <div className="-mt-20 relative z-10">
+      <div className="-mt-20 relative z-10 mx-auto w-full max-w-7xl px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <div className="lg:col-span-2 space-y-6">
             {/* EVENT INFO */}
@@ -244,7 +244,7 @@ const EventDetailsPage = async ({ params }: EventDetailsPageProps) => {
           </aside>
         </div>
       </div>
-    </div>
+    </main>
   );
 };
 

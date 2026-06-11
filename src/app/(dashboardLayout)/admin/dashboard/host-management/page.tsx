@@ -1,5 +1,6 @@
 import HostManagementHeader from '@/components/modules/Admin/HostManagement/HostManagementHeader'
 import HostTable from '@/components/modules/Admin/HostManagement/HostTable'
+import ClearFiltersButton from '@/components/shared/ClearFiltersButton'
 import RefreshButton from '@/components/shared/RefreshButton'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
@@ -32,6 +33,7 @@ const HostManagementPage = async ({ searchParams }: { searchParams: Promise<{ [k
                     }))}
                 />
                 <RefreshButton />
+                <ClearFiltersButton />
             </div>
             <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
                 <HostTable hosts={result.data} />

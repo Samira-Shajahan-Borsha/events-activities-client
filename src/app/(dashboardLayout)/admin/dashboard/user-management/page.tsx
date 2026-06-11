@@ -1,5 +1,6 @@
 import UserManagementHeader from '@/components/modules/Admin/UserManagement/UserManagementHeader'
 import UserTable from '@/components/modules/Admin/UserManagement/UserTable'
+import ClearFiltersButton from '@/components/shared/ClearFiltersButton'
 import RefreshButton from '@/components/shared/RefreshButton'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
@@ -29,6 +30,7 @@ const UserManagementPage = async ({ searchParams }: { searchParams: Promise<{ [k
           }))}
         />
         <RefreshButton />
+        <ClearFiltersButton />
       </div>
       <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
         <UserTable users={result.data} />

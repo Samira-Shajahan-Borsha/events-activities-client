@@ -7,6 +7,7 @@ import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarMenu, Sid
 import { NavSection } from "@/types/dashboard.interface";
 import { IProfile } from "@/types/user.interface";
 import Link from "next/link";
+import Logo from "@/components/shared/Logo";
 
 interface DashboardSidebarContentProps {
     userInfo: IProfile;
@@ -20,11 +21,7 @@ const DashboardSidebarContent = ({ userInfo, navItems, dashboardHome }: Dashboar
             <SidebarHeader>
                 <SidebarMenu>
                     <SidebarMenuItem>
-                        <Link href={dashboardHome}>
-                            <span className="text-xl font-semibold tracking-tight text-primary">
-                                EventHub
-                            </span>
-                        </Link>
+                        <Logo />
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>

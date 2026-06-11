@@ -5,6 +5,7 @@ import { IProfile } from "@/types/user.interface";
 import UserDropdown from "@/components/modules/Dashboard/UserDropdown";
 import { Separator } from "@/components/ui/separator";
 import Link from "next/link";
+import { ModeToggle } from "@/components/shared/ModeToggler";
 
 interface DashboardNavbarContentProps {
     userInfo: IProfile
@@ -22,7 +23,8 @@ const DashboardNavbarContent = ({ userInfo }: DashboardNavbarContentProps) => {
                 <Link href="/">
                     <h1 className="text-base font-medium">Home</h1>
                 </Link>
-                <div className="ml-auto flex items-center gap-2">
+                <div className="ml-auto flex items-center gap-3">
+                    <ModeToggle />
                     <UserDropdown userInfo={userInfo} />
                 </div>
             </div>

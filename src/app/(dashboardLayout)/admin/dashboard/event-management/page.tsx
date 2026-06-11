@@ -1,5 +1,6 @@
 import EventManagementHeader from '@/components/modules/EventsManagement/EventManagementHeader'
 import EventTable from '@/components/modules/EventsManagement/EventTable'
+import ClearFiltersButton from '@/components/shared/ClearFiltersButton'
 import RefreshButton from '@/components/shared/RefreshButton'
 import SearchFilter from '@/components/shared/SearchFilter'
 import SelectFilter from '@/components/shared/SelectFilter'
@@ -8,7 +9,7 @@ import { TableSkeleton } from '@/components/shared/TableSkeleton'
 import { queryStringFormatter } from '@/lib/formatters'
 import { getUserInfo } from '@/services/auth/getUserInfo'
 import { getAllEvents } from '@/services/event/eventManagement'
-import { EVENT_STATUS, IS_PAID, } from '@/types/event.interface'
+import { EVENT_STATUS, IEvent, IS_PAID, } from '@/types/event.interface'
 import { IUserInfo } from '@/types/user.interface'
 import { Suspense } from 'react'
 
@@ -20,6 +21,11 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
     const result = await getAllEvents(queryString);
 
     const authInfo = await getUserInfo() as IUserInfo;
+
+    const eventTypes = Array.from(new Set(result?.data?.map((e: IEvent) => e.type))).map((type) => ({
+        label: type as string,
+        value: type as string,
+    }));
 
     return (
         <div className='flex flex-col gap-4'>
@@ -42,7 +48,13 @@ const EventManagementPage = async ({ searchParams }: { searchParams: Promise<{ [
                         value: isPaid,
                     }))}
                 />
+                <SelectFilter
+                    paramName="type"
+                    placeholder="Filter by event type"
+                    options={eventTypes}
+                />
                 <RefreshButton />
+                <ClearFiltersButton />
             </div>
             <Suspense fallback={<TableSkeleton columns={2} rows={10} />}>
                 <EventTable events={result.data} role={authInfo && authInfo!.role} />

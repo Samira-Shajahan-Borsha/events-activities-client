@@ -96,6 +96,17 @@ EventHub bridges the gap between digital discovery and real-world participation 
 
 ---
 
+## 🚧 Upcoming Features
+
+-   AI-powered event recommendations for more personalized discovery
+-   In-app chat and messaging between users, hosts, and support
+-   Advanced caching with Redis for improved page load and API response speed
+-   Real-time notifications with WebSockets for event updates, bookings, and host alerts
+-   Enhanced analytics dashboard for admins and hosts
+-   Intelligent search with semantic and location-aware results
+
+---
+
 ## 🎨 UI & UX Highlights
 
 -   Fully responsive design

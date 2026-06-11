@@ -43,7 +43,11 @@ const EventActionButton = ({ user, isParticipant, event, participantsCount }: IE
                     return;
                 }
 
-                toast.success("Your ticket is confirmed! 🎉");
+                if (event.isPaid === IS_PAID.FREE) {
+                    toast.success("Your ticket is confirmed! 🎉");
+                    router.push('/dashboard/my-events');
+                    return;
+                }
                 router.refresh();
                 // eslint-disable-next-line @typescript-eslint/no-explicit-any
             } catch (err: any) {

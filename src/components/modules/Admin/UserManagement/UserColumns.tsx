@@ -47,7 +47,7 @@ export const userColumns: Column<IUser>[] = [
             </div>
         ),
         className: "min-w-[180px]",
-        sortKey: "fullName", 
+        sortKey: "fullName",
     },
     {
         header: "Email",
@@ -63,9 +63,9 @@ export const userColumns: Column<IUser>[] = [
         header: "Status",
         accessor: (row) => {
             const statusColor: Record<STATUS, string> = {
-                [STATUS.ACTIVE]: "bg-green-100 text-green-700 border-green-200",
-                [STATUS.INACTIVE]: "bg-yellow-100 text-yellow-700 border-yellow-200",
-                [STATUS.BLOCKED]: "bg-red-100 text-red-700 border-red-200",
+                [STATUS.ACTIVE]: "bg-primary text-primary-foreground border-transparent",
+                [STATUS.INACTIVE]: "bg-amber-500/10 text-amber-600 border-amber-500/20",
+                [STATUS.BLOCKED]: "bg-destructive text-destructive-foreground border-transparent"
             };
 
             return (

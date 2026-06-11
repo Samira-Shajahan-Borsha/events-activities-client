@@ -7,6 +7,7 @@ export type IEvent = {
     date: string;
     location: string;
     isPaid: IS_PAID;
+    isFeatured: boolean;
     joiningFee: number;
     status: EVENT_STATUS;
     slug: string;

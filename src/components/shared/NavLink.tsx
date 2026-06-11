@@ -12,15 +12,14 @@ interface NavLinkProps {
 const NavLink = ({ href, label }: NavLinkProps) => {
   const pathname = usePathname();
 
-  const isActive =
-    pathname === href || pathname.startsWith(`${href}/`);
+  const isActive = pathname === href || pathname.startsWith(`${href}/`);
 
   return (
     <Link
       href={href}
       className={cn(
-        " hover:text-primary transition-colors font-medium",
-        isActive && "text-primary font-semibold"
+        "text-sm font-medium transition-colors hover:text-foreground text-muted-foreground",
+        isActive && "text-foreground font-semibold"
       )}
     >
       {label}

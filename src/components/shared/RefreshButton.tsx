@@ -11,7 +11,7 @@ interface RefreshButtonProps {
 }
 
 const RefreshButton = ({
-  size = "sm",
+  size = "default",
   variant = "default",
   showLabel = true,
 }: RefreshButtonProps) => {
@@ -32,9 +32,8 @@ const RefreshButton = ({
       className="cursor-pointer"
     >
       <RefreshCcw
-        className={`h-4 w-4 ${isPending ? "animate-spin" : ""} ${
-          showLabel ? "mr-2" : ""
-        }`}
+        className={`h-4 w-4 ${isPending ? "animate-spin" : ""} ${showLabel ? "mr-2" : ""
+          }`}
       />
       {showLabel && "Refresh"}
     </Button>
