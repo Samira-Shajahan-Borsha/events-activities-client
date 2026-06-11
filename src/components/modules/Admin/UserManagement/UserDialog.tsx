@@ -68,14 +68,14 @@ function StatusBadge({ status }: { status: string }) {
             icon: <XCircle className="w-3 h-3" />,
             label: "Blocked",
         },
-        [STATUS.PENDING]: {
+        [STATUS.INACTIVE]: {
             variant: "secondary" as const,
             icon: <Clock className="w-3 h-3" />,
             label: "Pending",
         },
     };
 
-    const config = statusConfig[status] || statusConfig[STATUS.PENDING];
+    const config = statusConfig[status] || statusConfig[STATUS.INACTIVE];
 
     return (
         <Badge variant={config.variant} className="flex items-center gap-1.5 w-fit">
@@ -165,14 +165,6 @@ function UserInfoCard({ user }: { user: IUser }) {
                     </p>
                     <p className="font-medium text-sm">
                         {formatDate(user.createdAt)}
-                    </p>
-                </div>
-                <div>
-                    <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-1">
-                        Last Active
-                    </p>
-                    <p className="font-medium text-sm">
-                        {formatDate(user.lastActivityAt)}
                     </p>
                 </div>
             </div>
